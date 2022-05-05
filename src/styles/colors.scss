@@ -1,0 +1,118 @@
+:root {
+  --background-light: #f8fffe;
+  --background-dark: #0e0e0f;
+
+  --background-navbar-light: #fff;
+  --background-navbar-dark: #18181d;
+
+  --background-card-light: #ffffff;
+  --background-card-dark: #25252c;
+  --background-card-dark-contrast: #171717;
+
+  --text-primary-light: #06000e;
+  --text-secondary-light: #717171;
+
+  --text-primary-dark: #e7e7e7;
+  --text-secondary-dark: #b2b2b2;
+
+  --shadow-dark: #312b3c;
+  --shadow-light: #2c3094;
+
+  --input-background-dark: #252525;
+  --input-background-light: #3fcab711;
+  --hover-dark: #5b5b5b;
+  --hover-light: #d1d1d1;
+
+  --primary-light: #3fcab7;
+  --secondary-light: #fa5284;
+  --third-light: #8c53af;
+  --secondary-complement-light: #e8cb90;
+  --third-complement-light: #4ce69c;
+
+  --primary-dark: #96f0a9;
+  --secondary-dark: #eba3f0;
+  --third-dark: #f0a58b;
+  --secondary-complement-dark: #a077a3;
+  --third-complement-dark: #a36a56;
+
+  --succes-not: #72c72d;
+  --warning-not: #f2ce59;
+  --danger-not: #e05252;
+}
+
+.theme-light {
+  //backgrounds
+  --background: var(--background-light);
+  --background-contrast: var(--background-dark);
+  --background-card: var(--background-card-light);
+  --background-navbar: var(--background-navbar-light);
+
+  // Texts
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-contrast-primary: var(--text-primary-dark);
+  --text-contrast-secondary: var(--text-secondary-dark);
+
+  //App colors
+  --primary: var(--primary-light);
+  --secondary: var(--secondary-light);
+  --third: var(--third-light);
+  --secondary-complement: var(--secondary-complement-light);
+  --third-complement: var(--third-complement-light);
+
+  //Input
+  --input-background: var(--input-background-light);
+
+  //Hover
+  --hover: var(--hover-light);
+  --hover-contrast: var(--hover-dark);
+
+  //Notifications
+  --succes: var(--succes-not);
+  --warning: var(--warning-not);
+  --danger: var(--danger-not);
+
+  background-color: var(--background-light);
+  color: var(--text-primary-light);
+}
+
+.theme-dark {
+  //backgrounds
+  --background: var(--background-dark);
+  --background-card: var(--background-card-dark);
+  --background-navbar: var(--background-light);
+  --background-contrast: var(--background-light);
+  --background-width-opacity: var(--background-card-dark-contrast);
+  background-color: var(--background-dark);
+
+  // Texts
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --text-contrast-primary: var(--text-primary-light);
+  --text-contrast-secondary: var(--text-secondary-light);
+
+  //App colors
+  --primary: var(--primary-dark);
+  --secondary: var(--secondary-dark);
+  --third: var(--third-dark);
+  --secondary-complement: var(--secondary-complement-dark);
+  --third-complement: var(--third-complement-dark);
+
+  // Shadow
+  --shadow: var(--shadow-dark);
+
+  //Hover
+  --hover: var(--hover-dark);
+  --hover-contrast: var(--hover-light);
+
+  //Input
+  --input-background: var(--input-background-dark);
+
+  //Notifications
+  --succes: var(--succes-not);
+  --warning: var(--warning-not);
+  --danger: var(--danger-not);
+
+  background-color: var(--background-dark);
+  color: var(--text-primary-dark);
+}
