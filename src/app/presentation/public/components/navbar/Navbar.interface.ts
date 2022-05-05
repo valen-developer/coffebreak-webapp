@@ -3,6 +3,7 @@ export abstract class Navbar {
 }
 
 export interface Route {
+  iconClass: string;
   label: string;
   path: string;
 }

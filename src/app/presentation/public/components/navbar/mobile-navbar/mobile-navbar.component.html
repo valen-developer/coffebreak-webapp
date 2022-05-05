@@ -1,1 +1,7 @@
-<p>mobile-navbar works!</p>
+<nav class="mobile-navbar">
+  <ul>
+    <li *ngFor="let route of routes">
+      <app-navbar-link [route]="route"></app-navbar-link>
+    </li>
+  </ul>
+</nav>

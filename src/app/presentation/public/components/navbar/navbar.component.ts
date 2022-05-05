@@ -9,7 +9,28 @@ import { Navbar, Route } from './Navbar.interface';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  public webRoutes: Route[] = [];
+  public webRoutes: Route[] = [
+    {
+      iconClass: 'fas fa-home',
+      path: '/home',
+      label: 'Home',
+    },
+    {
+      iconClass: 'fas fa-user',
+      path: '/profile',
+      label: 'Profile',
+    },
+    {
+      iconClass: 'fas fa-user',
+      path: '/profile',
+      label: 'Profile',
+    },
+    {
+      iconClass: 'fas fa-user',
+      path: '/profile',
+      label: 'Profile',
+    },
+  ];
   public mobileRoutes: Route[] = [];
   private generalRoutes: Route[] = [];
 

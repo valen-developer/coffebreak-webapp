@@ -1,0 +1,36 @@
+.route-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  text-decoration: none;
+  color: var(--text-secondary);
+
+  & i {
+    font-size: 0.8rem;
+  }
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.active {
+  color: var(--primary);
+}
+
+$diameter: 5px;
+.active-point {
+  display: none;
+  width: $diameter;
+  height: $diameter;
+  border-radius: 50%;
+  background-color: var(--primary);
+
+  animation-duration: 0.8s;
+}
+
+.active .active-point {
+  display: block;
+}

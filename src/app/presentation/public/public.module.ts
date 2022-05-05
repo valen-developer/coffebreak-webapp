@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MobileNavbarComponent } from './components/navbar/mobile-navbar/mobile-navbar.component';
 import { WebNavbarComponent } from './components/navbar/web-navbar/web-navbar.component';
+import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { WebNavbarComponent } from './components/navbar/web-navbar/web-navbar.co
     NavbarComponent,
     MobileNavbarComponent,
     WebNavbarComponent,
+    NavbarLinkComponent,
   ],
   imports: [CommonModule, PublicRoutingModule],
 })
