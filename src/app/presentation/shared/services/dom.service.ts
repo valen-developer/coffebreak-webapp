@@ -1,0 +1,57 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
+import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
+
+const MOBILE_WIDTH = 500;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DOMService {
+  private onChangeViewSubject: Subject<void>;
+  public onChangeView$: Observable<void>;
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformID: InjectionToken<any>,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.onChangeViewSubject = new Subject<void>();
+    this.onChangeView$ = this.onChangeViewSubject.asObservable();
+
+    this.observeChangeViewDimentions();
+  }
+
+  public isBrowser(): boolean {
+    return isPlatformBrowser(this.platformID);
+  }
+
+  public isMobile(): boolean {
+    if (!this.isBrowser()) return false;
+
+    const width = this.getWindow()?.innerWidth ?? 0;
+
+    return width < MOBILE_WIDTH;
+  }
+
+  public getDocument(): Nullable<Document> {
+    return this.isBrowser() ? this.document : null;
+  }
+
+  public getWindow(): Nullable<Window> {
+    return this.isBrowser() ? this.document.defaultView : null;
+  }
+
+  private observeChangeViewDimentions(): void {
+    if (this.isBrowser()) {
+      this.getWindow()?.addEventListener('resize', () => {
+        this.onChangeViewDimentions();
+      });
+    }
+  }
+
+  private onChangeViewDimentions(): void {
+    this.onChangeViewSubject.next();
+  }
+}
