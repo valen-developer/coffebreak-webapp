@@ -1,0 +1,7 @@
+<div *ngIf="isMobile; else isWeb">
+  <app-mobile-navbar></app-mobile-navbar>
+</div>
+
+<ng-template #isWeb>
+  <app-web-navbar></app-web-navbar>
+</ng-template>
