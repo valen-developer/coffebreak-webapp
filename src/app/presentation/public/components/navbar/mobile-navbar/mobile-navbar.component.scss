@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 0;
 
-  background-color: var(--background-navbar-dark);
+  background-color: var(--background-navbar);
   width: 100%;
 
   & ul {
@@ -12,7 +12,9 @@
     gap: 1rem;
 
     list-style: none;
-    padding: 0.5rem 0.25rem;
     margin: 0;
+    padding: 0.5rem 0.25rem;
+
+    overflow-x: auto;
   }
 }

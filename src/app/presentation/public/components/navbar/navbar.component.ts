@@ -30,6 +30,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       path: '/profile',
       label: 'Profile',
     },
+    {
+      iconClass: 'fas fa-user',
+      path: '/profile',
+      label: 'Profile',
+    },
   ];
   public mobileRoutes: Route[] = [];
   private generalRoutes: Route[] = [];
@@ -41,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToChangeDimention();
+    this.isMobile = this.domService.isMobile();
   }
 
   ngOnDestroy(): void {

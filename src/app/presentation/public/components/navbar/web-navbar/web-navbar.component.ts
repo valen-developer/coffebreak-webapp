@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Navbar, Route } from '../Navbar.interface';
+import { Navbar, Route, WebNavbarRouteSection } from '../Navbar.interface';
 
 @Component({
   selector: 'app-web-navbar',
@@ -8,7 +8,7 @@ import { Navbar, Route } from '../Navbar.interface';
 })
 export class WebNavbarComponent implements OnInit, Navbar {
   @Input()
-  public routes: Route[] = [];
+  public routeSections: WebNavbarRouteSection[] = [];
 
   constructor() {}
 
