@@ -1,1 +1,27 @@
-<p>playlist works!</p>
+<main class="playlists">
+  <button class="add">
+    <div class="add-icon">
+      <i class="fas fa-plus"></i>
+    </div>
+    <span>Crear nueva playlist</span>
+  </button>
+
+  <a
+    routerLink="/library/playlist"
+    class="playlist-item"
+    *ngFor="let playlist of platyLists"
+  >
+    <div class="image">
+      <img src="assets/images/episode.jpg" alt="" />
+    </div>
+
+    <div class="text">
+      <h5 class="text__title">Titulo</h5>
+      <span class="text__by">by usuario</span>
+    </div>
+
+    <div class="count">
+      <span>3 episodios</span>
+    </div>
+  </a>
+</main>
