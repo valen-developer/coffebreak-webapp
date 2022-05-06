@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, Subscription } from 'rxjs';
 import { DOMService } from 'src/app/presentation/shared/services/dom.service';
-import { Navbar, Route } from './Navbar.interface';
+import { Navbar, Route, WebNavbarRouteSection } from './Navbar.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,7 @@ import { Navbar, Route } from './Navbar.interface';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  public webRoutes: Route[] = [
+  public mobileRoutes: Route[] = [
     {
       iconClass: 'fas fa-home',
       path: '/home',
@@ -36,8 +36,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
       label: 'Profile',
     },
   ];
-  public mobileRoutes: Route[] = [];
-  private generalRoutes: Route[] = [];
+  public webRouteSections: WebNavbarRouteSection[] = [
+    {
+      label: 'Menú',
+      routes: this.mobileRoutes,
+    },
+    {
+      label: 'Opciones',
+      routes: this.mobileRoutes,
+    },
+    {
+      label: 'Opciones',
+      routes: this.mobileRoutes,
+    },
+  ];
 
   public isMobile = true;
   private changeDimentionSubscription!: Subscription;

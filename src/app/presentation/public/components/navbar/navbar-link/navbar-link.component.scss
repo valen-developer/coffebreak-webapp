@@ -18,6 +18,9 @@
 
 .active {
   color: var(--primary);
+  &:hover {
+    color: var(--primary);
+  }
 }
 
 $diameter: 5px;
@@ -33,4 +36,16 @@ $diameter: 5px;
 
 .active .active-point {
   display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .route-link {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .active-point {
+    display: block;
+  }
 }

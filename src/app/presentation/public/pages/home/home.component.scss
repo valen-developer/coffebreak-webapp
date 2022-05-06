@@ -1,3 +1,15 @@
 .home {
-  height: 200rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 6rem;
+}
+
+.header {
+  padding: 0.5rem;
+}
+
+.section__title {
+  padding: 0.5rem;
+  margin: 1.5rem 0 1rem 0;
+  font-size: 1rem;
 }

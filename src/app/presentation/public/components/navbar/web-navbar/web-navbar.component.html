@@ -1,1 +1,19 @@
-<nav class="web-navbar"></nav>
+<nav class="web-navbar">
+  <div class="logo"></div>
+
+  <div class="sections">
+    <div class="section" *ngFor="let routeSection of routeSections">
+      <h5 class="section__title">{{ routeSection.label }}</h5>
+      <ul class="section__list">
+        <li *ngFor="let route of routeSection.routes" class="section__item">
+          <app-navbar-link [route]="route" [isMobile]="false"></app-navbar-link>
+          <div
+            class="section__item__active"
+            [routerLink]="route.path"
+            routerLinkActive="active"
+          ></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

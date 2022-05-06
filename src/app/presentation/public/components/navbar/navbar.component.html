@@ -1,7 +1,7 @@
 <div *ngIf="isMobile; else isWeb" class="navbar">
-  <app-mobile-navbar [routes]="webRoutes"></app-mobile-navbar>
+  <app-mobile-navbar [routes]="mobileRoutes"></app-mobile-navbar>
 </div>
 
 <ng-template #isWeb>
-  <app-web-navbar></app-web-navbar>
+  <app-web-navbar [routeSections]="webRouteSections"></app-web-navbar>
 </ng-template>

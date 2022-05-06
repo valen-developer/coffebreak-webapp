@@ -8,6 +8,7 @@ import { Route } from '../Navbar.interface';
 })
 export class NavbarLinkComponent implements OnInit {
   @Input() public route!: Route;
+  @Input() public isMobile = true;
 
   constructor() {}
 
