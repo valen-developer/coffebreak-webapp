@@ -12,6 +12,8 @@ import { WebNavbarComponent } from './components/navbar/web-navbar/web-navbar.co
 import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
 import { EpisodeCardComponent } from './components/episode-card/episode-card.component';
 import { EpisodeCardListComponent } from './components/episode-card-list/episode-card-list.component';
+import { ExploreComponent } from './pages/explore/explore.component';
+import { SearchResultEntityMoblieComponent } from './components/search-result-entity-moblie/search-result-entity-moblie.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { EpisodeCardListComponent } from './components/episode-card-list/episode
     NavbarLinkComponent,
     EpisodeCardComponent,
     EpisodeCardListComponent,
+    ExploreComponent,
+    SearchResultEntityMoblieComponent,
   ],
   imports: [CommonModule, PublicRoutingModule, SharedModule],
 })

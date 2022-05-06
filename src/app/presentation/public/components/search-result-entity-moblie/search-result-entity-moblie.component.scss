@@ -1,0 +1,40 @@
+.search-result {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.image {
+  width: 70px;
+  height: 70px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  & img {
+    width: 100%;
+  }
+}
+
+.text {
+  width: 100%;
+  &__description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & i {
+    border: 1px solid var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+}

@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+
 import { PublicComponent } from './public.component';
+
+import { ExploreComponent } from './pages/explore/explore.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
@@ -13,9 +16,13 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
+        path: 'explore',
+        component: ExploreComponent,
+      },
+      {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'home',
+        redirectTo: 'explore',
       },
     ],
   },

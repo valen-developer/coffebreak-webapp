@@ -1,0 +1,17 @@
+<main class="animate__animated animate__fadeIn explore">
+  <section class="header">
+    <app-search-input></app-search-input>
+    <app-circle-profile></app-circle-profile>
+  </section>
+
+  <section class="results">
+    <h3 class="results__title">Resultados</h3>
+    <div class="results-item" *ngFor="let entity of entities">
+      <app-search-result-entity-moblie></app-search-result-entity-moblie>
+    </div>
+  </section>
+
+  <!-- <section class="no-results">
+    <h4>Sin resultados</h4>
+  </section> -->
+</main>

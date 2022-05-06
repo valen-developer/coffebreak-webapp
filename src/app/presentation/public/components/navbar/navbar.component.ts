@@ -16,24 +16,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       label: 'Home',
     },
     {
-      iconClass: 'fas fa-user',
-      path: '/profile',
-      label: 'Profile',
-    },
-    {
-      iconClass: 'fas fa-user',
-      path: '/profile',
-      label: 'Profile',
-    },
-    {
-      iconClass: 'fas fa-user',
-      path: '/profile',
-      label: 'Profile',
-    },
-    {
-      iconClass: 'fas fa-user',
-      path: '/profile',
-      label: 'Profile',
+      label: 'Explore',
+      iconClass: 'fas fa-compass',
+      path: '/explore',
     },
   ];
   public webRouteSections: WebNavbarRouteSection[] = [
