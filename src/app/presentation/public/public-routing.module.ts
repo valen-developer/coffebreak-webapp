@@ -25,6 +25,13 @@ const routes: Routes = [
           import('./pages/library/library.module').then((m) => m.LibraryModule),
       },
       {
+        path: 'settings',
+        loadChildren: () =>
+          import('./pages/settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'explore',
