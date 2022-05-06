@@ -20,6 +20,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       iconClass: 'fas fa-compass',
       path: '/explore',
     },
+    {
+      label: 'Library',
+      iconClass: 'fas fa-file-audio',
+      path: '/library',
+    },
   ];
   public webRouteSections: WebNavbarRouteSection[] = [
     {

@@ -1,0 +1,51 @@
+.library-navbar {
+  & ul {
+    display: flex;
+    list-style: none;
+
+    & li {
+      position: relative;
+      padding: 0.25rem 0.5rem;
+
+      & a {
+        text-decoration: none;
+        color: var(--text-secondary);
+      }
+
+      & .border {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        left: 0.5rem;
+        width: 40%;
+        height: 2px;
+        background-color: var(--primary);
+        border-radius: var(--border-radius);
+
+        animation-name: border;
+        animation-duration: 0.3s;
+        animation-fill-mode: forwards;
+      }
+
+      &.active {
+        & a {
+          color: var(--text-primary);
+          font-weight: bold;
+        }
+
+        & .border {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@keyframes border {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50%;
+  }
+}

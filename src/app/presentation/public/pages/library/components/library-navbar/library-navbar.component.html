@@ -1,0 +1,14 @@
+<nav class="library-navbar">
+  <ul>
+    <li
+      *ngFor="let route of routes"
+      [routerLink]="route.path"
+      routerLinkActive="active"
+    >
+      <a [routerLink]="route.path" routerLinkActive="active">
+        {{ route.label | titlecase }}
+      </a>
+      <div class="border"></div>
+    </li>
+  </ul>
+</nav>

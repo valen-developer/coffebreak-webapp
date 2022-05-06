@@ -20,6 +20,11 @@ const routes: Routes = [
         component: ExploreComponent,
       },
       {
+        path: 'library',
+        loadChildren: () =>
+          import('./pages/library/library.module').then((m) => m.LibraryModule),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'explore',
