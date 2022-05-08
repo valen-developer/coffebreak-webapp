@@ -1,10 +1,10 @@
 <main class="animate__animated animate__fadeIn explore">
   <section class="header">
-    <app-search-input></app-search-input>
+    <app-search-input (searchEmitter)="onSearch($event)"></app-search-input>
     <app-circle-profile></app-circle-profile>
   </section>
 
-  <section class="results">
+  <section class="results" *ngIf="episodes.length > 0">
     <h3 class="results__title">Resultados</h3>
     <a
       [routerLink]="['/episode', episode?.uuid?.value]"
@@ -17,7 +17,7 @@
     </a>
   </section>
 
-  <!-- <section class="no-results">
+  <section class="no-results" *ngIf="episodes.length <= 0">
     <h4>Sin resultados</h4>
-  </section> -->
+  </section>
 </main>
