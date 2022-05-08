@@ -1,17 +1,10 @@
 <div class="card">
   <div class="card-image">
-    <img src="assets/images/episode.jpg" alt="" />
+    <img [src]="entity?.imageUrl" alt="" />
   </div>
 
   <div class="card-text">
-    <h5 class="card-text__title">Episode 1</h5>
-    <p class="card-text__description">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus quas,
-      doloremque itaque nesciunt obcaecati recusandae veniam laboriosam ad quia
-      ex culpa qui exercitationem minima consectetur magnam nemo cupiditate
-      consequuntur fugit quae reiciendis pariatur assumenda labore unde facilis!
-      Explicabo cupiditate mollitia quis reiciendis laudantium, vel repudiandae,
-      quas adipisci ex, impedit doloribus.
-    </p>
+    <h5 class="card-text__title">{{ entity?.title }}</h5>
+    <p class="card-text__description">{{ entity?.description }}</p>
   </div>
 </div>

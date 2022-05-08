@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Entity } from '../episode-card/episode-card.component';
 
 @Component({
   selector: 'app-episode-card-list',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./episode-card-list.component.scss'],
 })
 export class EpisodeCardListComponent implements OnInit {
-  public entities = new Array(10).fill(0);
+  @Input()
+  public entities: Entity[] = [];
 
   constructor() {}
 

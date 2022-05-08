@@ -1,3 +1,6 @@
 <div class="card-list">
-  <app-episode-card *ngFor="let entity of entities"></app-episode-card>
+  <app-episode-card
+    *ngFor="let entity of entities"
+    [entity]="entity"
+  ></app-episode-card>
 </div>

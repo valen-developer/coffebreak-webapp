@@ -23,6 +23,7 @@
 
 .card-text {
   flex-grow: 1;
+  margin-top: 0.25rem;
   &__title {
     font-weight: bold;
   }
@@ -30,7 +31,7 @@
   &__description {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     overflow: hidden;
 
     width: 100%;

@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-episode-card',
   templateUrl: './episode-card.component.html',
-  styleUrls: ['./episode-card.component.scss']
+  styleUrls: ['./episode-card.component.scss'],
 })
 export class EpisodeCardComponent implements OnInit {
 
-  constructor() { }
+  @Input() public entity!: Entity;
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
+}
+
+export interface Entity {
+  title: string;
+  description: string;
+  imageUrl: string;
 }

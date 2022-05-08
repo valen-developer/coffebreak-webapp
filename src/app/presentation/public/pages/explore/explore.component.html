@@ -6,8 +6,10 @@
 
   <section class="results">
     <h3 class="results__title">Resultados</h3>
-    <div class="results-item" *ngFor="let entity of entities">
-      <app-search-result-entity-moblie></app-search-result-entity-moblie>
+    <div class="results-item" *ngFor="let episode of episodes">
+      <app-search-result-entity-moblie
+        [episodes]="episode"
+      ></app-search-result-entity-moblie>
     </div>
   </section>
 
