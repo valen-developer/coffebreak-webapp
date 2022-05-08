@@ -1,0 +1,6 @@
+<app-slider [percent]="percent" (changeEmitter)="onChange($event)"></app-slider>
+
+<div class="time-container">
+  <span class="time">{{ timeToString }}</span>
+  <span class="duration">{{ durationToString }}</span>
+</div>

@@ -7,17 +7,26 @@
   <div class="content">
     <section class="section">
       <h5 class="section__title">Trending</h5>
-      <app-episode-card-list></app-episode-card-list>
+      <app-episode-card-list
+        route="/episode"
+        [entities]="lastEpisodes"
+      ></app-episode-card-list>
     </section>
 
     <section class="section">
       <h5 class="section__title">Canales Populares</h5>
-      <app-episode-card-list></app-episode-card-list>
+      <app-episode-card-list
+        route="/episode"
+        [entities]="lastEpisodes"
+      ></app-episode-card-list>
     </section>
 
     <section class="section">
       <h5 class="section__title">Últimos episodios</h5>
-      <app-episode-card-list [entities]="lastEpisodes"></app-episode-card-list>
+      <app-episode-card-list
+        route="/episode"
+        [entities]="lastEpisodes"
+      ></app-episode-card-list>
     </section>
   </div>
 </main>

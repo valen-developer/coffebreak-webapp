@@ -1,0 +1,40 @@
+<div class="audio-player-wrapper">
+  <div class="time-bar">
+    <app-time-bar
+      [percent]="percentRoute"
+      [duration]="duration"
+      (changeEmitter)="onTimeChange($event)"
+    ></app-time-bar>
+  </div>
+
+  <div class="actions">
+    <button class="action">
+      <!-- favorite icon fontawesome -->
+      <i class="fa-regular fa-heart"></i>
+    </button>
+
+    <button class="action">
+      <i class="fa-solid fa-backward-step"></i>
+    </button>
+
+    <button class="action play" (click)="togglePlayPause()">
+      <i class="fas fa-play" *ngIf="!playingStatus"></i>
+      <i class="fas fa-pause" *ngIf="playingStatus"></i>
+    </button>
+
+    <button class="action">
+      <i class="fa-solid fa-forward-step"></i>
+    </button>
+
+    <button class="action">
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </button>
+  </div>
+
+  <div class="volume">
+    <app-volume-bar
+      [percent]="percentVolume"
+      (volumeChangeEmitter)="onVolumeChange($event)"
+    ></app-volume-bar>
+  </div>
+</div>

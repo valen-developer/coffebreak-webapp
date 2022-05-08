@@ -1,0 +1,10 @@
+<div class="volume">
+  <!-- volume icon fontawesome -->
+  <i class="fa-solid fa-volume-high"></i>
+  <div class="slider">
+    <app-slider
+      [percent]="percent"
+      (changeEmitter)="onVolumeChange($event)"
+    ></app-slider>
+  </div>
+</div>

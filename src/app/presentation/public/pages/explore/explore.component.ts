@@ -17,7 +17,7 @@ export class ExploreComponent implements OnInit {
   constructor(private episodeFinder: PodcastEpisodeFinder) {}
 
   ngOnInit(): void {
-    this.search('Einstein');
+    this.search('Especial');
   }
 
   private search(criteria: string): void {

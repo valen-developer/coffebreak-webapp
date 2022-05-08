@@ -1,6 +1,12 @@
 <div class="public">
-  <app-navbar></app-navbar>
   <div class="public-content">
     <router-outlet></router-outlet>
+  </div>
+
+  <div class="navbars">
+    <div class="audio-player" *ngIf="showAudioPlayer$ | async">
+      <app-navbar-audio-player></app-navbar-audio-player>
+    </div>
+    <app-navbar></app-navbar>
   </div>
 </div>

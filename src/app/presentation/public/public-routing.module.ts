@@ -5,6 +5,7 @@ import { PublicComponent } from './public.component';
 
 import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
+import { EpisodeComponent } from './pages/episode/episode.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'explore',
         component: ExploreComponent,
+      },
+      {
+        path: 'episode/:uuid',
+        component: EpisodeComponent,
       },
       {
         path: 'library',

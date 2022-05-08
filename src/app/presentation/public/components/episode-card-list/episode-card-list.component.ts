@@ -10,6 +10,9 @@ export class EpisodeCardListComponent implements OnInit {
   @Input()
   public entities: Entity[] = [];
 
+  @Input()
+  public route!: string;
+
   constructor() {}
 
   ngOnInit(): void {}

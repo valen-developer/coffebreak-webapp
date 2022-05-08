@@ -6,7 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./episode-card.component.scss'],
 })
 export class EpisodeCardComponent implements OnInit {
-
   @Input() public entity!: Entity;
 
   constructor() {}
@@ -18,4 +17,5 @@ export interface Entity {
   title: string;
   description: string;
   imageUrl: string;
+  uuid?: string;
 }

@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
         title: `Episodio ${e.episode}`,
         description: e.title.value,
         imageUrl: e.imageUrl.value,
+        uuid: e.uuid.value,
       }));
     });
   }

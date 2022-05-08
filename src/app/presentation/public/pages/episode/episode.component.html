@@ -1,0 +1,20 @@
+<div class="episode-player">
+  <div class="header"></div>
+
+  <div class="image">
+    <img [src]="episode?.imageUrl?.value" alt="" />
+  </div>
+
+  <div class="title">
+    <h4>{{ "Episodio " + episode?.episode }}</h4>
+    <p>{{ episode?.title?.value }}</p>
+    <!-- <p>{{ episode?.description?.value }}</p> -->
+  </div>
+
+  <div class="player">
+    <app-principal-audio-player
+      class="player"
+      [duration]="episode?.duration?.value ?? 10000"
+    ></app-principal-audio-player>
+  </div>
+</div>

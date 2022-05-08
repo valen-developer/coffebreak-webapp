@@ -1,0 +1,21 @@
+<div class="navbar-audio" *ngIf="episode">
+  <a [routerLink]="['/episode', episode?.uuid?.value]" class="information">
+    <div class="image">
+      <img [src]="episode.imageUrl.value" alt="" />
+    </div>
+
+    <div class="title">
+      <h5 class="title__heading">{{ "Episodio " + episode.episode }}</h5>
+      <p class="title__subtitle">{{ episode.title.value }}</p>
+    </div>
+  </a>
+
+  <div class="actions">
+    <button class="action play" (click)="togglePlay()">
+      <i class="fas fa-play" *ngIf="!playStatus"></i>
+      <i class="fas fa-pause" *ngIf="playStatus"></i>
+    </button>
+  </div>
+
+  <div class="timebar" [ngStyle]="{ width: percent * 100 + '%' }"></div>
+</div>

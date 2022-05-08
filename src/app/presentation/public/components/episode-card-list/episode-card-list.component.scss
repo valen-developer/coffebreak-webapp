@@ -4,6 +4,11 @@
   width: 100%;
   overflow-x: auto;
   padding: 0 0.5rem;
+
+  & a {
+    text-decoration: none;
+    color: var(--text-primary);
+  }
 }
 
 .card-list::-webkit-scrollbar {

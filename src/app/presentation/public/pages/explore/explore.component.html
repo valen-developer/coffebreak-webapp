@@ -6,11 +6,15 @@
 
   <section class="results">
     <h3 class="results__title">Resultados</h3>
-    <div class="results-item" *ngFor="let episode of episodes">
+    <a
+      [routerLink]="['/episode', episode?.uuid?.value]"
+      class="results-item"
+      *ngFor="let episode of episodes"
+    >
       <app-search-result-entity-moblie
         [episodes]="episode"
       ></app-search-result-entity-moblie>
-    </div>
+    </a>
   </section>
 
   <!-- <section class="no-results">

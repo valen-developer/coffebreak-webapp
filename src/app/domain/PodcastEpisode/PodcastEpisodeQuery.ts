@@ -1,4 +1,5 @@
 export interface PodcastEpisodeQuery {
+  uuid_equals?: string;
   title_contains?: string;
   pubDate_lte?: Date;
   pubDate_gte?: Date;

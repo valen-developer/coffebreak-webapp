@@ -1,0 +1,11 @@
+<div class="slider-container">
+  <input
+    type="range"
+    min="0"
+    max="100"
+    class="slider"
+    [formControl]="formControl"
+    #sliderInput
+  />
+  <div class="route" [ngStyle]="{ width: percent * 100 + '%' }"></div>
+</div>
