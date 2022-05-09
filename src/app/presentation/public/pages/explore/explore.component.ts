@@ -41,4 +41,8 @@ export class ExploreComponent implements OnInit {
       this.episodes = episodes;
     });
   }
+
+  public onSuggest(query: string): void {
+    this.search(query);
+  }
 }

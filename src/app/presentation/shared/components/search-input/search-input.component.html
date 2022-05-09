@@ -1,3 +1,11 @@
 <div class="input-wrapper">
-  <input type="text" placeholder="Buscar" [formControl]="formControl" />
+  <input type="text" [placeholder]="placeholder" [formControl]="formControl" />
+
+  <div class="icon">
+    <i class="fa fa-search"></i>
+  </div>
+
+  <button class="clear-icon">
+    <i class="fa fa-times" (click)="onClear()"></i>
+  </button>
 </div>

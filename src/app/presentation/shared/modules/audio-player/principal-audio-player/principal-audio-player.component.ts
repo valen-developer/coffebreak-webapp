@@ -8,15 +8,14 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AudioController } from '../services/audio-controller.service';
+import { EpisodePlayerService } from '../services/episode-player.service';
 
 @Component({
   selector: 'app-principal-audio-player',
   templateUrl: './principal-audio-player.component.html',
   styleUrls: ['./principal-audio-player.component.scss'],
 })
-export class PrincipalAudioPlayerComponent
-  implements OnInit, OnDestroy, OnChanges
-{
+export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   @Input() duration!: number;
 
   public playingStatus: boolean = false;
@@ -29,13 +28,10 @@ export class PrincipalAudioPlayerComponent
   private playingStatusSubscription!: Subscription;
   private volumeSubscription!: Subscription;
 
-  constructor(private audioController: AudioController) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // check if episode has changed
-    const previus = changes['episode']?.previousValue;
-    const current = changes['episode']?.currentValue;
-  }
+  constructor(
+    private audioController: AudioController,
+    episodePlayer: EpisodePlayerService
+  ) {}
 
   ngOnInit(): void {
     this.setupAudio();

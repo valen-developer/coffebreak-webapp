@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -14,6 +15,8 @@ import { debounceTime, Subscription } from 'rxjs';
   styleUrls: ['./search-input.component.scss'],
 })
 export class SearchInputComponent implements OnInit, OnDestroy {
+  @Input() placeholder = 'Buscar';
+
   public formControl = new FormControl('');
   private formControlSubscription!: Subscription;
 
@@ -35,5 +38,9 @@ export class SearchInputComponent implements OnInit, OnDestroy {
 
   public onChangeValue(value: string): void {
     this.searchEmitter.emit(value);
+  }
+
+  public onClear(): void {
+    this.formControl.setValue('');
   }
 }

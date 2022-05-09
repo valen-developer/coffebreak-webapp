@@ -1,0 +1,20 @@
+$circleRadius: 40px;
+
+.circle-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: $circleRadius;
+  height: $circleRadius;
+
+  border-radius: 50%;
+  border: 1px solid var(--background-navbar);
+  box-shadow: 0 0 5px var(--hover);
+  overflow: hidden;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}

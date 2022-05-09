@@ -15,6 +15,7 @@ import { EpisodeCardListComponent } from './components/episode-card-list/episode
 import { ExploreComponent } from './pages/explore/explore.component';
 import { SearchResultEntityMoblieComponent } from './components/search-result-entity-moblie/search-result-entity-moblie.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
+import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
 
 @NgModule({
   declarations: [
@@ -31,5 +32,6 @@ import { EpisodeComponent } from './pages/episode/episode.component';
     EpisodeComponent,
   ],
   imports: [CommonModule, PublicRoutingModule, SharedModule],
+  providers: [EpisodePlayerService],
 })
 export class PublicModule {}
