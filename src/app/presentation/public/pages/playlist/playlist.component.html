@@ -1,0 +1,53 @@
+<div class="playlist-wrapper">
+  <div class="header">
+    <div class="content">
+      <div class="content-header">
+        <a class="content-header__action" routerLink="..">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+
+        <button class="content-header__action">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+      </div>
+
+      <div class="content-information">
+        <h5 class="content-information__description">Playlist</h5>
+
+        <h4>Titulo</h4>
+
+        <p class="content-information__description">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus
+          doloremque aspernatur optio voluptates reiciendis iusto laboriosam
+          adipisci id
+        </p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="actions__action">
+        <!-- play -->
+        <i class="fa-solid fa-play"></i>
+      </button>
+    </div>
+
+    <img src="assets/images/episode.jpg" alt="" />
+  </div>
+
+  <div class="list">
+    <div class="list-item" *ngFor="let episode of episodes">
+      <button class="list-item__action">
+        <i class="fa-solid fa-play"></i>
+      </button>
+      <div class="list-item-info">
+        <span class="list-item-info__title">Episodio 1</span>
+        <span class="list-item-info__subtitle">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi sunt
+          repudiandae velit eveniet tempore exercitationem nobis. Repellat porro
+          voluptatem, quis, omnis ipsa fuga dolorem, cupiditate accusantium
+          mollitia sequi animi quasi.
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

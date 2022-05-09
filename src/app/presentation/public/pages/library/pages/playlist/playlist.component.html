@@ -7,7 +7,7 @@
   </button>
 
   <a
-    routerLink="/library/playlist"
+    [routerLink]="['/playlist', 12345]"
     class="playlist-item"
     *ngFor="let playlist of platyLists"
   >

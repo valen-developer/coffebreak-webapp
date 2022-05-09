@@ -16,6 +16,7 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { SearchResultEntityMoblieComponent } from './components/search-result-entity-moblie/search-result-entity-moblie.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
 import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
+import { PlaylistComponent } from './pages/playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EpisodePlayerService } from '../shared/modules/audio-player/services/ep
     ExploreComponent,
     SearchResultEntityMoblieComponent,
     EpisodeComponent,
+    PlaylistComponent,
   ],
   imports: [CommonModule, PublicRoutingModule, SharedModule],
   providers: [EpisodePlayerService],

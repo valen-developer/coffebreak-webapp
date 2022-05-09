@@ -6,6 +6,7 @@ import { PublicComponent } from './public.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
+import { PlaylistComponent } from './pages/playlist/playlist.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'episode/:uuid',
         component: EpisodeComponent,
+      },
+      {
+        path: 'playlist/:uuid',
+        component: PlaylistComponent,
       },
       {
         path: 'library',
