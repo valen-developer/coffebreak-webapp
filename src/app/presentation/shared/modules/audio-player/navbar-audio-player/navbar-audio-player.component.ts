@@ -65,7 +65,6 @@ export class NavbarAudioPlayerComponent implements OnInit, OnDestroy {
       next: (time) => {
         const duration = this.episode?.duration.value ?? 1;
         this.percent = time / duration;
-        console.log(this.percent);
       },
     });
   }

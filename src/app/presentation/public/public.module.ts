@@ -1,22 +1,31 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  ApplicationRef,
+  APP_INITIALIZER,
+  DoBootstrap,
+  NgModule,
+} from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { PublicRoutingModule } from './public-routing.module';
 
-import { PublicComponent } from './public.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { MobileNavbarComponent } from './components/navbar/mobile-navbar/mobile-navbar.component';
-import { WebNavbarComponent } from './components/navbar/web-navbar/web-navbar.component';
-import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
-import { EpisodeCardComponent } from './components/episode-card/episode-card.component';
+import { Router } from '@angular/router';
+import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
+import { DOMService } from '../shared/services/dom.service';
+import { RouteToolService } from '../shared/services/route-tool.service';
 import { EpisodeCardListComponent } from './components/episode-card-list/episode-card-list.component';
-import { ExploreComponent } from './pages/explore/explore.component';
+import { EpisodeCardComponent } from './components/episode-card/episode-card.component';
+import { MobileNavbarComponent } from './components/navbar/mobile-navbar/mobile-navbar.component';
+import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { WebNavbarComponent } from './components/navbar/web-navbar/web-navbar.component';
 import { SearchResultEntityMoblieComponent } from './components/search-result-entity-moblie/search-result-entity-moblie.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
-import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
+import { ExploreComponent } from './pages/explore/explore.component';
+import { HomeComponent } from './pages/home/home.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
+import { PublicComponent } from './public.component';
+import { ScrollService } from '../shared/services/scroll.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +43,8 @@ import { PlaylistComponent } from './pages/playlist/playlist.component';
     PlaylistComponent,
   ],
   imports: [CommonModule, PublicRoutingModule, SharedModule],
-  providers: [EpisodePlayerService],
+  providers: [EpisodePlayerService, RouteToolService, ScrollService],
 })
-export class PublicModule {}
+export class PublicModule {
+  constructor(private routeTool: RouteToolService) {}
+}
