@@ -25,7 +25,7 @@ export class EpisodePlayerService implements OnDestroy {
     this.timeSubscription?.unsubscribe();
   }
 
-  public setEpisode(episode: PodcastEpisode): void {
+  public setEpisode(episode: PodcastEpisode, opt?: SetEpisodeOptions): void {
     const isSame = this._episodePlaying?.uuid.value === episode?.uuid.value;
 
     if (isSame) return;
@@ -35,6 +35,23 @@ export class EpisodePlayerService implements OnDestroy {
     this._episodePlaying = episode;
     this.episodeSubject.next(episode);
     this.audioController.setupAudio(episode?.audioUrl.value as string);
+
+    if (opt?.autoplay) this.audioController.togglePlayPause();
+  }
+
+  public togglePlayPause(): void {
+    this.audioController.togglePlayPause();
+  }
+
+  public isEpisodePlaying(episode: PodcastEpisode): boolean {
+    const isSameEpisode = this.isEpisodeSelected(episode);
+    const isPlaying = this.audioController.isPlaying();
+
+    return isSameEpisode && isPlaying;
+  }
+
+  public isEpisodeSelected(episode: PodcastEpisode): boolean {
+    return this._episodePlaying?.uuid.value === episode.uuid.value;
   }
 
   private subscribeToTime(): void {
@@ -52,4 +69,8 @@ export class EpisodePlayerService implements OnDestroy {
       },
     });
   }
+}
+
+interface SetEpisodeOptions {
+  autoplay: boolean;
 }

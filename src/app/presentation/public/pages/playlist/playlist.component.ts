@@ -5,6 +5,7 @@ import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastDuration } from 'src/app/domain/PodcastEpisode/valueObjects/PodcastDuration.valueObject';
+import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { ScrollService } from 'src/app/presentation/shared/services/scroll.service';
 
@@ -26,7 +27,8 @@ export class PlaylistComponent implements OnInit {
     private routeTool: RouteToolService,
     private scrollService: ScrollService,
     private playlistFinder: PlaylistFinder,
-    private imageGetter: ImageGetter
+    private imageGetter: ImageGetter,
+    private episodePlayer: EpisodePlayerService
   ) {}
 
   ngOnInit(): void {
@@ -67,5 +69,21 @@ export class PlaylistComponent implements OnInit {
     }, 0);
 
     this.durationSeconds = new PodcastDuration(seconds);
+  }
+
+  public onPlay(episode: PodcastEpisode): void {
+    const isEpisodeSelected = this.isEpisodeSelected(episode);
+
+    if (isEpisodeSelected) return this.episodePlayer.togglePlayPause();
+
+    this.episodePlayer.setEpisode(episode, { autoplay: true });
+  }
+
+  public isEpisodePlaying(episode: PodcastEpisode): boolean {
+    return this.episodePlayer.isEpisodePlaying(episode);
+  }
+
+  public isEpisodeSelected(episode: PodcastEpisode): boolean {
+    return this.episodePlayer.isEpisodeSelected(episode);
   }
 }

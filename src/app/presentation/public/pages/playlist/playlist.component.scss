@@ -115,12 +115,19 @@
       width: 40px;
 
       border-radius: 50%;
+
+      & .pause {
+        color: var(--primary);
+      }
     }
 
     &-info {
       display: flex;
       flex-direction: column;
       width: 70%;
+
+      text-decoration: none;
+      color: var(--text-primary);
 
       &__title {
         font-size: 1rem;
@@ -135,6 +142,10 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
       }
+    }
+
+    &.selected {
+      border-bottom: 1px solid var(--primary);
     }
   }
 }

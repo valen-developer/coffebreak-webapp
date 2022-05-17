@@ -41,7 +41,7 @@ export class AudioController {
 
   public setupAudio(url: string): void {
     this.audioObject.src = url;
-    this.emitPlatingStatus(!this.audioObject.paused);
+    this.emitPlayingStatus(!this.audioObject.paused);
     this.emitCurrentTime(this.audioObject.currentTime);
     this.emitVolume(this.audioObject.volume);
   }
@@ -53,7 +53,7 @@ export class AudioController {
 
     if (!isPlaying) this.audioObject.play();
 
-    this.emitPlatingStatus(!isPlaying);
+    this.emitPlayingStatus(!isPlaying);
   }
 
   public setVolume(volume: number): void {
@@ -69,8 +69,12 @@ export class AudioController {
     this.audioObject.currentTime = time;
   }
 
-  private emitPlatingStatus(status: boolean): void {
+  private emitPlayingStatus(status: boolean): void {
     this.playingStatusSubject.next(status);
+  }
+
+  public isPlaying(): boolean {
+    return !this.audioObject.paused;
   }
 
   private configCurrentTimeEmitter(): void {

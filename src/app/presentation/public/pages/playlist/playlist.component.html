@@ -39,18 +39,26 @@
   </div>
 
   <div class="list">
-    <div class="list-item" *ngFor="let episode of episodes">
-      <button class="list-item__action">
-        <i class="fa-solid fa-play"></i>
+    <div
+      class="list-item"
+      *ngFor="let episode of episodes"
+      [ngClass]="{ selected: isEpisodeSelected(episode) }"
+    >
+      <button class="list-item__action" (click)="onPlay(episode)">
+        <i class="fa-solid fa-play" *ngIf="!isEpisodePlaying(episode)"></i>
+        <i
+          class="fa-solid fa-pause pause"
+          *ngIf="isEpisodePlaying(episode)"
+        ></i>
       </button>
-      <div class="list-item-info">
-        <span class="list-item-info__title">{{
-          "Episodio " + episode.episode
-        }}</span>
+      <a class="list-item-info" [routerLink]="['/episode', episode.uuid.value]">
+        <span class="list-item-info__title">
+          {{ "Episodio " + episode.episode }}
+        </span>
         <span class="list-item-info__subtitle">
           {{ episode.title.value }}
         </span>
-      </div>
+      </a>
     </div>
   </div>
 </div>
