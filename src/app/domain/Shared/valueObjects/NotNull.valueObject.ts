@@ -1,4 +1,4 @@
-import { ValueObject } from "./ValueObject.interface";
+import { ValueObject } from './ValueObject.interface';
 
 export class NotNullValueObject<T> implements ValueObject {
   public readonly value: T;
@@ -11,6 +11,6 @@ export class NotNullValueObject<T> implements ValueObject {
   private checkValue(value: T, name: string): void {
     // TODO: change for custom error
     if (value === null || value === undefined)
-      throw new Error(`${name} shuld not be null`);
+      throw Error(`${name} shuld not be null`);
   }
 }

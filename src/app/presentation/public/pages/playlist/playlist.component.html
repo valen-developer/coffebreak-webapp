@@ -1,4 +1,4 @@
-<div class="playlist-wrapper">
+<div class="playlist-wrapper" *ngIf="playlist">
   <div class="header">
     <div class="content">
       <div class="content-header">
@@ -14,13 +14,17 @@
       <div class="content-information">
         <h5 class="content-information__description">Playlist</h5>
 
-        <h4>Titulo</h4>
+        <h4>{{ playlist.name.value }}</h4>
 
         <p class="content-information__description">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus
-          doloremque aspernatur optio voluptates reiciendis iusto laboriosam
-          adipisci id
+          {{ playlist.description.value }}
         </p>
+
+        <span class="content-information__description">
+          <small>{{ episodes.length }} Episodios</small>
+          <br />
+          <small>{{ durationSeconds?.toString() }}</small>
+        </span>
       </div>
     </div>
 
@@ -31,7 +35,7 @@
       </button>
     </div>
 
-    <img src="assets/images/episode.jpg" alt="" />
+    <img [src]="imageUrl" alt="" />
   </div>
 
   <div class="list">
@@ -40,12 +44,11 @@
         <i class="fa-solid fa-play"></i>
       </button>
       <div class="list-item-info">
-        <span class="list-item-info__title">Episodio 1</span>
+        <span class="list-item-info__title">{{
+          "Episodio " + episode.episode
+        }}</span>
         <span class="list-item-info__subtitle">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi sunt
-          repudiandae velit eveniet tempore exercitationem nobis. Repellat porro
-          voluptatem, quis, omnis ipsa fuga dolorem, cupiditate accusantium
-          mollitia sequi animi quasi.
+          {{ episode.title.value }}
         </span>
       </div>
     </div>

@@ -1,6 +1,10 @@
 import { Provider } from '@angular/core';
+import { PlaylistRepository } from './domain/Playlist/interfaces/PlaylistRepository.interface';
 import { LastEpisodesRepository } from './domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
 import { PodcastEpisodeRepository } from './domain/PodcastEpisode/interfaces/PodcastEpisodeRepository.interface';
+import { ImageRepository } from './domain/Shared/interfaces/ImageRepository.interface';
+import { ApiImageRepository } from './infrastructure/Image/ApiImageRepository';
+import { ApiPlaylistRepository } from './infrastructure/Playlist/ApiPlaylistRepository';
 import { ApiPodcastEpisodeRepository } from './infrastructure/PodcastEpisode/ApiPodcastepisodeRepository';
 import { LocalStorageLastEpisodeRepository } from './infrastructure/PodcastEpisode/LocalStorageLastEpisodeRepository';
 
@@ -12,6 +16,14 @@ const repositories: Provider[] = [
   {
     provide: LastEpisodesRepository,
     useClass: LocalStorageLastEpisodeRepository,
+  },
+  {
+    provide: PlaylistRepository,
+    useClass: ApiPlaylistRepository,
+  },
+  {
+    provide: ImageRepository,
+    useClass: ApiImageRepository,
   },
 ];
 

@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
+import { firstValueFrom } from 'rxjs';
 import { PodcastEpisodeRepository } from 'src/app/domain/PodcastEpisode/interfaces/PodcastEpisodeRepository.interface';
 import {
-  PodcastEpisodeDTO,
   PodcastEpisode,
+  PodcastEpisodeDTO,
 } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
 import { Paginator } from 'src/app/domain/Shared/interfaces/Paginator.interface';
 import { environment } from 'src/environments/environment';
-import { firstValueFrom } from 'rxjs';
+import { ApiRepository } from '../Shared/ApiRepository';
 
 @Injectable({ providedIn: 'root' })
-export class ApiPodcastEpisodeRepository implements PodcastEpisodeRepository {
+export class ApiPodcastEpisodeRepository
+  extends ApiRepository
+  implements PodcastEpisodeRepository
+{
   private _API_URL = environment.apiUrl + '/episode';
-
-  constructor(private http: HttpClient) {}
 
   public async filter(
     query: PodcastEpisodeQuery,

@@ -33,4 +33,8 @@ export class RouteToolService {
   public getPreviousUrl(): string {
     return this._previousUrl;
   }
+
+  public redirectTo(url: string): void {
+    this.router.navigateByUrl(url);
+  }
 }
