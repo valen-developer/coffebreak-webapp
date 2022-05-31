@@ -1,16 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import {
   BehaviorSubject,
+  debounceTime,
   fromEvent,
   map,
   Observable,
+  Subject,
+  Subscription,
   throttleTime,
 } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AudioController {
+export class AudioController implements OnDestroy {
   private _DEFAULT_VOLUME: number = 0.8;
 
   private audioObject!: HTMLAudioElement;
@@ -24,6 +27,12 @@ export class AudioController {
   private volumeSubject: BehaviorSubject<number>;
   public volume$!: Observable<number>;
 
+  private endEpisodeSubject: Subject<boolean>;
+  public endEpisode$!: Observable<boolean>;
+
+  private currentTimeSubscription!: Subscription;
+  private endEpisodeSubscription!: Subscription;
+
   constructor() {
     this.playingStatusSubject = new BehaviorSubject<boolean>(false);
     this.playingStatus$ = this.playingStatusSubject.asObservable();
@@ -34,9 +43,18 @@ export class AudioController {
     this.currentTimeSubject = new BehaviorSubject<number>(0);
     this.currentTime$ = this.currentTimeSubject.asObservable();
 
+    this.endEpisodeSubject = new Subject<boolean>();
+    this.endEpisode$ = this.endEpisodeSubject.asObservable();
+
     this.audioObject = new Audio();
 
     this.configCurrentTimeEmitter();
+    this.configEndEpisodeEmitter();
+  }
+
+  ngOnDestroy(): void {
+    this.currentTimeSubscription?.unsubscribe();
+    this.endEpisodeSubscription?.unsubscribe();
   }
 
   public setupAudio(url: string): void {
@@ -49,11 +67,21 @@ export class AudioController {
   public togglePlayPause(): void {
     const isPlaying = !this.audioObject.paused;
 
-    if (isPlaying) this.audioObject.pause();
+    if (isPlaying) this.pause();
 
-    if (!isPlaying) this.audioObject.play();
+    if (!isPlaying) this.play();
 
     this.emitPlayingStatus(!isPlaying);
+  }
+
+  public play(): void {
+    this.audioObject.play();
+    this.emitPlayingStatus(true);
+  }
+
+  public pause(): void {
+    this.audioObject.pause();
+    this.emitPlayingStatus(false);
   }
 
   public setVolume(volume: number): void {
@@ -78,7 +106,7 @@ export class AudioController {
   }
 
   private configCurrentTimeEmitter(): void {
-    const timeSubscription = fromEvent(this.audioObject, 'timeupdate')
+    this.currentTimeSubscription = fromEvent(this.audioObject, 'timeupdate')
       .pipe(
         throttleTime(900),
         map((event: any) => {
@@ -88,6 +116,17 @@ export class AudioController {
       )
       .subscribe({
         next: (time) => this.emitCurrentTime(time),
+      });
+  }
+
+  private configEndEpisodeEmitter(): void {
+    this.endEpisodeSubscription = fromEvent(this.audioObject, 'ended')
+      .pipe(debounceTime(200))
+      .subscribe({
+        next: () => {
+          this.emitPlayingStatus(false);
+          this.endEpisodeSubject.next(true);
+        },
       });
   }
 

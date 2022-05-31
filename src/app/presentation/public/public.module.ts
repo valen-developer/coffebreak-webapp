@@ -26,6 +26,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { PublicComponent } from './public.component';
 import { ScrollService } from '../shared/services/scroll.service';
+import { PlaylistPlayerService } from '../shared/modules/audio-player/services/playlist-player.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,12 @@ import { ScrollService } from '../shared/services/scroll.service';
     PlaylistComponent,
   ],
   imports: [CommonModule, PublicRoutingModule, SharedModule],
-  providers: [EpisodePlayerService, RouteToolService, ScrollService],
+  providers: [
+    PlaylistPlayerService,
+    EpisodePlayerService,
+    RouteToolService,
+    ScrollService,
+  ],
 })
 export class PublicModule {
   constructor(private routeTool: RouteToolService) {}

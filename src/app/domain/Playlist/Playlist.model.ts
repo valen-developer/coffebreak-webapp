@@ -30,6 +30,14 @@ export class Playlist {
     return this._episodes;
   }
 
+  public getEpisodesCount(): number {
+    return this._episodes.value.length;
+  }
+
+  public getEpisodeIndex(episodeUuid: string): Nullable<number> {
+    return this.getEpisodesCount() - this._episodes.value.indexOf(episodeUuid);
+  }
+
   public addEpisode(episodeUuid: string): void {
     this._episodes.addEpisode(episodeUuid);
   }

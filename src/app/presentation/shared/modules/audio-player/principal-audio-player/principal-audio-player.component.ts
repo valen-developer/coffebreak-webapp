@@ -1,14 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AudioController } from '../services/audio-controller.service';
 import { EpisodePlayerService } from '../services/episode-player.service';
+import { PlayerTimerService } from '../services/player-timer.service';
 
 @Component({
   selector: 'app-principal-audio-player',
@@ -17,6 +20,7 @@ import { EpisodePlayerService } from '../services/episode-player.service';
 })
 export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   @Input() duration!: number;
+  @Input() isPlaylist = false;
 
   public playingStatus: boolean = false;
   public currentTimeString: string = '00:00';
@@ -24,14 +28,17 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   public percentVolume: number = 0;
   public volume = 0.8;
 
+  public isRandom = false;
+
   private currentTimeSubscription!: Subscription;
   private playingStatusSubscription!: Subscription;
   private volumeSubscription!: Subscription;
 
-  constructor(
-    private audioController: AudioController,
-    episodePlayer: EpisodePlayerService
-  ) {}
+  @Output() nextEmitter = new EventEmitter<void>();
+  @Output() previousEmitter = new EventEmitter<void>();
+  @Output() randomEmitter = new EventEmitter<void>();
+
+  constructor(private audioController: AudioController) {}
 
   ngOnInit(): void {
     this.setupAudio();
@@ -86,5 +93,18 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
 
   public onVolumeChange(volume: number): void {
     this.audioController.setVolume(volume);
+  }
+
+  public toggleRandom(): void {
+    this.isRandom = !this.isRandom;
+    this.randomEmitter.emit();
+  }
+
+  public next(): void {
+    this.nextEmitter.emit();
+  }
+
+  public previous(): void {
+    this.previousEmitter.emit();
   }
 }

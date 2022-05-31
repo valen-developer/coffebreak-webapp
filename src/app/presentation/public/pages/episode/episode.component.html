@@ -1,5 +1,21 @@
 <div class="animate__animated animate__fadeIn episode-player">
-  <div class="header"></div>
+  <div class="header">
+    <a
+      class="header-playlist"
+      *ngIf="isPlaylist()"
+      [routerLink]="['/playlist', playlist?.uuid?.value]"
+    >
+      <h5>
+        Playlist
+        <small>{{ playlist?.name?.value }}</small>
+        <br />
+        <small
+          >{{ episodePlaylistIndex$ | async }} /
+          {{ playlist?.getEpisodesCount() }}</small
+        >
+      </h5>
+    </a>
+  </div>
 
   <div class="image">
     <img [src]="episode?.imageUrl?.value" alt="" />
@@ -8,13 +24,23 @@
   <div class="title">
     <h4>{{ "Episodio " + episode?.episode }}</h4>
     <p>{{ episode?.title?.value }}</p>
-    <!-- <p>{{ episode?.description?.value }}</p> -->
+
+    <h5>{{ "Descripción" }}</h5>
+    <div class="title-description">
+      <p [innerHtml]="episode?.description?.value"></p>
+    </div>
+    <div class="title-meta">
+      <small>{{ episode?.pubDate?.toDDMMYYYY() }}</small>
+    </div>
   </div>
 
   <div class="player">
     <app-principal-audio-player
       class="player"
       [duration]="episode?.duration?.value ?? 10000"
+      [isPlaylist]="isPlaylist()"
+      (nextEmitter)="onNext()"
+      (previousEmitter)="onPrevious()"
     ></app-principal-audio-player>
   </div>
 </div>

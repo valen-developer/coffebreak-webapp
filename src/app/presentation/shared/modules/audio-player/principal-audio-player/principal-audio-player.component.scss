@@ -25,6 +25,11 @@
   }
   & i {
     font-size: 1.2rem;
+    color: var(--text-secondary);
+
+    &.active {
+      color: var(--text-primary);
+    }
   }
 }
 

@@ -8,26 +8,32 @@
   </div>
 
   <div class="actions">
-    <button class="action">
-      <!-- favorite icon fontawesome -->
-      <i class="fa-regular fa-heart"></i>
+    <button class="action" (click)="toggleRandom()">
+      <!-- random icon -->
+      <i class="fas fa-random" [ngClass]="{ active: isPlaylist }"></i>
     </button>
 
-    <button class="action">
-      <i class="fa-solid fa-backward-step"></i>
+    <button class="action" (click)="previous()">
+      <i
+        class="fa-solid fa-backward-step"
+        [ngClass]="{ active: isPlaylist }"
+      ></i>
     </button>
 
     <button class="action play" (click)="togglePlayPause()">
-      <i class="fas fa-play" *ngIf="!playingStatus"></i>
-      <i class="fas fa-pause" *ngIf="playingStatus"></i>
+      <i class="fas fa-play active" *ngIf="!playingStatus"></i>
+      <i class="fas fa-pause active" *ngIf="playingStatus"></i>
+    </button>
+
+    <button class="action" (click)="next()">
+      <i
+        class="fa-solid fa-forward-step"
+        [ngClass]="{ active: isPlaylist }"
+      ></i>
     </button>
 
     <button class="action">
-      <i class="fa-solid fa-forward-step"></i>
-    </button>
-
-    <button class="action">
-      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      <i class="fa-solid fa-arrow-up-right-from-square active"></i>
     </button>
   </div>
 

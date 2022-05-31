@@ -6,6 +6,7 @@ import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastDuration } from 'src/app/domain/PodcastEpisode/valueObjects/PodcastDuration.valueObject';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
+import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { ScrollService } from 'src/app/presentation/shared/services/scroll.service';
 
@@ -28,7 +29,8 @@ export class PlaylistComponent implements OnInit {
     private scrollService: ScrollService,
     private playlistFinder: PlaylistFinder,
     private imageGetter: ImageGetter,
-    private episodePlayer: EpisodePlayerService
+    private episodePlayer: EpisodePlayerService,
+    private playlistPlayer: PlaylistPlayerService
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +78,15 @@ export class PlaylistComponent implements OnInit {
 
     if (isEpisodeSelected) return this.episodePlayer.togglePlayPause();
 
-    this.episodePlayer.setEpisode(episode, { autoplay: true });
+    const episodeIndex = this.episodes.indexOf(episode);
+    this.playPlaylist(episodeIndex);
+  }
+
+  public playPlaylist(index = 0): void {
+    this.playlistPlayer.setPlaylist(this.playlist, this.episodes, {
+      autoplay: true,
+      selectedIndex: index,
+    });
   }
 
   public isEpisodePlaying(episode: PodcastEpisode): boolean {

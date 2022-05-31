@@ -8,6 +8,7 @@ import { AudioController } from './audio-controller.service';
 @Injectable()
 export class EpisodePlayerService implements OnDestroy {
   private _episodePlaying!: Nullable<PodcastEpisode>;
+  private _isPlaylist = false;
 
   private episodeSubject = new BehaviorSubject<Nullable<PodcastEpisode>>(null);
   public episode$ = this.episodeSubject.asObservable();
@@ -32,6 +33,7 @@ export class EpisodePlayerService implements OnDestroy {
 
     if (!episode?.audioUrl.value) throw new Error('Episode has no audio url');
 
+    this._isPlaylist = opt?.isPlaylist ?? false;
     this._episodePlaying = episode;
     this.episodeSubject.next(episode);
     this.audioController.setupAudio(episode?.audioUrl.value as string);
@@ -54,6 +56,10 @@ export class EpisodePlayerService implements OnDestroy {
     return this._episodePlaying?.uuid.value === episode.uuid.value;
   }
 
+  public isPlaylist(): boolean {
+    return this._isPlaylist;
+  }
+
   private subscribeToTime(): void {
     this.timeSubscription = this.audioController.currentTime$.subscribe({
       next: (time) => {
@@ -72,5 +78,6 @@ export class EpisodePlayerService implements OnDestroy {
 }
 
 interface SetEpisodeOptions {
-  autoplay: boolean;
+  autoplay?: boolean;
+  isPlaylist?: boolean;
 }
