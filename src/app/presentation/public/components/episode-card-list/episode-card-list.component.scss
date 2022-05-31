@@ -2,7 +2,7 @@
   display: flex;
   gap: 1.4rem;
   width: 100%;
-  overflow-x: auto;
+
   padding: 0 0.5rem;
 
   & a {
@@ -13,4 +13,21 @@
 
 .card-list::-webkit-scrollbar {
   display: none;
+}
+
+@media screen and (min-width: 500px) {
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+
+    & a:hover {
+      box-shadow: 0 0 5px var(--hover);
+      transition: 0.3s;
+    }
+  }
+
+  .card-list::-webkit-scrollbar {
+    display: block;
+  }
 }

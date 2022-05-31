@@ -31,18 +31,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
       path: '/settings',
     },
   ];
+
   public webRouteSections: WebNavbarRouteSection[] = [
     {
       label: 'Menú',
       routes: this.mobileRoutes,
     },
     {
-      label: 'Opciones',
-      routes: this.mobileRoutes,
-    },
-    {
-      label: 'Opciones',
-      routes: this.mobileRoutes,
+      label: 'Librería',
+      routes: [
+        {
+          label: 'Playlists',
+          iconClass: 'fas fa-list',
+          path: '/library/playlist',
+        },
+        {
+          label: 'Contertulios',
+          iconClass: 'fas fa-microphone',
+          path: '/library/artists',
+        },
+      ],
     },
   ];
 

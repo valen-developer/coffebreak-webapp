@@ -20,5 +20,6 @@ import { VolumeBarComponent } from './volume-bar/volume-bar.component';
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [PrincipalAudioPlayerComponent, NavbarAudioPlayerComponent],
+  providers: [PlayerTimerService],
 })
 export class AudioPlayerModule {}

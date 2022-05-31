@@ -38,7 +38,10 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   @Output() previousEmitter = new EventEmitter<void>();
   @Output() randomEmitter = new EventEmitter<void>();
 
-  constructor(private audioController: AudioController) {}
+  constructor(
+    private audioController: AudioController,
+    private playerTimer: PlayerTimerService
+  ) {}
 
   ngOnInit(): void {
     this.setupAudio();
@@ -85,6 +88,8 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
 
   public togglePlayPause(): void {
     this.audioController.togglePlayPause();
+
+    this.playerTimer.setTimer(10);
   }
 
   public onTimeChange(percent: number): void {
