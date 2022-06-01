@@ -1,0 +1,12 @@
+<div class="input-wrapper">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    [formControl]="formControl"
+    #input
+  />
+
+  <button class="clear-icon">
+    <i class="fa fa-times" (click)="onClear($event)"></i>
+  </button>
+</div>

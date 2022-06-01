@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  padding-left: 35px;
+  min-height: 25px;
+  width: min-content;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: var(--border-radius);
+  background-color: var(--text-secondary);
+  transition: 0.2s;
+
+  & i {
+    display: none;
+
+    color: var(--background);
+  }
+}
+
+.container:hover input ~ .checkmark {
+  background-color: var(--background-card);
+  box-shadow: 0 0 5px var(--primary);
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: var(--primary);
+  opacity: 0.7;
+
+  & i {
+    display: block;
+    z-index: 1;
+  }
+}
+
+.label {
+  font-size: 1rem;
+}

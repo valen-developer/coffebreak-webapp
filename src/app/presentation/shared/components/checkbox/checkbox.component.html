@@ -1,0 +1,8 @@
+<label class="container">
+  <span class="label" *ngIf="label">{{ label }}</span>
+  <input type="checkbox" [formControl]="control" />
+  <span class="checkmark">
+    <!-- check icon fontawesome -->
+    <i class="fa-solid fa-check"></i>
+  </span>
+</label>

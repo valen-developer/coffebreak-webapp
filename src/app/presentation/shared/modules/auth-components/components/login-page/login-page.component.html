@@ -1,0 +1,30 @@
+<div class="login">
+  <h1>Entra con tu email y contraseña</h1>
+
+  <form class="form" [formGroup]="form">
+    <app-input
+      placeholder="Introduce tu email"
+      [formControl]="emailControl"
+    ></app-input>
+    <app-input
+      placeholder="Introduce tu contraseña"
+      [formControl]="passwordControl"
+    ></app-input>
+
+    <div class="forgot-password">
+      <a><small>He olvidado mi contraseña</small></a>
+    </div>
+
+    <div class="actions">
+      <div class="actions-checkbox">
+        <app-checkbox
+          label="Recuérdame"
+          [control]="rememberControler"
+        ></app-checkbox>
+      </div>
+      <button class="btn btn-primary btn-block" (click)="onSubmit()">
+        Acceder
+      </button>
+    </div>
+  </form>
+</div>
