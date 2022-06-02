@@ -18,9 +18,18 @@ export class ApiPlaylistRepository
 {
   private _API_URL = environment.apiUrl + '/playlist';
 
-  public save(playlist: Playlist): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async save(playlist: Playlist, image: Blob | File): Promise<void> {
+    const formData = new FormData();
+    formData.append('uuid', playlist.uuid.value);
+    formData.append('name', playlist.name.value);
+    formData.append('description', playlist.description.value);
+    formData.append('file', image);
+
+    const response$ = this.http.post<{ ok: boolean }>(this._API_URL, formData);
+
+    await firstValueFrom(response$);
   }
+
   public update(playlist: Playlist): Promise<void> {
     throw new Error('Method not implemented.');
   }

@@ -8,6 +8,7 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/input.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { ModalModule } from './modules/modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -16,13 +17,14 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     InputComponent,
     CheckboxComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule],
+  imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule, ModalModule],
   exports: [
     CircleProfileComponent,
     SearchInputComponent,
     AudioPlayerModule,
     InputComponent,
     CheckboxComponent,
+    ModalModule,
   ],
 })
 export class SharedModule {}

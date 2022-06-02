@@ -2,7 +2,7 @@ import { PodcastEpisode } from '../../PodcastEpisode/PodcastEpisode.model';
 import { Playlist } from '../Playlist.model';
 
 export abstract class PlaylistRepository {
-  public abstract save(playlist: Playlist): Promise<void>;
+  public abstract save(playlist: Playlist, image: Blob | File): Promise<void>;
   public abstract update(playlist: Playlist): Promise<void>;
   public abstract delete(uuid: string): Promise<void>;
 

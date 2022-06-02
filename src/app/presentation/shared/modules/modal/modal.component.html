@@ -1,0 +1,10 @@
+<div
+  #wrapper
+  (click)="onBackgroundClick($event)"
+  class="modal-wrapper animate__animated animate__fadeIn"
+  [ngStyle]="{ display: display ? 'flex' : 'none' }"
+>
+  <div class="modal-container animate__animated animate__fadeInDown" #container>
+    <ng-template appModal></ng-template>
+  </div>
+</div>

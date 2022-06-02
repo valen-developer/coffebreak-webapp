@@ -1,5 +1,5 @@
 <main class="animate__animated animate__fadeIn playlists">
-  <button class="add">
+  <button class="add" (click)="createNewPlaylist()">
     <div class="add-icon">
       <i class="fas fa-plus"></i>
     </div>
@@ -24,3 +24,5 @@
     </div>
   </a>
 </main>
+
+<app-modal #modal></app-modal>

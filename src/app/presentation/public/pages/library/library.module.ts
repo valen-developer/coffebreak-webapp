@@ -9,6 +9,7 @@ import { LibraryComponent } from './library.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { AuthComponentsModule } from 'src/app/presentation/shared/modules/auth-components/auth-components.module';
+import { CrearePlaylistModalComponent } from './components/creare-playlist-modal/creare-playlist-modal.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AuthComponentsModule } from 'src/app/presentation/shared/modules/auth-c
     PlaylistComponent,
     LibraryNavbarComponent,
     ArtistsComponent,
+    CrearePlaylistModalComponent,
   ],
   imports: [
     CommonModule,

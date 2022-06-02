@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
@@ -7,12 +7,16 @@ import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
+import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
+import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
 
 @Component({
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.scss'],
 })
 export class PlaylistComponent implements OnInit, OnDestroy {
+  @ViewChild('modal', { static: true }) modal!: ModalComponent;
+
   public platyLists: Playlist[] = [];
   public playlistsData: PlaylistData[] = [];
 
@@ -72,6 +76,12 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     if (!playlist) return '';
 
     return await this.imageGetter.getDataUrlFromEntity(playlist.uuid.value);
+  }
+
+  public createNewPlaylist(): void {
+    this.modal.show(CrearePlaylistModalComponent, {}, true).then((response) => {
+      this.modal.hide();
+    });
   }
 }
 

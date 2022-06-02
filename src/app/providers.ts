@@ -5,12 +5,21 @@ import { PlaylistRepository } from './domain/Playlist/interfaces/PlaylistReposit
 import { LastEpisodesRepository } from './domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
 import { PodcastEpisodeRepository } from './domain/PodcastEpisode/interfaces/PodcastEpisodeRepository.interface';
 import { ImageRepository } from './domain/Shared/interfaces/ImageRepository.interface';
+import { UUIDGenerator } from './domain/Shared/interfaces/UuidGenerator';
 import { ApiAuthRepository } from './infrastructure/Auth/ApiAuthRepository';
 import { ApiImageRepository } from './infrastructure/Image/ApiImageRepository';
 import { ApiPlaylistRepository } from './infrastructure/Playlist/ApiPlaylistRepository';
 import { ApiPodcastEpisodeRepository } from './infrastructure/PodcastEpisode/ApiPodcastepisodeRepository';
 import { LocalStorageLastEpisodeRepository } from './infrastructure/PodcastEpisode/LocalStorageLastEpisodeRepository';
+import { NanoidUuidGenerator } from './infrastructure/Shared/NanoidUuidGenerator';
 import { AuthenticatedInterceptor } from './presentation/shared/interceptors/authenticated.interceptor';
+
+const utils: Provider[] = [
+  {
+    provide: UUIDGenerator,
+    useClass: NanoidUuidGenerator,
+  },
+];
 
 const repositories: Provider[] = [
   {
@@ -43,4 +52,8 @@ const interceptors: Provider[] = [
   },
 ];
 
-export const providers: Provider[] = [...repositories, ...interceptors];
+export const providers: Provider[] = [
+  ...utils,
+  ...repositories,
+  ...interceptors,
+];
