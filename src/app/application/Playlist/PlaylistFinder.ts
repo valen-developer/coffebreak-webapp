@@ -20,4 +20,8 @@ export class PlaylistFinder {
   public async getEpisodes(playlist: string): Promise<PodcastEpisode[]> {
     return this.playlistRepository.getEpisodes(playlist);
   }
+
+  public async getPlayListByOwner(ownerUuid: string): Promise<Playlist[]> {
+    return this.playlistRepository.getPlaylistByOwn(ownerUuid);
+  }
 }

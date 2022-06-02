@@ -27,15 +27,23 @@ export class ApiPlaylistRepository
   public delete(uuid: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  public getPlaylist(uuid: string): Promise<Playlist> {
+
+  public async getPlaylist(uuid: string): Promise<Playlist> {
     const response$ = this.http
       .get<{ ok: boolean; playlist: PlaylistDTO }>(`${this._API_URL}/${uuid}`)
       .pipe(pluck('playlist'));
 
     return firstValueFrom(response$).then((dto) => new Playlist(dto));
   }
-  public getPlaylistByOwn(own: string): Promise<Playlist[]> {
-    throw new Error('Method not implemented.');
+
+  public async getPlaylistByOwn(own: string): Promise<Playlist[]> {
+    const response$ = this.http
+      .get<{ ok: boolean; playlist: PlaylistDTO[] }>(`${this._API_URL}/own`)
+      .pipe(pluck('playlist'));
+
+    const playlistsDTO = await firstValueFrom(response$);
+
+    return playlistsDTO.map((p) => new Playlist(p));
   }
 
   public async getChannels(): Promise<Playlist[]> {

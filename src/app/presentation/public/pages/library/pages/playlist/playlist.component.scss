@@ -14,9 +14,11 @@ $itemWidth: 70px;
 
   background-color: transparent;
   border: none;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   font-size: 1rem;
   font-weight: bold;
+
+  cursor: pointer;
 
   &-icon {
     display: flex;
@@ -25,6 +27,11 @@ $itemWidth: 70px;
     background-color: var(--background-card);
     height: 100%;
     width: $itemWidth;
+    border-radius: var(--border-radius);
+  }
+
+  &:hover {
+    color: var(--text-primary);
   }
 }
 
