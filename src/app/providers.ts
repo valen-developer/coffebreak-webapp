@@ -1,3 +1,4 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Provider } from '@angular/core';
 import { AuthRepository } from './domain/Auth/interfaces/AuthRepository';
 import { PlaylistRepository } from './domain/Playlist/interfaces/PlaylistRepository.interface';
@@ -9,6 +10,7 @@ import { ApiImageRepository } from './infrastructure/Image/ApiImageRepository';
 import { ApiPlaylistRepository } from './infrastructure/Playlist/ApiPlaylistRepository';
 import { ApiPodcastEpisodeRepository } from './infrastructure/PodcastEpisode/ApiPodcastepisodeRepository';
 import { LocalStorageLastEpisodeRepository } from './infrastructure/PodcastEpisode/LocalStorageLastEpisodeRepository';
+import { AuthenticatedInterceptor } from './presentation/shared/interceptors/authenticated.interceptor';
 
 const repositories: Provider[] = [
   {
@@ -33,4 +35,12 @@ const repositories: Provider[] = [
   },
 ];
 
-export const providers: Provider[] = [...repositories];
+const interceptors: Provider[] = [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticatedInterceptor,
+    multi: true,
+  },
+];
+
+export const providers: Provider[] = [...repositories, ...interceptors];
