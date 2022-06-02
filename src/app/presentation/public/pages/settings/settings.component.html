@@ -1,1 +1,9 @@
-<p>settings works!</p>
+<div class="settings">
+  <div class="no-auth" *ngIf="!(isAuthenticated$ | async)">
+    <div class="no-auth-login">
+      <app-login-page></app-login-page>
+    </div>
+  </div>
+
+  <div class="auth" *ngIf="isAuthenticated$"></div>
+</div>

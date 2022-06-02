@@ -1,14 +1,16 @@
 <div class="login">
   <h1>Entra con tu email y contraseña</h1>
 
-  <form class="form" [formGroup]="form">
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <app-input
       placeholder="Introduce tu email"
       [formControl]="emailControl"
+      class="form-input"
     ></app-input>
     <app-input
       placeholder="Introduce tu contraseña"
       [formControl]="passwordControl"
+      class="form-input"
     ></app-input>
 
     <div class="forgot-password">

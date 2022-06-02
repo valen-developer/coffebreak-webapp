@@ -21,7 +21,6 @@
 .suggest {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
   margin: 1rem 0;
 
   &-action {
@@ -30,6 +29,7 @@
     background-color: transparent;
     color: var(--text-secondary);
     padding: 0.25rem;
+    margin-right: 0.5rem;
 
     &:hover {
       border-color: var(--text-primary);
