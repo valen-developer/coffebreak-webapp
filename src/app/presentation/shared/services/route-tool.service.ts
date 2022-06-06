@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { DOMService } from './dom.service';
 
 @Injectable({
@@ -9,9 +10,11 @@ export class RouteToolService {
   private _previousUrl!: string;
   private _currentUrl!: string;
 
+  private previusUrlSubject = new BehaviorSubject<string>('/home');
+  public previousUrl$ = this.previusUrlSubject.asObservable();
+
   constructor(private domService: DOMService, private router: Router) {
     this.setUp();
-    console.log('Instance');
   }
 
   private setUp(): void {
@@ -27,6 +30,8 @@ export class RouteToolService {
 
       this._previousUrl = this._currentUrl;
       this._currentUrl = event.url;
+
+      this.previusUrlSubject.next(this._previousUrl);
     });
   }
 

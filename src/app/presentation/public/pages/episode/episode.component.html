@@ -1,5 +1,9 @@
 <div class="animate__animated animate__fadeIn episode-player">
   <div class="header">
+    <a class="header__action" [routerLink]="previousUrl | async">
+      <i class="fa-solid fa-chevron-left"></i>
+    </a>
+
     <a
       class="header-playlist"
       *ngIf="isPlaylist()"
@@ -15,6 +19,10 @@
         >
       </h5>
     </a>
+
+    <button class="header__action">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
   </div>
 
   <div class="image">

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
@@ -8,6 +8,7 @@ import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisod
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio-player/services/navbar-audio-controller.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
+import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 
 @Component({
   templateUrl: './episode.component.html',
@@ -19,14 +20,18 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   public episodePlaylistIndex$: Observable<number>;
 
+  public previousUrl!: Observable<string>;
+
   constructor(
     private route: ActivatedRoute,
     private navbarAudioController: NavbarAudioController,
     private episodePlayerService: EpisodePlayerService,
     private episodeFinder: PodcastEpisodeFinder,
-    private playlistPlayer: PlaylistPlayerService
+    private playlistPlayer: PlaylistPlayerService,
+    private routeTool: RouteToolService
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
+    this.previousUrl = this.routeTool.previousUrl$;
   }
 
   ngOnInit(): void {

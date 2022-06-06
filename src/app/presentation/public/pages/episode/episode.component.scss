@@ -8,11 +8,23 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+
   &-playlist {
     text-align: center;
 
     text-decoration: none;
     color: var(--text-secondary);
+  }
+
+  &__action {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+
+    background-color: transparent;
+    border: none;
   }
 }
 
