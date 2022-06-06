@@ -5,5 +5,53 @@
     <i class="fas fa-times" (click)="hide()"></i>
   </div>
 
-  <div class="content"></div>
+  <div class="content">
+    <label for="image-dropper">
+      <div
+        class="image-dropper dropzone"
+        [ngStyle]="{
+          borderColor: 'var(--' + (image ? 'succes' : 'text-secondary') + ')'
+        }"
+        appDropzone
+        (fileEmitter)="onDropFile($event)"
+      >
+        <div class="image" *ngIf="image">
+          <img [src]="imageUrl" alt="" />
+        </div>
+
+        <div class="placeholder" *ngIf="!image">
+          <i class="fa-solid fa-image"></i>
+          <span class="dropper-text">Arrastra o selecciona una imagen</span>
+        </div>
+      </div>
+    </label>
+
+    <input
+      type="file"
+      hidden
+      id="image-dropper"
+      (input)="onSelectFile($event)"
+    />
+
+    <form class="content-form" [formGroup]="form">
+      <input
+        type="text"
+        placeholder="Titulo de playlist"
+        class="content-form-input"
+        formControlName="name"
+      />
+      <textarea
+        name="description"
+        cols="10"
+        rows="10"
+        placeholder="Descripción de playlist"
+        class="content-form-input"
+        formControlName="description"
+      ></textarea>
+
+      <div class="actions">
+        <button class="btn btn-primary" (click)="onSubmit()">Crear</button>
+      </div>
+    </form>
+  </div>
 </div>

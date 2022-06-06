@@ -79,9 +79,15 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   }
 
   public createNewPlaylist(): void {
-    this.modal.show(CrearePlaylistModalComponent, {}, true).then((response) => {
-      this.modal.hide();
-    });
+    this.modal
+      .show<any, Playlist>(CrearePlaylistModalComponent, {}, true)
+      .then((response) => {
+        if (!response) return this.modal.hide();
+
+        // add to init of array
+        this.platyLists.unshift(response);
+        this.buildPlaylistData();
+      });
   }
 }
 

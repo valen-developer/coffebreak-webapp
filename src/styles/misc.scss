@@ -2,3 +2,10 @@
   --border-radius: 5px;
   --input-border-radius: 1.2rem;
 }
+
+.dropzone {
+  border: 2px dashed var(--text-secondary);
+}
+.dragging {
+  border: 2px dashed var(--secondary);
+}

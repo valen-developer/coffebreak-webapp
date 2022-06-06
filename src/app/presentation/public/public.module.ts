@@ -1,18 +1,13 @@
 import { CommonModule } from '@angular/common';
-import {
-  ApplicationRef,
-  APP_INITIALIZER,
-  DoBootstrap,
-  NgModule,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { PublicRoutingModule } from './public-routing.module';
 
-import { Router } from '@angular/router';
 import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
-import { DOMService } from '../shared/services/dom.service';
+import { PlaylistPlayerService } from '../shared/modules/audio-player/services/playlist-player.service';
 import { RouteToolService } from '../shared/services/route-tool.service';
+import { ScrollService } from '../shared/services/scroll.service';
 import { EpisodeCardListComponent } from './components/episode-card-list/episode-card-list.component';
 import { EpisodeCardComponent } from './components/episode-card/episode-card.component';
 import { MobileNavbarComponent } from './components/navbar/mobile-navbar/mobile-navbar.component';
@@ -25,8 +20,6 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { PublicComponent } from './public.component';
-import { ScrollService } from '../shared/services/scroll.service';
-import { PlaylistPlayerService } from '../shared/modules/audio-player/services/playlist-player.service';
 
 @NgModule({
   declarations: [

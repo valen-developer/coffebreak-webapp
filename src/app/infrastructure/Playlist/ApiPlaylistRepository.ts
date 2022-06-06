@@ -18,16 +18,21 @@ export class ApiPlaylistRepository
 {
   private _API_URL = environment.apiUrl + '/playlist';
 
-  public async save(playlist: Playlist, image: Blob | File): Promise<void> {
+  public async save(playlist: Playlist, image: Blob | File): Promise<Playlist> {
     const formData = new FormData();
     formData.append('uuid', playlist.uuid.value);
     formData.append('name', playlist.name.value);
     formData.append('description', playlist.description.value);
     formData.append('file', image);
 
-    const response$ = this.http.post<{ ok: boolean }>(this._API_URL, formData);
+    const response$ = this.http.post<{ ok: boolean; playlist: PlaylistDTO }>(
+      this._API_URL,
+      formData
+    );
 
-    await firstValueFrom(response$);
+    const { playlist: playlistCreated } = await firstValueFrom(response$);
+
+    return new Playlist(playlistCreated);
   }
 
   public update(playlist: Playlist): Promise<void> {

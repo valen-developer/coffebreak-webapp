@@ -12,7 +12,7 @@ export class PlaylistCreator {
     private uuidGenerator: UUIDGenerator
   ) {}
 
-  public async createPlaylist(params: CreateParams): Promise<void> {
+  public async createPlaylist(params: CreateParams): Promise<Playlist> {
     const playlist = new Playlist({
       uuid: this.uuidGenerator.generate(),
       name: params.name,
@@ -20,7 +20,7 @@ export class PlaylistCreator {
       description: params.description,
     });
 
-    await this.playlistRepository.save(playlist, params.image);
+    return await this.playlistRepository.save(playlist, params.image);
   }
 }
 

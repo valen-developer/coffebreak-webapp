@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/input.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ModalModule } from './modules/modal/modal.module';
+import { DropzoneDirective } from './directives/dropzone.directive';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ModalModule } from './modules/modal/modal.module';
     SearchInputComponent,
     InputComponent,
     CheckboxComponent,
+    DropzoneDirective,
   ],
   imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule, ModalModule],
   exports: [
@@ -25,6 +27,7 @@ import { ModalModule } from './modules/modal/modal.module';
     InputComponent,
     CheckboxComponent,
     ModalModule,
+    DropzoneDirective,
   ],
 })
 export class SharedModule {}

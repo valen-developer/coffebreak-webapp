@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
+import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
+import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
 import { Entity } from '../../components/episode-card/episode-card.component';
 
@@ -14,15 +18,28 @@ export class HomeComponent implements OnInit {
   public lastEpisodes: Entity[] = [];
   public channels: Entity[] = [];
 
+  public user: Nullable<User>;
+  private userSubscription!: Subscription;
+
   constructor(
     private podcastFinder: PodcastEpisodeFinder,
     private playlistFinder: PlaylistFinder,
-    private imageGetter: ImageGetter
+    private imageGetter: ImageGetter,
+    private authStatus: AuthStatusService
   ) {}
 
   ngOnInit(): void {
+    this.subscribeToUser();
     this.getLastEpisodes();
     this.getChannels();
+  }
+
+  private subscribeToUser(): void {
+    this.userSubscription = this.authStatus.user$.subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+    });
   }
 
   private getLastEpisodes(): void {
