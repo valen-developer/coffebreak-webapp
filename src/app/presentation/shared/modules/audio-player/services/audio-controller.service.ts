@@ -50,6 +50,14 @@ export class AudioController implements OnDestroy {
 
     this.configCurrentTimeEmitter();
     this.configEndEpisodeEmitter();
+
+    this.audioObject.onplay = () => {
+      this.emitPlayingStatus(true);
+    };
+
+    this.audioObject.onpause = () => {
+      this.emitPlayingStatus(false);
+    };
   }
 
   ngOnDestroy(): void {
@@ -70,18 +78,14 @@ export class AudioController implements OnDestroy {
     if (isPlaying) this.pause();
 
     if (!isPlaying) this.play();
-
-    this.emitPlayingStatus(!isPlaying);
   }
 
   public play(): void {
     this.audioObject.play();
-    this.emitPlayingStatus(true);
   }
 
   public pause(): void {
     this.audioObject.pause();
-    this.emitPlayingStatus(false);
   }
 
   public setVolume(volume: number): void {
