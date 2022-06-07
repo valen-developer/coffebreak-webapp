@@ -6,23 +6,28 @@
     <span>Crear nueva playlist</span>
   </button>
 
-  <a
-    [routerLink]="['/playlist', playlist.uuid]"
-    class="playlist-item"
-    *ngFor="let playlist of playlistsData"
-  >
-    <div class="image">
-      <img [src]="playlist.imageUrl" alt="" />
-    </div>
+  <div class="item" *ngFor="let playlist of playlistsData">
+    <a [routerLink]="['/playlist', playlist.uuid]" class="playlist-item">
+      <div class="image">
+        <img [src]="playlist.imageUrl" alt="" />
+      </div>
 
-    <div class="text">
-      <h5 class="text__title">{{ playlist.name }}</h5>
-    </div>
+      <div class="text">
+        <h5 class="text__title">{{ playlist.name }}</h5>
+      </div>
 
-    <div class="count">
-      <span>{{ playlist.episodes }} Episodios</span>
+      <div class="count">
+        <span>{{ playlist.episodes }} Episodios</span>
+      </div>
+    </a>
+
+    <div class="item-actions">
+      <button>
+        <!-- delete -->
+        <i class="fas fa-trash-alt"></i>
+      </button>
     </div>
-  </a>
+  </div>
 </main>
 
 <app-modal #modal></app-modal>

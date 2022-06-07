@@ -89,6 +89,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         this.buildPlaylistData();
       });
   }
+
+  public deletePlaylist(uuid: string): void {}
 }
 
 interface PlaylistData {

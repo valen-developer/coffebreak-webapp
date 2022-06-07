@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
@@ -17,6 +18,7 @@ import { ScrollService } from 'src/app/presentation/shared/services/scroll.servi
 export class PlaylistComponent implements OnInit {
   public episodes: PodcastEpisode[] = [];
   public playlist!: Playlist;
+  public canUpdate = false;
 
   public imageUrl!: string;
   public durationSeconds!: PodcastDuration;
@@ -28,12 +30,13 @@ export class PlaylistComponent implements OnInit {
     private routeTool: RouteToolService,
     private scrollService: ScrollService,
     private playlistFinder: PlaylistFinder,
+    private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
     private imageGetter: ImageGetter,
     private episodePlayer: EpisodePlayerService,
     private playlistPlayer: PlaylistPlayerService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.scrollService.scrollToTop();
     this.previousUrl = this.routeTool.getPreviousUrl();
     const uuid = this.getUuid();
@@ -42,8 +45,14 @@ export class PlaylistComponent implements OnInit {
       this.routeTool.redirectTo('/');
     }
 
-    this.getPlaylist(uuid);
+    await this.getPlaylist(uuid);
     this.getImage(uuid);
+    this.setCanUpdate();
+  }
+
+  public setCanUpdate(): void {
+    const hasOwner = this.playlist?.getOwn()?.value ? true : false;
+    this.canUpdate = hasOwner;
   }
 
   private getUuid(): string {
@@ -95,5 +104,14 @@ export class PlaylistComponent implements OnInit {
 
   public isEpisodeSelected(episode: PodcastEpisode): boolean {
     return this.episodePlayer.isEpisodeSelected(episode);
+  }
+
+  public removeEpisode(episode: PodcastEpisode): void {
+    this.playlistEpisodeUpdater
+      .removeEpisode(this.playlist, episode)
+      .then(() => {
+        this.episodes = this.episodes.filter((ep) => ep.uuid !== episode.uuid);
+        this.calculateDurationSeconds();
+      });
   }
 }

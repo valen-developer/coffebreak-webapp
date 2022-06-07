@@ -149,3 +149,14 @@
     }
   }
 }
+
+.list-item-actions__action {
+  border: none;
+  background-color: var(--background-card);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+
+  & i {
+    color: var(--text-primary);
+  }
+}

@@ -58,6 +58,16 @@
           {{ episode.title.value }}
         </span>
       </a>
+
+      <div class="list-item-actions">
+        <button
+          class="list-item-actions__action"
+          (click)="removeEpisode(episode)"
+          *ngIf="canUpdate"
+        >
+          <i class="fa-solid fa-trash-alt"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
