@@ -38,8 +38,13 @@ export class ApiPlaylistRepository
   public update(playlist: Playlist): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  public delete(uuid: string): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  public async delete(uuid: string): Promise<void> {
+    const response$ = this.http.delete<{ ok: boolean }>(
+      `${this._API_URL}/${uuid}`
+    );
+
+    await firstValueFrom(response$);
   }
 
   public async getPlaylist(uuid: string): Promise<Playlist> {

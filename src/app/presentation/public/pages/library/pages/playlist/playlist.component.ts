@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
+import { PlaylistDeleter } from 'src/app/application/Playlist/PlaylistDeleter';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
@@ -26,7 +27,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   constructor(
     private playlistFinder: PlaylistFinder,
     private authStatus: AuthStatusService,
-    private imageGetter: ImageGetter
+    private imageGetter: ImageGetter,
+    private playlistDeleter: PlaylistDeleter
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +92,17 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       });
   }
 
-  public deletePlaylist(uuid: string): void {}
+  public deletePlaylist(uuid: string): void {
+    this.playlistDeleter
+      .deletePlaylist(uuid)
+      .then(() => {
+        this.platyLists = this.platyLists.filter(
+          (playlist) => playlist.uuid.value !== uuid
+        );
+        this.buildPlaylistData();
+      })
+      .catch(() => {});
+  }
 }
 
 interface PlaylistData {
