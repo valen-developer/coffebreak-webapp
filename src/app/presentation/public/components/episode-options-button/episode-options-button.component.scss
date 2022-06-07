@@ -1,0 +1,42 @@
+.action {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+
+  background-color: transparent;
+  border: none;
+}
+
+.options {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  display: none;
+  flex-direction: column;
+
+  background-color: var(--background-navbar);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px var(--hover);
+  width: 60%;
+
+  padding: 0.25rem;
+
+  z-index: 1;
+
+  &-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--background);
+    color: var(--text-secondary);
+    width: 100%;
+    padding: 0.25rem;
+
+    &__icon {
+      margin-right: 0.25rem;
+    }
+  }
+}

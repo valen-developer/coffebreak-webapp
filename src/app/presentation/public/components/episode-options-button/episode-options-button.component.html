@@ -1,0 +1,9 @@
+<button class="action" #optionsButton (click)="toggleOptions()">
+  <i class="fa-solid fa-ellipsis-vertical"></i>
+</button>
+<div class="animate__animated animate__fadeIn options" #options>
+  <button class="options-action" (click)="onAddToPlaylist()" #addPlaylist>
+    <i class="fa-solid fa-plus options-action__icon"></i>
+    <span>Agregar a playlist</span>
+  </button>
+</div>

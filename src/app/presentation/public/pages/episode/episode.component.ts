@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { PlaylistCreator } from 'src/app/application/Playlist/PlaylistCreator';
+import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
@@ -8,13 +10,17 @@ import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisod
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio-player/services/navbar-audio-controller.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
+import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
+import { PlaylistSelectorModalComponent } from '../../components/playlist-selector-modal/playlist-selector-modal.component';
 
 @Component({
   templateUrl: './episode.component.html',
   styleUrls: ['./episode.component.scss'],
 })
 export class EpisodeComponent implements OnInit, OnDestroy {
+  @ViewChild('modal', { static: true }) modal!: ModalComponent;
+
   public episode!: PodcastEpisode;
   public playlist!: Playlist;
 
@@ -26,9 +32,10 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private navbarAudioController: NavbarAudioController,
     private episodePlayerService: EpisodePlayerService,
-    private episodeFinder: PodcastEpisodeFinder,
     private playlistPlayer: PlaylistPlayerService,
-    private routeTool: RouteToolService
+    private routeTool: RouteToolService,
+    private episodeFinder: PodcastEpisodeFinder,
+    private playlistEpisodeUpdater: PlaylistEpisodeUpdater
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
     this.previousUrl = this.routeTool.previousUrl$;
@@ -79,4 +86,16 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   public onRandom(): void {}
+
+  public onAddToPlaylist(): void {
+    if (!this.modal) return;
+
+    this.modal.show(PlaylistSelectorModalComponent, {}).then((playlist) => {
+      if (!playlist) return this.modal.hide();
+
+      this.playlistEpisodeUpdater
+        .addEpisode(playlist, this.episode)
+        .then(() => {});
+    });
+  }
 }

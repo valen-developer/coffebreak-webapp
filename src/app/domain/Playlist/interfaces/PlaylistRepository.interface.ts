@@ -14,4 +14,12 @@ export abstract class PlaylistRepository {
   public abstract getChannels(): Promise<Playlist[]>;
 
   public abstract getEpisodes(playlist: string): Promise<PodcastEpisode[]>;
+  public abstract addEpisode(
+    playlist: Playlist,
+    episode: PodcastEpisode
+  ): Promise<void>;
+  public abstract removeEpisode(
+    playlist: Playlist,
+    episode: PodcastEpisode
+  ): Promise<void>;
 }

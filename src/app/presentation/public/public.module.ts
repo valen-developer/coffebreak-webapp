@@ -20,6 +20,9 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { PublicComponent } from './public.component';
+import { EpisodeOptionsButtonComponent } from './components/episode-options-button/episode-options-button.component';
+import { PlaylistSelectorModalComponent } from './components/playlist-selector-modal/playlist-selector-modal.component';
+import { AuthComponentsModule } from '../shared/modules/auth-components/auth-components.module';
 
 @NgModule({
   declarations: [
@@ -35,8 +38,15 @@ import { PublicComponent } from './public.component';
     SearchResultEntityMoblieComponent,
     EpisodeComponent,
     PlaylistComponent,
+    EpisodeOptionsButtonComponent,
+    PlaylistSelectorModalComponent,
   ],
-  imports: [CommonModule, PublicRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    PublicRoutingModule,
+    SharedModule,
+    AuthComponentsModule,
+  ],
   providers: [
     PlaylistPlayerService,
     EpisodePlayerService,

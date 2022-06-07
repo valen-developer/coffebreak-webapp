@@ -85,4 +85,36 @@ export class ApiPlaylistRepository
       episodes.map((dto) => new PodcastEpisode(dto))
     );
   }
+
+  public async addEpisode(
+    playlist: Playlist,
+    episode: PodcastEpisode
+  ): Promise<void> {
+    const body = {
+      episodeUuid: episode.uuid.value,
+    };
+
+    const response$ = this.http.post<{ ok: boolean }>(
+      `${this._API_URL}/${playlist.uuid.value}/episode/add`,
+      body
+    );
+
+    await firstValueFrom(response$);
+  }
+
+  public async removeEpisode(
+    playlist: Playlist,
+    episode: PodcastEpisode
+  ): Promise<void> {
+    const body = {
+      episodeUuid: episode.uuid.value,
+    };
+
+    const response$ = this.http.post<{ ok: boolean }>(
+      `${this._API_URL}/${playlist.uuid.value}/episode/remove`,
+      body
+    );
+
+    await firstValueFrom(response$);
+  }
 }

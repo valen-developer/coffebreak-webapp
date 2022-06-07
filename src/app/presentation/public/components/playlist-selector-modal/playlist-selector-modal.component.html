@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="auth" *ngIf="isAuthenticated">
+    <div class="header">
+      <h2>Playlists</h2>
+    </div>
+
+    <div class="content">
+      <button
+        class="playlist-item"
+        *ngFor="let playlist of playlistsData"
+        (click)="onSelectPlaylist(playlist)"
+      >
+        <div class="image">
+          <img [src]="playlist.imageUrl" alt="" />
+        </div>
+
+        <div class="text">
+          <h5 class="text__title">{{ playlist.name }}</h5>
+        </div>
+
+        <div class="count">
+          <span>{{ playlist.episodes }} Episodios</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="no-auth" *ngIf="!isAuthenticated">
+    <app-login-page></app-login-page>
+  </div>
+</div>
