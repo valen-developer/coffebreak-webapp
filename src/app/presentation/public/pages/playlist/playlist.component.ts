@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
@@ -6,8 +6,10 @@ import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastDuration } from 'src/app/domain/PodcastEpisode/valueObjects/PodcastDuration.valueObject';
+import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
+import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { ScrollService } from 'src/app/presentation/shared/services/scroll.service';
 
@@ -16,6 +18,8 @@ import { ScrollService } from 'src/app/presentation/shared/services/scroll.servi
   styleUrls: ['./playlist.component.scss'],
 })
 export class PlaylistComponent implements OnInit {
+  @ViewChild('modal', { static: true }) modal!: ModalComponent;
+
   public episodes: PodcastEpisode[] = [];
   public playlist!: Playlist;
   public canUpdate = false;
@@ -106,7 +110,14 @@ export class PlaylistComponent implements OnInit {
     return this.episodePlayer.isEpisodeSelected(episode);
   }
 
-  public removeEpisode(episode: PodcastEpisode): void {
+  public async removeEpisode(episode: PodcastEpisode): Promise<void> {
+    const title = `el episodio ${episode.episode}`;
+    const deleteConfirmation = await this.modal.show(DeleteModalComponent, {
+      title,
+    });
+
+    if (!deleteConfirmation) return;
+
     this.playlistEpisodeUpdater
       .removeEpisode(this.playlist, episode)
       .then(() => {

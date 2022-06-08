@@ -10,6 +10,7 @@ import { InputComponent } from './components/input/input.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ModalModule } from './modules/modal/modal.module';
 import { DropzoneDirective } from './directives/dropzone.directive';
+import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DropzoneDirective } from './directives/dropzone.directive';
     InputComponent,
     CheckboxComponent,
     DropzoneDirective,
+    DeleteModalComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule, ModalModule],
   exports: [
@@ -28,6 +30,7 @@ import { DropzoneDirective } from './directives/dropzone.directive';
     CheckboxComponent,
     ModalModule,
     DropzoneDirective,
+    DeleteModalComponent
   ],
 })
 export class SharedModule {}

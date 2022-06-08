@@ -8,6 +8,7 @@ import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
+import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
 
@@ -92,7 +93,16 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       });
   }
 
-  public deletePlaylist(uuid: string): void {
+  public async deletePlaylist(uuid: string): Promise<void> {
+    const platyList = this.platyLists.find(
+      (playlist) => playlist.uuid.value === uuid
+    );
+    if (!platyList) return;
+
+    const title = `la playlist ${platyList.name.value}`;
+    const response = await this.modal.show(DeleteModalComponent, { title });
+    if (!response) return;
+
     this.playlistDeleter
       .deletePlaylist(uuid)
       .then(() => {
