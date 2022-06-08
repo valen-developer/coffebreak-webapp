@@ -41,6 +41,7 @@ export class ApiPlaylistRepository
 
     const { playlist: playlistCreated } = await firstValueFrom(response$);
 
+    this.playlistCache.clear();
     return new Playlist(playlistCreated);
   }
 
@@ -54,6 +55,7 @@ export class ApiPlaylistRepository
     );
 
     await firstValueFrom(response$);
+    this.playlistCache.clear();
   }
 
   public async getPlaylist(uuid: string): Promise<Playlist> {
@@ -124,6 +126,7 @@ export class ApiPlaylistRepository
     );
 
     await firstValueFrom(response$);
+    this.playlistCache.clear();
   }
 
   public async removeEpisode(
@@ -140,5 +143,6 @@ export class ApiPlaylistRepository
     );
 
     await firstValueFrom(response$);
+    this.playlistCache.clear();
   }
 }

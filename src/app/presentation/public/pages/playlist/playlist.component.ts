@@ -7,6 +7,7 @@ import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastDuration } from 'src/app/domain/PodcastEpisode/valueObjects/PodcastDuration.valueObject';
 import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
+import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
@@ -37,7 +38,8 @@ export class PlaylistComponent implements OnInit {
     private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
     private imageGetter: ImageGetter,
     private episodePlayer: EpisodePlayerService,
-    private playlistPlayer: PlaylistPlayerService
+    private playlistPlayer: PlaylistPlayerService,
+    private alert: AlertService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -123,6 +125,7 @@ export class PlaylistComponent implements OnInit {
       .then(() => {
         this.episodes = this.episodes.filter((ep) => ep.uuid !== episode.uuid);
         this.calculateDurationSeconds();
+        this.alert.success(`Episodio ${episode.episode} eliminado`);
       });
   }
 }

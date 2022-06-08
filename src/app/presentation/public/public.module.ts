@@ -23,6 +23,7 @@ import { PublicComponent } from './public.component';
 import { EpisodeOptionsButtonComponent } from './components/episode-options-button/episode-options-button.component';
 import { PlaylistSelectorModalComponent } from './components/playlist-selector-modal/playlist-selector-modal.component';
 import { AuthComponentsModule } from '../shared/modules/auth-components/auth-components.module';
+import { AlertModule } from '../shared/modules/alert/alert.module';
 
 @NgModule({
   declarations: [

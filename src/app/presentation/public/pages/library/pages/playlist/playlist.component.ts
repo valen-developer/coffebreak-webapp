@@ -9,6 +9,7 @@ import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
 import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
+import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
 
@@ -29,7 +30,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     private playlistFinder: PlaylistFinder,
     private authStatus: AuthStatusService,
     private imageGetter: ImageGetter,
-    private playlistDeleter: PlaylistDeleter
+    private playlistDeleter: PlaylistDeleter,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +92,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         // add to init of array
         this.platyLists.unshift(response);
         this.buildPlaylistData();
+        this.alert.success(`Playlist ${response.name.value} creada`);
       });
   }
 
@@ -110,6 +113,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
           (playlist) => playlist.uuid.value !== uuid
         );
         this.buildPlaylistData();
+        this.alert.success(`Playlist ${platyList.name.value} eliminada`);
       })
       .catch(() => {});
   }

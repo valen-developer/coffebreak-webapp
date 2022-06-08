@@ -7,6 +7,7 @@ import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/Podcast
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
+import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio-player/services/navbar-audio-controller.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
@@ -35,7 +36,8 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     private playlistPlayer: PlaylistPlayerService,
     private routeTool: RouteToolService,
     private episodeFinder: PodcastEpisodeFinder,
-    private playlistEpisodeUpdater: PlaylistEpisodeUpdater
+    private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
+    private alert: AlertService
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
     this.previousUrl = this.routeTool.previousUrl$;
@@ -95,7 +97,11 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
       this.playlistEpisodeUpdater
         .addEpisode(playlist, this.episode)
-        .then(() => {});
+        .then(() => {
+          this.alert.success(
+            `Episodio ${this.episode.episode} añadido a la lista ${playlist.name.value}`
+          );
+        });
     });
   }
 }

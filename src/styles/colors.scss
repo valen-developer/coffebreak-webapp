@@ -38,6 +38,7 @@
   --succes-not: #72c72d;
   --warning-not: #f2ce59;
   --danger-not: #e05252;
+  --info-not: #5bc0de;
 }
 
 .theme-light {
@@ -71,6 +72,7 @@
   --succes: var(--succes-not);
   --warning: var(--warning-not);
   --danger: var(--danger-not);
+  --info: var(--info-not);
 
   background-color: var(--background-light);
   color: var(--text-primary-light);
@@ -112,6 +114,7 @@
   --succes: var(--succes-not);
   --warning: var(--warning-not);
   --danger: var(--danger-not);
+  --info: var(--info-not);
 
   background-color: var(--background-dark);
   color: var(--text-primary-dark);
