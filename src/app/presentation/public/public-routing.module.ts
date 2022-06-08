@@ -7,6 +7,7 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
+import { PlaylistOwnerGuard } from '../auth/guards/playlist-owner.guard';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       {
         path: 'playlist/:uuid',
         component: PlaylistComponent,
+        canActivate: [PlaylistOwnerGuard],
       },
       {
         path: 'library',

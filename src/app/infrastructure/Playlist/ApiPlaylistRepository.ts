@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, pluck } from 'rxjs';
 import { PlaylistRepository } from 'src/app/domain/Playlist/interfaces/PlaylistRepository.interface';
@@ -8,6 +9,7 @@ import {
 } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { environment } from 'src/environments/environment';
 import { ApiRepository } from '../Shared/ApiRepository';
+import { PlaylistHttpCache } from './PlaylistHttpCache';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,13 @@ export class ApiPlaylistRepository
   extends ApiRepository
   implements PlaylistRepository
 {
+  constructor(
+    protected override http: HttpClient,
+    private playlistCache: PlaylistHttpCache
+  ) {
+    super(http);
+  }
+
   private _API_URL = environment.apiUrl + '/playlist';
 
   public async save(playlist: Playlist, image: Blob | File): Promise<Playlist> {
@@ -48,21 +57,31 @@ export class ApiPlaylistRepository
   }
 
   public async getPlaylist(uuid: string): Promise<Playlist> {
-    const response$ = this.http
-      .get<{ ok: boolean; playlist: PlaylistDTO }>(`${this._API_URL}/${uuid}`)
-      .pipe(pluck('playlist'));
+    try {
+      return this.playlistCache.getCachedPlaylistFromOwner(uuid);
+    } catch (error) {
+      const response$ = this.http
+        .get<{ ok: boolean; playlist: PlaylistDTO }>(`${this._API_URL}/${uuid}`)
+        .pipe(pluck('playlist'));
 
-    return firstValueFrom(response$).then((dto) => new Playlist(dto));
+      return firstValueFrom(response$).then((dto) => new Playlist(dto));
+    }
   }
 
   public async getPlaylistByOwn(own: string): Promise<Playlist[]> {
-    const response$ = this.http
-      .get<{ ok: boolean; playlist: PlaylistDTO[] }>(`${this._API_URL}/own`)
-      .pipe(pluck('playlist'));
+    try {
+      return this.playlistCache.getCachedPlaylistArrayFromOwner();
+    } catch (error) {
+      const response$ = this.http
+        .get<{ ok: boolean; playlist: PlaylistDTO[] }>(`${this._API_URL}/own`)
+        .pipe(pluck('playlist'));
 
-    const playlistsDTO = await firstValueFrom(response$);
+      const playlistsDTO = await firstValueFrom(response$);
+      const playlists = playlistsDTO.map((p) => new Playlist(p));
+      this.playlistCache.setValue(playlists);
 
-    return playlistsDTO.map((p) => new Playlist(p));
+      return playlists;
+    }
   }
 
   public async getChannels(): Promise<Playlist[]> {

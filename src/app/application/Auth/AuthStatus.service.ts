@@ -31,6 +31,10 @@ export class AuthStatusService {
     this.emitIsAuthenticated();
   }
 
+  public getUser(): Nullable<User> {
+    return this._user;
+  }
+
   public logout(): void {
     this._user = null;
     this._isAuthenticated = false;
