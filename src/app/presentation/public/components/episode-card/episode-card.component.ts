@@ -11,6 +11,11 @@ export class EpisodeCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  public onError(event: ErrorEvent): void {
+    const imageHtmlElement = event.target as HTMLImageElement;
+    imageHtmlElement.src = 'https://via.placeholder.com/150';
+  }
 }
 
 export interface Entity {

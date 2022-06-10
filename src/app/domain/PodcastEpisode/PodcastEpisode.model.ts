@@ -41,6 +41,11 @@ export class PodcastEpisode {
       episode: this.episode,
     };
   }
+
+  public isSame(other: PodcastEpisode): boolean {
+    if (!other) return false;
+    return this.uuid.isSame(other.uuid);
+  }
 }
 
 export interface PodcastEpisodeDTO {

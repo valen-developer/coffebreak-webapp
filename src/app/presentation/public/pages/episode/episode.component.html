@@ -1,6 +1,6 @@
 <div class="animate__animated animate__fadeIn episode-player">
   <div class="header">
-    <a class="header__action" [routerLink]="previousUrl | async">
+    <a class="header__action" [routerLink]="previousUrl$ | async">
       <i class="fa-solid fa-chevron-left"></i>
     </a>
 
@@ -26,7 +26,11 @@
   </div>
 
   <div class="image">
-    <img [src]="episode?.imageUrl?.value" alt="" />
+    <img
+      [src]="episode?.imageUrl?.value"
+      alt=""
+      (error)="onImageError($event)"
+    />
   </div>
 
   <div class="title">
@@ -47,8 +51,10 @@
       class="player"
       [duration]="episode?.duration?.value ?? 10000"
       [isPlaylist]="isPlaylist()"
+      [isSameEpisode]="isSameThanPlaying"
       (nextEmitter)="onNext()"
       (previousEmitter)="onPrevious()"
+      (playPulseEmitter)="onPlayPulse()"
     ></app-principal-audio-player>
   </div>
 </div>

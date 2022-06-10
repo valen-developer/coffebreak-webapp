@@ -9,6 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { AudioController } from '../services/audio-controller.service';
 import { EpisodePlayerService } from '../services/episode-player.service';
 import { PlayerTimerService } from '../services/player-timer.service';
@@ -18,7 +19,8 @@ import { PlayerTimerService } from '../services/player-timer.service';
   templateUrl: './principal-audio-player.component.html',
   styleUrls: ['./principal-audio-player.component.scss'],
 })
-export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
+export class PrincipalAudioPlayerComponent implements OnChanges, OnDestroy {
+  @Input() isSameEpisode = false;
   @Input() duration!: number;
   @Input() isPlaylist = false;
 
@@ -37,17 +39,24 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   @Output() nextEmitter = new EventEmitter<void>();
   @Output() previousEmitter = new EventEmitter<void>();
   @Output() randomEmitter = new EventEmitter<void>();
+  @Output() playPulseEmitter = new EventEmitter<void>();
 
   constructor(
     private audioController: AudioController,
     private playerTimer: PlayerTimerService
   ) {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.isSameEpisode) return;
+    this.unsubscribe();
     this.setupAudio();
   }
 
   ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  private unsubscribe(): void {
     this.currentTimeSubscription?.unsubscribe();
     this.playingStatusSubscription?.unsubscribe();
     this.volumeSubscription?.unsubscribe();
@@ -87,9 +96,8 @@ export class PrincipalAudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   public togglePlayPause(): void {
+    this.playPulseEmitter.emit();
     this.audioController.togglePlayPause();
-
-    this.playerTimer.setTimer(10);
   }
 
   public onTimeChange(percent: number): void {

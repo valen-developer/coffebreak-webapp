@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-image">
-    <img [src]="entity?.imageUrl" alt="" />
+    <img [src]="entity?.imageUrl" alt="" (error)="onError($event)" />
   </div>
 
   <div class="card-text">

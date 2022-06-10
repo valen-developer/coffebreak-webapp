@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PlaylistCreator } from 'src/app/application/Playlist/PlaylistCreator';
+import { Observable, Subscription } from 'rxjs';
 import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
@@ -23,11 +22,14 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: true }) modal!: ModalComponent;
 
   public episode!: PodcastEpisode;
+  private episodePlaying!: PodcastEpisode;
   public playlist!: Playlist;
+  public isSameThanPlaying = false;
 
   public episodePlaylistIndex$: Observable<number>;
+  public previousUrl$!: Observable<string>;
 
-  public previousUrl!: Observable<string>;
+  private episodePlayingSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +42,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     private alert: AlertService
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
-    this.previousUrl = this.routeTool.previousUrl$;
+    this.previousUrl$ = this.routeTool.previousUrl$;
   }
 
   ngOnInit(): void {
@@ -53,12 +55,22 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     this.episodeFinder.filter(query, {}).then((episodeArray) => {
       const episode = episodeArray[0];
       this.episode = episode;
-      this.episodePlayerService.setEpisode(episode);
+      this.isSameThanPlaying = this.episode?.isSame(this.episodePlaying);
     });
+
+    this.episodePlayingSubscription =
+      this.episodePlayerService.episode$.subscribe({
+        next: (episode) => {
+          if (!episode) return;
+          this.episodePlaying = episode;
+          this.isSameThanPlaying = this.episode?.isSame(episode);
+        },
+      });
   }
 
   ngOnDestroy(): void {
     this.navbarAudioController.show();
+    this.episodePlayingSubscription?.unsubscribe();
   }
 
   private getUuid(): string {
@@ -87,8 +99,6 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     this.episode = this.playlistPlayer.getSelectedEpisode();
   }
 
-  public onRandom(): void {}
-
   public onAddToPlaylist(): void {
     if (!this.modal) return;
 
@@ -103,5 +113,14 @@ export class EpisodeComponent implements OnInit, OnDestroy {
           );
         });
     });
+  }
+
+  public onImageError(event: ErrorEvent): void {
+    const imageHtmlElement = event.target as HTMLImageElement;
+    imageHtmlElement.src = 'https://via.placeholder.com/150';
+  }
+
+  public onPlayPulse(): void {
+    this.episodePlayerService.setEpisode(this.episode);
   }
 }
