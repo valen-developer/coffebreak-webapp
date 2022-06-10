@@ -69,7 +69,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToChangeDimention(): void {
-    this.changeDimentionSubscription = this.domService.onChangeView$
+    this.changeDimentionSubscription = this.domService.onChangeViewDimension$
       .pipe(debounceTime(300))
       .subscribe(() => {
         this.isMobile = this.domService.isMobile();

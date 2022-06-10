@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AlertModule } from './presentation/shared/modules/alert/alert.module';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './infrastructure/Shared/CustomReuseStrategy';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,13 @@ import { AlertModule } from './presentation/shared/modules/alert/alert.module';
     }),
     AlertModule,
   ],
-  providers: [...providers],
+  providers: [
+    ...providers,
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategy,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

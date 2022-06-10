@@ -11,14 +11,14 @@ const MOBILE_WIDTH = 500;
 })
 export class DOMService {
   private onChangeViewSubject: Subject<void>;
-  public onChangeView$: Observable<void>;
+  public onChangeViewDimension$: Observable<void>;
 
   constructor(
     @Inject(PLATFORM_ID) private platformID: InjectionToken<any>,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.onChangeViewSubject = new Subject<void>();
-    this.onChangeView$ = this.onChangeViewSubject.asObservable();
+    this.onChangeViewDimension$ = this.onChangeViewSubject.asObservable();
 
     this.observeChangeViewDimentions();
   }
