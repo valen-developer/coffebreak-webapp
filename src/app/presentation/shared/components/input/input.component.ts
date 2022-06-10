@@ -22,6 +22,12 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
   @Input() placeholder: string = 'Introduce tu texto';
   @Input() formControl: FormControl = new FormControl('');
+  @Input() typeConstant: 'text' | 'password' = 'text';
+
+  public type: 'text' | 'password' = 'text';
+
+  public isPassword = false;
+  public isVisible = false;
 
   // value accesor functions
   onTouched!: (value: string) => void;
@@ -32,7 +38,10 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: any): void {}
   registerOnTouched(fn: any): void {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isPassword = this.typeConstant === 'password';
+    this.type = this.typeConstant;
+  }
 
   public onClear(event: MouseEvent): void {
     event.preventDefault();
@@ -40,5 +49,13 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     this.formControl.setValue('');
 
     this.input?.nativeElement.focus();
+  }
+
+  public changeVisibility(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.isVisible = !this.isVisible;
+    this.type = this.isVisible ? 'text' : 'password';
   }
 }

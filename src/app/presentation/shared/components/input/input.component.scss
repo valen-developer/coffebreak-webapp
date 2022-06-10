@@ -27,20 +27,23 @@
       color: var(--text-secondary);
     }
   }
+}
 
-  & .clear-icon {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 10px;
+.actions {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+}
+.actions__action {
+  border: none;
+  background-color: transparent;
+  margin-right: 1rem;
 
-    border: none;
-    background-color: transparent;
-
-    & i {
-      color: var(--text-secondary);
-    }
+  & i {
+    font-size: 1rem;
+    color: var(--text-secondary);
   }
 }

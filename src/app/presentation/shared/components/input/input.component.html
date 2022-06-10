@@ -1,12 +1,25 @@
 <div class="input-wrapper">
   <input
-    type="text"
+    [type]="type"
     [placeholder]="placeholder"
     [formControl]="formControl"
     #input
   />
 
-  <button class="clear-icon">
-    <i class="fa fa-times" (click)="onClear($event)"></i>
-  </button>
+  <div class="actions">
+    <button class="actions__action">
+      <i class="fa fa-times" (click)="onClear($event)"></i>
+    </button>
+    <button
+      class="actions__action"
+      *ngIf="isPassword"
+      (click)="changeVisibility($event)"
+    >
+      <!-- icon eye fontawesome -->
+      <i class="fa fa-eye" *ngIf="!isVisible"></i>
+
+      <!-- icon eye-slash fontawesome -->
+      <i class="fa fa-eye-slash" *ngIf="isVisible"></i>
+    </button>
+  </div>
 </div>
