@@ -11,6 +11,7 @@ import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
 import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
+import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
 import { SearchLibraryService } from '../../services/search-library.service';
@@ -36,7 +37,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     private imageGetter: ImageGetter,
     private playlistDeleter: PlaylistDeleter,
     private alert: AlertService,
-    private searchService: SearchLibraryService
+    private searchService: SearchLibraryService,
+    private playlistPlayer: PlaylistPlayerService
   ) {}
 
   ngOnInit(): void {
@@ -133,10 +135,23 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         this.platyLists = this.platyLists.filter(
           (playlist) => playlist.uuid.value !== uuid
         );
+
         this.buildPlaylistData();
+        this.setNullPlaylistPlayerIfDeleted(uuid);
+
         this.alert.success(`Playlist ${platyList.name.value} eliminada`);
       })
       .catch(() => {});
+  }
+
+  private setNullPlaylistPlayerIfDeleted(deletedUuid: string): void {
+    const playingPlaylist = this.playlistPlayer.getPlaylist();
+    if (!playingPlaylist) return;
+
+    const isSame = playingPlaylist.uuid.value === deletedUuid;
+    if (!isSame) return;
+
+    this.playlistPlayer.setNullPlaylist();
   }
 }
 

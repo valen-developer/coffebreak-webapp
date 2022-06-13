@@ -2,19 +2,17 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
+import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { AudioController } from './audio-controller.service';
 import { EpisodePlayerService } from './episode-player.service';
 
 @Injectable()
 export class PlaylistPlayerService implements OnDestroy {
-  private _playlist!: Playlist;
+  private _playlist!: Nullable<Playlist>;
   private _episodes: PodcastEpisode[] = [];
   private _selectedEpisodeIndex: number = 0;
 
   private _endEpisodeSubscription!: Subscription;
-
-  // playlist count observable
-  // playlist episode index observable
 
   private episodePlayingIndexSubject: BehaviorSubject<number>;
   public episodeIndex$: Observable<number>;
@@ -46,7 +44,13 @@ export class PlaylistPlayerService implements OnDestroy {
     this.setEpisode(selectedEpisode, op);
   }
 
-  public getPlaylist(): Playlist {
+  public setNullPlaylist(): void {
+    this._playlist = null;
+    this._episodes = [];
+    this._selectedEpisodeIndex = 0;
+  }
+
+  public getPlaylist(): Nullable<Playlist> {
     return this._playlist;
   }
 

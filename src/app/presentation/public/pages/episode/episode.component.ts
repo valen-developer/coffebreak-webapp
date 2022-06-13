@@ -78,8 +78,10 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   public isPlaylist(): boolean {
-    this.playlist = this.playlistPlayer.getPlaylist();
+    const playlist = this.playlistPlayer.getPlaylist();
+    if (!playlist) return false;
 
+    this.playlist = playlist;
     return this.episodePlayerService.isPlaylist();
   }
 
