@@ -23,7 +23,6 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { PublicComponent } from './public.component';
-import { ScrollPositionModule } from '../shared/modules/scroll-position/scroll-position.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { ScrollPositionModule } from '../shared/modules/scroll-position/scroll-p
     PublicRoutingModule,
     SharedModule,
     AuthComponentsModule,
-    ScrollPositionModule,
   ],
   providers: [
     PlaylistPlayerService,

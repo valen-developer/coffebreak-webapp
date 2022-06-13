@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { ScrollPositionService } from '../modules/scroll-position/scroll-position.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DOMService } from './dom.service';
 import { ScrollService } from './scroll.service';
 
@@ -15,10 +14,13 @@ export class RouteToolService {
   private previusUrlSubject = new BehaviorSubject<string>('/home');
   public previousUrl$ = this.previusUrlSubject.asObservable();
 
+  private currentUrlSubject = new BehaviorSubject<string>('/home');
+  public currentUrl$: Observable<string> =
+    this.currentUrlSubject.asObservable();
+
   constructor(
     private domService: DOMService,
     private router: Router,
-    private scrollPositionService: ScrollPositionService,
     private scrollService: ScrollService
   ) {
     this.setUp();
@@ -39,11 +41,7 @@ export class RouteToolService {
       this._currentUrl = event.url;
 
       this.previusUrlSubject.next(this._previousUrl);
-
-      const scrollPosition = this.scrollPositionService.getScrollPosition(
-        this._currentUrl
-      );
-      this.scrollService.scrollTo(scrollPosition);
+      this.currentUrlSubject.next(this._currentUrl);
     });
   }
 

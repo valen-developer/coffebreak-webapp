@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PlaylistRepository } from 'src/app/domain/Playlist/interfaces/PlaylistRepository.interface';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
+import { PlaylistQuery } from 'src/app/domain/Playlist/PlaylistQuery';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 
 @Injectable({
@@ -23,5 +24,9 @@ export class PlaylistFinder {
 
   public async getPlayListByOwner(ownerUuid: string): Promise<Playlist[]> {
     return this.playlistRepository.getPlaylistByOwn(ownerUuid);
+  }
+
+  public async filter(query: PlaylistQuery): Promise<Playlist[]> {
+    return this.playlistRepository.searchPlaylist(query);
   }
 }

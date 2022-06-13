@@ -5,6 +5,7 @@ import { PlaylistDeleter } from 'src/app/application/Playlist/PlaylistDeleter';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
+import { PlaylistQuery } from 'src/app/domain/Playlist/PlaylistQuery';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
@@ -12,6 +13,7 @@ import { DeleteModalComponent } from 'src/app/presentation/shared/components/del
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
+import { SearchLibraryService } from '../../services/search-library.service';
 
 @Component({
   templateUrl: './playlist.component.html',
@@ -26,20 +28,25 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   private user: Nullable<User>;
   private userSubscription!: Subscription;
 
+  private searchSubscription!: Subscription;
+
   constructor(
     private playlistFinder: PlaylistFinder,
     private authStatus: AuthStatusService,
     private imageGetter: ImageGetter,
     private playlistDeleter: PlaylistDeleter,
-    private alert: AlertService
+    private alert: AlertService,
+    private searchService: SearchLibraryService
   ) {}
 
   ngOnInit(): void {
     this.subsCribeToUser();
+    this.searchSubscribe();
   }
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
+    this.searchSubscription?.unsubscribe();
   }
 
   private subsCribeToUser(): void {
@@ -52,12 +59,26 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     });
   }
 
-  private async getPlaylists(): Promise<void> {
+  private searchSubscribe(): void {
+    this.searchSubscription = this.searchService.search$.subscribe({
+      next: (search) => {
+        this.getPlaylists(search);
+      },
+    });
+  }
+
+  private async getPlaylists(search?: Nullable<string>): Promise<void> {
     if (!this.user) return;
 
-    this.platyLists = await this.playlistFinder.getPlayListByOwner(
-      this.user.uuid.value
-    );
+    const query: PlaylistQuery = {
+      ...(search
+        ? {
+            name_contains: search,
+          }
+        : {}),
+    };
+
+    this.platyLists = await this.playlistFinder.filter(query);
 
     this.buildPlaylistData();
   }

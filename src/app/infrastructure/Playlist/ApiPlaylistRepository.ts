@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom, pluck } from 'rxjs';
 import { PlaylistRepository } from 'src/app/domain/Playlist/interfaces/PlaylistRepository.interface';
 import { Playlist, PlaylistDTO } from 'src/app/domain/Playlist/Playlist.model';
+import { PlaylistQuery } from 'src/app/domain/Playlist/PlaylistQuery';
 import {
   PodcastEpisode,
   PodcastEpisodeDTO,
@@ -68,6 +69,19 @@ export class ApiPlaylistRepository
 
       return firstValueFrom(response$).then((dto) => new Playlist(dto));
     }
+  }
+
+  public async searchPlaylist(query: PlaylistQuery): Promise<Playlist[]> {
+    const response$ = this.http
+      .post<{ ok: boolean; playlists: PlaylistDTO[] }>(
+        `${this._API_URL}/search`,
+        query
+      )
+      .pipe(pluck('playlists'));
+
+    const playlists = await firstValueFrom(response$);
+
+    return playlists.map((dto) => new Playlist(dto));
   }
 
   public async getPlaylistByOwn(own: string): Promise<Playlist[]> {

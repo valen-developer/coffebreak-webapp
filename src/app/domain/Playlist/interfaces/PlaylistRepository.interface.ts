@@ -1,5 +1,6 @@
 import { PodcastEpisode } from '../../PodcastEpisode/PodcastEpisode.model';
 import { Playlist } from '../Playlist.model';
+import { PlaylistQuery } from '../PlaylistQuery';
 
 export abstract class PlaylistRepository {
   public abstract save(
@@ -11,6 +12,7 @@ export abstract class PlaylistRepository {
 
   public abstract getPlaylist(uuid: string): Promise<Playlist>;
   public abstract getPlaylistByOwn(own: string): Promise<Playlist[]>;
+  public abstract searchPlaylist(query: PlaylistQuery): Promise<Playlist[]>;
   public abstract getChannels(): Promise<Playlist[]>;
 
   public abstract getEpisodes(playlist: string): Promise<PodcastEpisode[]>;

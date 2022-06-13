@@ -1,6 +1,9 @@
 <div class="animate__animated animate__fadeIn library">
   <section class="header">
-    <app-search-input placeholder="Buscar en librería"></app-search-input>
+    <app-search-input
+      placeholder="Buscar en librería"
+      (searchEmitter)="onSearch($event)"
+    ></app-search-input>
     <div class="profile">
       <app-circle-profile></app-circle-profile>
     </div>
