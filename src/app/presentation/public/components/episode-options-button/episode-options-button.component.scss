@@ -5,6 +5,14 @@
 
   background-color: transparent;
   border: none;
+  padding: 0.25rem 1rem;
+  border-radius: var(--border-radius);
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover);
+  }
 }
 
 .options {

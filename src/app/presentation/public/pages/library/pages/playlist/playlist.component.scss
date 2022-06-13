@@ -38,6 +38,12 @@ $itemWidth: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: var(--border-radius);
+  transition: 0.2s;
+
+  &:hover {
+    background-color: var(--background-card);
+  }
 }
 .playlist-item {
   display: flex;

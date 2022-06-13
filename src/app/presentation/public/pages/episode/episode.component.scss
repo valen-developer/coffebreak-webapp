@@ -25,6 +25,14 @@
 
     background-color: transparent;
     border: none;
+    padding: 0.25rem 1rem;
+    border-radius: var(--border-radius);
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--hover);
+    }
   }
 }
 
@@ -78,4 +86,10 @@
   align-items: flex-end;
   height: 100%;
   width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  .image {
+    padding: 1rem 10rem;
+  }
 }
