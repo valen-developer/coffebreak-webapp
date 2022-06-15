@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
+import { SocketIoModule } from 'ngx-socket-io';
 import { providers } from './providers';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +26,9 @@ import { CustomReuseStrategy } from './infrastructure/Shared/CustomReuseStrategy
       registrationStrategy: 'registerWhenStable:30000',
     }),
     AlertModule,
+    SocketIoModule.forRoot({
+      url: environment.socketUrl,
+    }),
   ],
   providers: [
     ...providers,

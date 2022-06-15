@@ -27,8 +27,8 @@ export class AlertService {
     this.emitAlert(message, 'danger');
   }
 
-  public info(message: string): void {
-    this.emitAlert(message, 'info');
+  public info(message: string, autoClose = true): void {
+    this.emitAlert(message, 'info', autoClose);
   }
 
   private emitAlert(message: string, type: alertTypes, autoClose = true): void {

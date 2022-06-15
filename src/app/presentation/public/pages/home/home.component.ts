@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
+
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
-import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
 import { Entity } from '../../components/episode-card/episode-card.component';
+import { Events } from 'src/app/domain/PodcastEpisode/constants/Events';
+import { PodcastEpisodeDTO } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
+import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 
 @Component({
   templateUrl: './home.component.html',
@@ -25,8 +29,21 @@ export class HomeComponent implements OnInit {
     private podcastFinder: PodcastEpisodeFinder,
     private playlistFinder: PlaylistFinder,
     private imageGetter: ImageGetter,
-    private authStatus: AuthStatusService
-  ) {}
+    private authStatus: AuthStatusService,
+    private socket: Socket
+  ) {
+    this.socket.fromEvent<PodcastEpisodeDTO>(Events.NEW_EPISODE).subscribe({
+      next: (data) => {
+        this.getLastEpisodes();
+      },
+    });
+
+    this.socket.fromEvent<Playlist>(Events.NEW_CHANNEL).subscribe({
+      next: (data) => {
+        this.getChannels();
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.subscribeToUser();

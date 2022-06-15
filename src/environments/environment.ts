@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://192.168.0.17:3000/api',
+  socketUrl: 'ws://192.168.0.17:3000',
 };
 
 /*
