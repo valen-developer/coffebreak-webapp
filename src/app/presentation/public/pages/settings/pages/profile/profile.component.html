@@ -1,0 +1,25 @@
+<div class="wrapper" *ngIf="user">
+  <div class="header">
+    <div class="header-back">
+      <a class="header__back__link" routerLink="../">
+        <i class="fas fa-angle-left"></i>
+      </a>
+    </div>
+
+    <div class="header-userdata">
+      <div class="userdata-image">
+        <app-circle-profile></app-circle-profile>
+      </div>
+
+      <div class="userdata-info">
+        <span class="userdata-info__name">{{ user.name.value }}</span>
+      </div>
+
+      <div class="userdata-meta"></div>
+    </div>
+
+    <div class="header-blank"></div>
+  </div>
+
+  <div class="content"></div>
+</div>

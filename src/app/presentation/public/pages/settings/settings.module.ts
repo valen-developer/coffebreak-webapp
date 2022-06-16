@@ -7,9 +7,10 @@ import { AuthComponentsModule } from 'src/app/presentation/shared/modules/auth-c
 import { SettingsHomeComponent } from './pages/settings-home/settings-home.component';
 import { SharedModule } from 'src/app/presentation/shared/shared.module';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
-  declarations: [SettingsComponent, SettingsHomeComponent, MyAccountComponent],
+  declarations: [SettingsComponent, SettingsHomeComponent, MyAccountComponent, ProfileComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,

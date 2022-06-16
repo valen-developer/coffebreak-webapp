@@ -53,6 +53,10 @@
   margin: 0;
 }
 
+.content {
+  flex-grow: 1;
+}
+
 .list {
   display: flex;
   flex-direction: column;
@@ -72,4 +76,9 @@
   &__value {
     color: var(--text-primary);
   }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
 }

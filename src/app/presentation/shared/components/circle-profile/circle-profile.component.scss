@@ -1,12 +1,10 @@
-$circleRadius: 40px;
-
 .circle-profile {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: $circleRadius;
-  height: $circleRadius;
+  width: 100%;
+  height: 100%;
 
   border-radius: 50%;
   border: 1px solid var(--background-navbar);
@@ -17,4 +15,8 @@ $circleRadius: 40px;
     width: 100%;
     height: 100%;
   }
+}
+
+.initials {
+  font-weight: bold;
 }

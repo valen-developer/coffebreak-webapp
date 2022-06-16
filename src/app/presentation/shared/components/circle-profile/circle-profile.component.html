@@ -1,3 +1,5 @@
-<div class="circle-profile">
-  <img src="assets/images/episode.jpg" alt="" />
+<div class="circle-profile" [ngStyle]="{ background: randomColor }">
+  <img [src]="imageUrl" alt="" *ngIf="imageUrl" />
+
+  <div class="initials" *ngIf="!imageUrl">{{ initials | uppercase }}</div>
 </div>

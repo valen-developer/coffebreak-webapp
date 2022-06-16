@@ -6,12 +6,14 @@ import { LastEpisodesRepository } from './domain/PodcastEpisode/interfaces/LastE
 import { PodcastEpisodeRepository } from './domain/PodcastEpisode/interfaces/PodcastEpisodeRepository.interface';
 import { ImageRepository } from './domain/Shared/interfaces/ImageRepository.interface';
 import { UUIDGenerator } from './domain/Shared/interfaces/UuidGenerator';
+import { UserRepository } from './domain/User/interfaces/UserRepository.interface';
 import { ApiAuthRepository } from './infrastructure/Auth/ApiAuthRepository';
 import { ApiImageRepository } from './infrastructure/Image/ApiImageRepository';
 import { ApiPlaylistRepository } from './infrastructure/Playlist/ApiPlaylistRepository';
 import { ApiPodcastEpisodeRepository } from './infrastructure/PodcastEpisode/ApiPodcastepisodeRepository';
 import { LocalStorageLastEpisodeRepository } from './infrastructure/PodcastEpisode/LocalStorageLastEpisodeRepository';
 import { NanoidUuidGenerator } from './infrastructure/Shared/NanoidUuidGenerator';
+import { ApiUserRepository } from './infrastructure/User/ApiUserRepository';
 import { AuthenticatedInterceptor } from './presentation/shared/interceptors/authenticated.interceptor';
 
 const utils: Provider[] = [
@@ -41,6 +43,10 @@ const repositories: Provider[] = [
   {
     provide: AuthRepository,
     useClass: ApiAuthRepository,
+  },
+  {
+    provide: UserRepository,
+    useClass: ApiUserRepository,
   },
 ];
 
