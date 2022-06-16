@@ -25,6 +25,12 @@ export class UserLogger {
     this.authStatusService.setUser(user);
   }
 
+  public async loginWithToken(): Promise<void> {
+    const user = await this.authRepository.loginWithToken();
+
+    this.authStatusService.setUser(user);
+  }
+
   private checkPassword(password: string): void {
     UserPassword.validate(password);
   }

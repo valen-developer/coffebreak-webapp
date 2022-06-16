@@ -39,6 +39,17 @@ export class ApiAuthRepository implements AuthRepository {
       token,
     };
   }
+
+  async loginWithToken(): Promise<User> {
+    const response = this.http.post<ApiLoginResponse>(
+      this.API_URL + '/login/token',
+      {}
+    );
+
+    const { ok, user } = await firstValueFrom(response);
+
+    return new User(user);
+  }
 }
 
 interface ApiLoginResponse {
