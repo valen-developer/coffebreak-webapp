@@ -1,0 +1,10 @@
+<div class="wrapper" *ngIf="user">
+  <div class="header">
+    <app-circle-profile></app-circle-profile>
+
+    <div class="header-name">
+      <span class="header-name__name">{{ user?.name?.value }}</span>
+      <span>Ver perfil</span>
+    </div>
+  </div>
+</div>

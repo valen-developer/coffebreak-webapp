@@ -5,5 +5,7 @@
     </div>
   </div>
 
-  <div class="auth" *ngIf="isAuthenticated$"></div>
+  <div class="auth" *ngIf="isAuthenticated$ | async">
+    <router-outlet></router-outlet>
+  </div>
 </div>

@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PublicComponent } from './public.component';
 
+import { PlaylistOwnerGuard } from '../auth/guards/playlist-owner.guard';
+import { EpisodeComponent } from './pages/episode/episode.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { HomeComponent } from './pages/home/home.component';
-import { EpisodeComponent } from './pages/episode/episode.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
-import { PlaylistOwnerGuard } from '../auth/guards/playlist-owner.guard';
 
 const routes: Routes = [
   {
