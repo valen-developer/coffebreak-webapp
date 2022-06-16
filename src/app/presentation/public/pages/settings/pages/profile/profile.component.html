@@ -21,5 +21,40 @@
     <div class="header-blank"></div>
   </div>
 
-  <div class="content"></div>
+  <div class="content">
+    <section class="meta-info">
+      <div class="meta-info-item">
+        <span class="meta-info-item__number">{{ playlistsData.length }}</span>
+        <span><small>Playlists</small></span>
+      </div>
+    </section>
+
+    <section class="playlists">
+      <div class="playlists-title">
+        <h2>Playlists</h2>
+      </div>
+
+      <div class="playlist" *ngFor="let playlist of playlistsData">
+        <div class="col">
+          <div class="playlist-image">
+            <img [src]="playlist.imageUrl" alt="" />
+          </div>
+
+          <div class="playlist-info">
+            <span>{{ playlist.name }}</span>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="playlist-episodes">
+            <small>{{ playlist.episodes }} Episodios</small>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary-invert">Editar Perfil</button>
+  </div>
 </div>
