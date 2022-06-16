@@ -1,10 +1,47 @@
 <div class="wrapper" *ngIf="user">
   <div class="header">
-    <app-circle-profile></app-circle-profile>
+    <div class="header-userdata">
+      <app-circle-profile></app-circle-profile>
 
-    <div class="header-name">
-      <span class="header-name__name">{{ user?.name?.value }}</span>
-      <span>Ver perfil</span>
+      <div class="header-name">
+        <span class="header-name__name">{{ user?.name?.value }}</span>
+        <span class="header-name__meta">Ver perfil</span>
+      </div>
     </div>
+
+    <div class="icon">
+      <!-- arrow left icon fontawesome -->
+      <i class="fas fa-angle-right"></i>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="lists">
+    <div class="user-actions list">
+      <a class="list-item" *ngFor="let link of userLinks">
+        <span>{{ link.label }}</span>
+        <div class="icon">
+          <!-- arrow left icon fontawesome -->
+          <i class="fas fa-angle-right"></i>
+        </div>
+      </a>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="app-actions list">
+      <a class="list-item" *ngFor="let link of appLinks">
+        <span>{{ link.label }}</span>
+        <div class="icon">
+          <!-- arrow left icon fontawesome -->
+          <i class="fas fa-angle-right"></i>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="logout">
+    <button class="btn btn-danger-invert">Cerrar Sesión</button>
   </div>
 </div>

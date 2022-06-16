@@ -37,6 +37,18 @@
   }
 }
 
+.btn-danger-invert {
+  border: 2px solid var(--danger);
+  background-color: var(--background);
+  color: var(--danger);
+  font-weight: bold;
+
+  &:hover {
+    background-color: var(--danger);
+    color: var(--text-background);
+  }
+}
+
 .btn-block {
   width: 100%;
 }

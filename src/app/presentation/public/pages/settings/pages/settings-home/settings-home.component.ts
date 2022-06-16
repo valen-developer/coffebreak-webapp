@@ -12,6 +12,21 @@ export class SettingsHomeComponent implements OnInit, OnDestroy {
   public user: Nullable<User>;
   private userSubscription!: Subscription;
 
+  public userLinks: Link[] = [
+    {
+      label: 'Mi Cuenta',
+    },
+    {
+      label: 'Cambiar Contraseña',
+    },
+  ];
+
+  public appLinks: Link[] = [
+    {
+      label: 'About',
+    },
+  ];
+
   constructor(private authStatus: AuthStatusService) {}
 
   ngOnInit(): void {
@@ -29,4 +44,9 @@ export class SettingsHomeComponent implements OnInit, OnDestroy {
       },
     });
   }
+}
+
+interface Link {
+  label: string;
+  url?: string;
 }
