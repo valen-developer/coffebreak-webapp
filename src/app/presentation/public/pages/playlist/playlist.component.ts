@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
+import { PlaylistCreator } from 'src/app/application/Playlist/PlaylistCreator';
 import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
@@ -28,19 +31,26 @@ export class PlaylistComponent implements OnInit {
   public imageUrl!: string;
   public durationSeconds!: PodcastDuration;
 
+  public isAuthenticated$: Observable<boolean>;
+
   public previousUrl = '/';
 
   constructor(
     private route: ActivatedRoute,
     private routeTool: RouteToolService,
     private scrollService: ScrollService,
+    private authService: AuthStatusService,
     private playlistFinder: PlaylistFinder,
+    private playlistCreator: PlaylistCreator,
     private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
     private imageGetter: ImageGetter,
     private episodePlayer: EpisodePlayerService,
     private playlistPlayer: PlaylistPlayerService,
+
     private alert: AlertService
-  ) {}
+  ) {
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
+  }
 
   async ngOnInit(): Promise<void> {
     this.scrollService.scrollToTop();
@@ -126,6 +136,17 @@ export class PlaylistComponent implements OnInit {
         this.episodes = this.episodes.filter((ep) => ep.uuid !== episode.uuid);
         this.calculateDurationSeconds();
         this.alert.success(`Episodio ${episode.episode} eliminado`);
+      });
+  }
+
+  public async duplicate(): Promise<void> {
+    this.playlistCreator
+      .duplicatePlaylist(this.playlist)
+      .then(() => {
+        this.alert.success('Playlist duplicada');
+      })
+      .catch(() => {
+        this.alert.danger('Error duplicando playlist');
       });
   }
 }

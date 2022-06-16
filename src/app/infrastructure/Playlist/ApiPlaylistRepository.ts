@@ -19,6 +19,8 @@ export class ApiPlaylistRepository
   extends ApiRepository
   implements PlaylistRepository
 {
+  private _API_URL = environment.apiUrl + '/playlist';
+
   constructor(
     protected override http: HttpClient,
     private playlistCache: PlaylistHttpCache
@@ -26,7 +28,16 @@ export class ApiPlaylistRepository
     super(http);
   }
 
-  private _API_URL = environment.apiUrl + '/playlist';
+  public async duplicate(uuid: string): Promise<Playlist> {
+    const response$ = this.http.post<{ ok: boolean; playlist: PlaylistDTO }>(
+      `${this._API_URL}/duplicate/${uuid}`,
+      {}
+    );
+
+    const { playlist } = await firstValueFrom(response$);
+
+    return new Playlist(playlist);
+  }
 
   public async save(playlist: Playlist, image: Blob | File): Promise<Playlist> {
     const formData = new FormData();

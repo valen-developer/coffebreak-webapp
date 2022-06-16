@@ -31,20 +31,4 @@
   padding: 0.25rem;
 
   z-index: 1;
-
-  &-action {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: var(--border-radius);
-    background-color: var(--background);
-    color: var(--text-secondary);
-    width: 100%;
-    padding: 0.25rem;
-
-    &__icon {
-      margin-right: 0.25rem;
-    }
-  }
 }

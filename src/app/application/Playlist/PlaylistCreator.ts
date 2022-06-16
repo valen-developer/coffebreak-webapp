@@ -22,6 +22,10 @@ export class PlaylistCreator {
 
     return await this.playlistRepository.save(playlist, params.image);
   }
+
+  public async duplicatePlaylist(playlist: Playlist): Promise<Playlist> {
+    return await this.playlistRepository.duplicate(playlist.uuid.value);
+  }
 }
 
 interface CreateParams {

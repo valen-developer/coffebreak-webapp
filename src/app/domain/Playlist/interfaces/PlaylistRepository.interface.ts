@@ -9,6 +9,7 @@ export abstract class PlaylistRepository {
   ): Promise<Playlist>;
   public abstract update(playlist: Playlist): Promise<void>;
   public abstract delete(uuid: string): Promise<void>;
+  public abstract duplicate(uuid: string): Promise<Playlist>;
 
   public abstract getPlaylist(uuid: string): Promise<Playlist>;
   public abstract getPlaylistByOwn(own: string): Promise<Playlist[]>;

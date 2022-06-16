@@ -81,6 +81,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     };
 
     this.platyLists = await this.playlistFinder.filter(query);
+    console.log(
+      '🚀 ~ file: playlist.component.ts ~ line 84 ~ PlaylistComponent ~ getPlaylists ~ platyLists',
+      this.platyLists
+    );
 
     this.buildPlaylistData();
   }
@@ -89,7 +93,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     if (!this.platyLists) return;
 
     this.playlistsData = await asyncMap(this.platyLists, async (playlist) => {
-      const image = await this.getImage(playlist);
+      const image = await this.getImage(playlist).catch(() => {
+        return 'https://via.placeholder.com/150';
+      });
       return {
         uuid: playlist.uuid.value,
         name: playlist.name.value,

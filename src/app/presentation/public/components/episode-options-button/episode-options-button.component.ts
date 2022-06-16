@@ -3,15 +3,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   OnInit,
   Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
 import { computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { fromEvent } from 'rxjs';
-import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { DOMService } from 'src/app/presentation/shared/services/dom.service';
 
 @Component({

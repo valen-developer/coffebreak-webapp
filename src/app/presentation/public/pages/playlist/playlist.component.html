@@ -6,9 +6,12 @@
           <i class="fa-solid fa-chevron-left"></i>
         </a>
 
-        <button class="content-header__action">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
+        <app-episode-options-button *ngIf="isAuthenticated$ | async">
+          <button class="options-action" (click)="duplicate()">
+            <i class="fa-solid fa-plus options-action__icon"></i>
+            <span>Duplicar playlist</span>
+          </button>
+        </app-episode-options-button>
       </div>
 
       <div class="content-information">
