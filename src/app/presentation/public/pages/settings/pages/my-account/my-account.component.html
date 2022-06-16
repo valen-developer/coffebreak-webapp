@@ -1,0 +1,27 @@
+<div class="wrapper" *ngIf="user">
+  <div class="header">
+    <a class="header__back" routerLink="../">
+      <i class="fas fa-angle-left"></i>
+    </a>
+
+    <h1 class="header__title">Mi Cuenta</h1>
+  </div>
+
+  <div class="header2">
+    <h2 class="header2__title">Datos de usuario</h2>
+  </div>
+
+  <div class="content">
+    <div class="list">
+      <div class="list-item">
+        <span class="list-item__label">Nombre</span>
+        <span class="list-item__value">{{ user.name.value }}</span>
+      </div>
+
+      <div class="list-item">
+        <span class="list-item__label">Email</span>
+        <span class="list-item__value">{{ user.email.value }}</span>
+      </div>
+    </div>
+  </div>
+</div>

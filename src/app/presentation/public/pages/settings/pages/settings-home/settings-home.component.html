@@ -19,7 +19,11 @@
 
   <div class="lists">
     <div class="user-actions list">
-      <a class="list-item" *ngFor="let link of userLinks">
+      <a
+        class="list-item"
+        *ngFor="let link of userLinks"
+        [routerLink]="['./' + link.url]"
+      >
         <span>{{ link.label }}</span>
         <div class="icon">
           <!-- arrow left icon fontawesome -->

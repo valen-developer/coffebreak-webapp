@@ -6,9 +6,10 @@ import { SettingsComponent } from './settings.component';
 import { AuthComponentsModule } from 'src/app/presentation/shared/modules/auth-components/auth-components.module';
 import { SettingsHomeComponent } from './pages/settings-home/settings-home.component';
 import { SharedModule } from 'src/app/presentation/shared/shared.module';
+import { MyAccountComponent } from './pages/my-account/my-account.component';
 
 @NgModule({
-  declarations: [SettingsComponent, SettingsHomeComponent],
+  declarations: [SettingsComponent, SettingsHomeComponent, MyAccountComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,
