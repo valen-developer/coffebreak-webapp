@@ -44,6 +44,10 @@ export class SettingsHomeComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  public logout(): void {
+    this.authStatus.logout();
+  }
 }
 
 interface Link {
