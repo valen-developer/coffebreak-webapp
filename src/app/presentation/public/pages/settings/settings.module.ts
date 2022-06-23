@@ -8,11 +8,20 @@ import { SettingsHomeComponent } from './pages/settings-home/settings-home.compo
 import { SharedModule } from 'src/app/presentation/shared/shared.module';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { EditProfileModalComponent } from './components/edit-profile-modal/edit-profile-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [SettingsComponent, SettingsHomeComponent, MyAccountComponent, ProfileComponent],
+  declarations: [
+    SettingsComponent,
+    SettingsHomeComponent,
+    MyAccountComponent,
+    ProfileComponent,
+    EditProfileModalComponent,
+  ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SettingsRoutingModule,
     AuthComponentsModule,
     SharedModule,

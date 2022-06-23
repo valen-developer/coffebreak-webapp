@@ -24,8 +24,8 @@ export class ApiUserRepository implements UserRepository {
       formData
     );
 
-    const { user: userUpdated } = await firstValueFrom(response$);
+    await firstValueFrom(response$);
 
-    return new User(userUpdated);
+    return user;
   }
 }

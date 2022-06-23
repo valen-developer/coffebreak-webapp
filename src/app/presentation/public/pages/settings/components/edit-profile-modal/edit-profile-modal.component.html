@@ -1,0 +1,54 @@
+<form class="form" [formGroup]="form">
+  <div class="image-container">
+    <label for="image-dropper">
+      <div
+        class="image-dropper dropzone"
+        [ngStyle]="{
+          borderColor: 'var(--' + (image ? 'succes' : 'text-secondary') + ')'
+        }"
+        appDropzone
+        (fileEmitter)="onDropFile($event)"
+      >
+        <div class="image" *ngIf="image">
+          <img [src]="imageUrl" alt="" />
+        </div>
+
+        <div class="placeholder" *ngIf="!image">
+          <i class="fa-solid fa-image"></i>
+          <span class="dropper-text">Arrastra o selecciona una imagen</span>
+        </div>
+      </div>
+    </label>
+    <input
+      type="file"
+      multiple="false"
+      hidden
+      id="image-dropper"
+      (input)="onDropFile($event)"
+    />
+  </div>
+
+  <div class="content-form">
+    <input
+      type="text"
+      class="content-form-input"
+      placeholder="Modificar nombre de usuario"
+      formControlName="name"
+    />
+    <input
+      type="text"
+      class="content-form-input"
+      placeholder="Modificar email"
+      formControlName="email"
+    />
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-danger-invert btn-block" (click)="hide()">
+      Cancelar
+    </button>
+    <button class="btn btn-primary btn-block" (click)="onSubmit()">
+      Confirmar
+    </button>
+  </div>
+</form>
