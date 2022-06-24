@@ -11,20 +11,22 @@ import { IModal } from 'src/app/presentation/shared/modules/modal/modal.interfac
   styleUrls: ['./creare-playlist-modal.component.scss'],
 })
 export class CrearePlaylistModalComponent
-  implements OnInit, IModal<any, Playlist>
+  implements
+    OnInit,
+    IModal<{ playlist?: Playlist; title: string }, NewPlaylistModalResponse>
 {
-  public initialState: any;
-  public responseEmitter: EventEmitter<any> = new EventEmitter();
+  public initialState: { playlist?: Playlist; title: string } = {
+    title: 'Crear nueva playlist',
+  };
+  public responseEmitter: EventEmitter<NewPlaylistModalResponse> =
+    new EventEmitter();
   public closeEmitter: EventEmitter<void> = new EventEmitter();
 
   public form: FormGroup;
   public image!: File;
   public imageUrl!: string;
 
-  constructor(
-    private fb: FormBuilder,
-    private playlistCreator: PlaylistCreator
-  ) {
+  constructor(private fb: FormBuilder) {
     this.form = this.buildForm();
   }
 
@@ -38,23 +40,26 @@ export class CrearePlaylistModalComponent
   onSubmit(): void {
     const { name, description } = this.form.value;
 
-    this.playlistCreator
-      .createPlaylist({
-        name,
-        description,
-        own: '',
-        image: this.image,
-      })
-      .then((playlist) => {
-        this.responseEmitter.emit(playlist);
-      });
+    this.responseEmitter.emit({
+      name,
+      description,
+      image: this.image,
+    });
   }
 
   hide(): void {
     this.closeEmitter.emit();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const { playlist } = this.initialState;
+    if (!playlist) return;
+
+    this.form.patchValue({
+      name: playlist.name.value,
+      description: playlist.description.value,
+    });
+  }
 
   public onDropFile(file: File): void {
     this.image = file;
@@ -75,4 +80,10 @@ export class CrearePlaylistModalComponent
     const imageUrl = await blobToDataUrl(this.image);
     this.imageUrl = imageUrl;
   }
+}
+
+export interface NewPlaylistModalResponse {
+  name: string;
+  description: string;
+  image: File;
 }

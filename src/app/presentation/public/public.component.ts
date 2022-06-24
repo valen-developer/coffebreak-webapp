@@ -10,8 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { Socket } from 'ngx-socket-io';
-
 import { debounceTime, fromEvent, Observable, Subscription } from 'rxjs';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
@@ -43,7 +41,6 @@ export class PublicComponent
   private scrollSubscription!: Subscription;
 
   constructor(
-    private socket: Socket,
     private renderer: Renderer2,
     private routeContainerScrollService: RouteContainerScrollService,
     private navbarAudioController: NavbarAudioController,
@@ -55,25 +52,6 @@ export class PublicComponent
     private alert: AlertService
   ) {
     this.showAudioPlayer$ = this.navbarAudioController.show$;
-
-    this.socket.fromEvent<PodcastEpisodeDTO>(Events.NEW_EPISODE).subscribe({
-      next: (data) => {
-        console.log('New episode');
-        console.log(data.episode);
-        this.alert.info(`New episode: ${data.title}`, false);
-      },
-      error: (err) => {
-        this.alert.danger('Eerror');
-      },
-    });
-
-    this.socket.fromEvent<Playlist>(Events.NEW_CHANNEL).subscribe({
-      next: (data) => {
-        console.log('New channel');
-
-        this.alert.info(`New channel: ${data.name}`, false);
-      },
-    });
   }
 
   ngAfterViewInit(): void {

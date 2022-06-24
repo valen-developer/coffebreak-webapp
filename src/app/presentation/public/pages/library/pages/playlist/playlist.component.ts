@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
+import { PlaylistCreator } from 'src/app/application/Playlist/PlaylistCreator';
 import { PlaylistDeleter } from 'src/app/application/Playlist/PlaylistDeleter';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
+import { PlaylistUpdater } from 'src/app/application/Playlist/PlaylistUpdater';
 import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PlaylistQuery } from 'src/app/domain/Playlist/PlaylistQuery';
@@ -13,7 +16,10 @@ import { DeleteModalComponent } from 'src/app/presentation/shared/components/del
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
-import { CrearePlaylistModalComponent } from '../../components/creare-playlist-modal/creare-playlist-modal.component';
+import {
+  CrearePlaylistModalComponent,
+  NewPlaylistModalResponse,
+} from '../../components/creare-playlist-modal/creare-playlist-modal.component';
 import { SearchLibraryService } from '../../services/search-library.service';
 
 @Component({
@@ -33,9 +39,11 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistFinder: PlaylistFinder,
+    private playlistDeleter: PlaylistDeleter,
+    private playlistCreator: PlaylistCreator,
+    private playlistUpdater: PlaylistUpdater,
     private authStatus: AuthStatusService,
     private imageGetter: ImageGetter,
-    private playlistDeleter: PlaylistDeleter,
     private alert: AlertService,
     private searchService: SearchLibraryService,
     private playlistPlayer: PlaylistPlayerService
@@ -81,10 +89,6 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     };
 
     this.platyLists = await this.playlistFinder.filter(query);
-    console.log(
-      '🚀 ~ file: playlist.component.ts ~ line 84 ~ PlaylistComponent ~ getPlaylists ~ platyLists',
-      this.platyLists
-    );
 
     this.buildPlaylistData();
   }
@@ -112,17 +116,81 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     return await this.imageGetter.getDataUrlFromEntity(playlist.uuid.value);
   }
 
-  public createNewPlaylist(): void {
-    this.modal
-      .show<any, Playlist>(CrearePlaylistModalComponent, {}, true)
-      .then((response) => {
-        if (!response) return this.modal.hide();
+  public async openCreateModal(): Promise<void> {
+    const response = await this.openModalPlaylist('Crear nueva playlist');
+    if (!response) return this.modal.hide();
 
-        // add to init of array
-        this.platyLists.unshift(response);
-        this.buildPlaylistData();
-        this.alert.success(`Playlist ${response.name.value} creada`);
+    const { name, description, image } = response;
+
+    try {
+      const playlist = await this.playlistCreator.createPlaylist({
+        name,
+        description,
+        image,
+        own: this.user?.uuid.value ?? '',
       });
+
+      // push on initial data
+      this.platyLists = [playlist, ...this.platyLists];
+      this.buildPlaylistData();
+
+      this.alert.success('Playlist creada correctamente');
+    } catch (error) {
+      this.alert.danger('Error al crear playlist');
+    }
+  }
+
+  public async openEditModal(uuid: string): Promise<void> {
+    const playlist = this.platyLists.find(
+      (playlist) => playlist.uuid.value === uuid
+    );
+    if (!playlist) return;
+
+    const response = await this.openModalPlaylist(
+      `Editar playlist: ${playlist.name.value} `,
+      playlist
+    );
+    if (!response) return this.modal.hide();
+
+    const { name, description, image } = response;
+
+    try {
+      const updatedPlaylist = new Playlist({
+        uuid: playlist.uuid.value,
+        name,
+        description,
+        episodes: playlist.getEpisodes().value,
+        own: playlist.getOwn().value,
+      });
+
+      await this.playlistUpdater.update({
+        playlist: updatedPlaylist,
+        image,
+      });
+
+      this.platyLists = this.platyLists.map((p) => {
+        if (p.uuid.value === playlist.uuid.value) {
+          return updatedPlaylist;
+        }
+        return p;
+      });
+
+      this.buildPlaylistData();
+      this.alert.success('Playlist actualizada correctamente');
+    } catch (error) {
+      this.alert.danger('Error al editar playlist');
+    }
+  }
+
+  private openModalPlaylist(
+    title: string,
+    playlist?: Playlist
+  ): Promise<NewPlaylistModalResponse | void> {
+    return this.modal.show(
+      CrearePlaylistModalComponent,
+      { title, playlist },
+      true
+    );
   }
 
   public async deletePlaylist(uuid: string): Promise<void> {

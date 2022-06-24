@@ -37,13 +37,18 @@ export class CircleProfileComponent implements OnInit, OnDestroy {
   private userSubscriber(): void {
     this.userSubscription = this.authStatus.user$.subscribe({
       next: (user: Nullable<User>) => {
-        if (!user) return;
+        if (!user) return this.resetComponent();
         this.user = user;
-
         this.buildInitials(user.name.value);
+
         this.getImageUrl();
       },
     });
+  }
+
+  private resetComponent(): void {
+    this.imageUrl = null;
+    this.initials = 'CB';
   }
 
   private async getImageUrl(): Promise<void> {

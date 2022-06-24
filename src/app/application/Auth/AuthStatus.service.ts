@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
+import { StorageService } from 'src/app/presentation/shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AuthStatusService {
   private isAuthenticatedSubject: BehaviorSubject<boolean>;
   public isAuthenticated$: Observable<boolean>;
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     this.userSubject = new BehaviorSubject<Nullable<User>>(null);
     this.user$ = this.userSubject.asObservable();
 
@@ -40,6 +41,7 @@ export class AuthStatusService {
     this._isAuthenticated = false;
     this.emitUser();
     this.emitIsAuthenticated();
+    this.storageService.remove('token');
   }
 
   private emitUser(): void {

@@ -3,11 +3,8 @@ import { Playlist } from '../Playlist.model';
 import { PlaylistQuery } from '../PlaylistQuery';
 
 export abstract class PlaylistRepository {
-  public abstract save(
-    playlist: Playlist,
-    image: Blob | File
-  ): Promise<Playlist>;
-  public abstract update(playlist: Playlist): Promise<void>;
+  public abstract save(playlist: Playlist, image: File): Promise<Playlist>;
+  public abstract update(playlist: Playlist, image?: File): Promise<void>;
   public abstract delete(uuid: string): Promise<void>;
   public abstract duplicate(uuid: string): Promise<Playlist>;
 

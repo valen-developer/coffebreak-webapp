@@ -32,5 +32,5 @@ interface CreateParams {
   name: string;
   description: string;
   own: string;
-  image: Blob | File;
+  image: File;
 }

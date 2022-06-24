@@ -16,9 +16,10 @@ export class ApiImageRepository
 
   public async getDataUrlFromEntity(entity: string): Promise<string> {
     const response$ = this.http.get(`${this._API_URL}/entity/${entity}`, {
-      responseType: 'blob',
+      responseType: 'arraybuffer',
     });
-    const blob = await firstValueFrom(response$);
+    const file = await firstValueFrom(response$);
+    const blob = new File([file], 'image.png', { type: 'image/png' });
 
     const dataUrl = await blobToDataUrl(blob);
 

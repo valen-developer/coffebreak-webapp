@@ -1,5 +1,5 @@
 <main class="animate__animated animate__fadeIn playlists">
-  <button class="add" (click)="createNewPlaylist()">
+  <button class="add" (click)="openCreateModal()">
     <div class="add-icon">
       <i class="fas fa-plus"></i>
     </div>
@@ -22,6 +22,11 @@
     </a>
 
     <div class="item-actions">
+      <button (click)="openEditModal(playlist.uuid)">
+        <!-- edit -->
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+
       <button (click)="deletePlaylist(playlist.uuid)">
         <!-- delete -->
         <i class="fas fa-trash-alt"></i>

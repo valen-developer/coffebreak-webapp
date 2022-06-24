@@ -98,6 +98,7 @@ $itemWidth: 70px;
 .item-actions {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 
   & button {
     border: none;

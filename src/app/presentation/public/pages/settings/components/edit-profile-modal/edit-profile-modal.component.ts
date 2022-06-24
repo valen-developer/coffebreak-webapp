@@ -76,9 +76,12 @@ export class EditProfileModalComponent
   }
 
   ngOnInit(): void {
-    const { imageUrl } = this.initialState;
-    if (!imageUrl) return;
+    const { imageUrl, user } = this.initialState;
 
+    this.emailControl.setValue(user?.email.value ?? null);
+    this.nameControl.setValue(user?.name.value ?? null);
+
+    if (!imageUrl) return;
     this.imageUrl = imageUrl;
   }
 

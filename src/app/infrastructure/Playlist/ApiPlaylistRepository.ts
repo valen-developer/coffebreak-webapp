@@ -39,7 +39,7 @@ export class ApiPlaylistRepository
     return new Playlist(playlist);
   }
 
-  public async save(playlist: Playlist, image: Blob | File): Promise<Playlist> {
+  public async save(playlist: Playlist, image: File): Promise<Playlist> {
     const formData = new FormData();
     formData.append('uuid', playlist.uuid.value);
     formData.append('name', playlist.name.value);
@@ -57,8 +57,20 @@ export class ApiPlaylistRepository
     return new Playlist(playlistCreated);
   }
 
-  public update(playlist: Playlist): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async update(playlist: Playlist, image?: File): Promise<void> {
+    const formData = new FormData();
+    formData.append('name', playlist.name.value);
+    formData.append('description', playlist.description.value);
+    if (image) {
+      formData.append('file', image);
+    }
+
+    const response$ = this.http.put<{ ok: boolean }>(
+      `${this._API_URL}/${playlist.uuid.value}`,
+      formData
+    );
+
+    await firstValueFrom(response$);
   }
 
   public async delete(uuid: string): Promise<void> {

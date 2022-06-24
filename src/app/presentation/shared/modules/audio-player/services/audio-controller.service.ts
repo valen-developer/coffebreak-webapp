@@ -9,6 +9,7 @@ import {
   Subscription,
   throttleTime,
 } from 'rxjs';
+import { DOMService } from '../../../services/dom.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class AudioController implements OnDestroy {
   private currentTimeSubscription!: Subscription;
   private endEpisodeSubscription!: Subscription;
 
-  constructor() {
+  constructor(private domService: DOMService) {
     this.playingStatusSubject = new BehaviorSubject<boolean>(false);
     this.playingStatus$ = this.playingStatusSubject.asObservable();
 
@@ -45,6 +46,12 @@ export class AudioController implements OnDestroy {
 
     this.endEpisodeSubject = new Subject<boolean>();
     this.endEpisode$ = this.endEpisodeSubject.asObservable();
+
+    this.buildController();
+  }
+
+  private buildController(): void {
+    if (!this.domService.isBrowser()) return;
 
     this.audioObject = new Audio();
 

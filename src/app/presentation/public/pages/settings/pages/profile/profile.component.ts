@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { PlaylistFinder } from 'src/app/application/Playlist/PlaylistFinder';
@@ -7,12 +7,16 @@ import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { User } from 'src/app/domain/User/User.mode';
 import { asyncMap } from 'src/app/helpers/asyncMap';
+import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
+import { EditProfileModalComponent } from '../../components/edit-profile-modal/edit-profile-modal.component';
 
 @Component({
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChild('modal', { static: true }) modal!: ModalComponent;
+
   public user: Nullable<User>;
   public userImage: Nullable<string>;
   private userSubscription!: Subscription;
@@ -64,6 +68,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private async getImage(uuid: string): Promise<Nullable<string>> {
     return this.imageGetter.getDataUrlFromEntity(uuid);
+  }
+
+  public async onEditProfile(): Promise<void> {
+    if (!this.user) return;
+
+    this.modal
+      .show(EditProfileModalComponent, {
+        user: this.user,
+      })
+      .then((response) => this.modal.hide());
   }
 }
 
