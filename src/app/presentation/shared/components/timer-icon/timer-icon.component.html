@@ -1,0 +1,11 @@
+<button class="wrapper" (click)="onClick()">
+  <!-- clock icon fontawesome -->
+  <i class="fa-solid fa-clock"></i>
+
+  <div
+    class="bubble"
+    [ngClass]="{ green: timerStatus$ | async, red: !(timerStatus$ | async) }"
+  ></div>
+</button>
+
+<app-modal #modal></app-modal>

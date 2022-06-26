@@ -1,0 +1,49 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+}
+
+.input-label {
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+$inputWidth: 80px;
+.input-number {
+  background-color: transparent;
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  text-align: center;
+  width: $inputWidth;
+  height: $inputWidth;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.input-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.input-action {
+  padding: 0.25rem;
+  width: calc($inputWidth * 0.4);
+  height: calc($inputWidth * 0.4);
+  border-radius: var(--border-radius);
+
+  &.substract {
+    border: 1px solid var(--danger);
+    background-color: transparent;
+    color: var(--danger);
+  }
+  &.add {
+    border: 1px solid var(--succes);
+    background-color: transparent;
+    color: var(--succes);
+  }
+}

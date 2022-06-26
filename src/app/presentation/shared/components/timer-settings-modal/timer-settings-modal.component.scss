@@ -1,0 +1,36 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputs {
+  display: flex;
+  justify-content: space-around;
+  max-width: 700px;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+}
+.timer-progress {
+  display: flex;
+  justify-content: center;
+}
+.timer-actions {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 2rem;
+}

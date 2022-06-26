@@ -23,6 +23,8 @@ import { AlertService } from '../shared/modules/alert/alert.service';
 import { AudioController } from '../shared/modules/audio-player/services/audio-controller.service';
 import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from '../shared/modules/audio-player/services/navbar-audio-controller.service';
+import { PlayerTimerService } from '../shared/modules/audio-player/services/player-timer.service';
+import { StorageService } from '../shared/services/storage.service';
 import { RouteContainerScrollService } from './services/route-container-scroll.service';
 
 @Component({
@@ -48,6 +50,8 @@ export class PublicComponent
     private audioController: AudioController,
     private lastEpisoreRepository: LastEpisodesRepository,
     private episodeFinder: PodcastEpisodeFinder,
+    private storage: StorageService,
+    private timer: PlayerTimerService,
     private cdref: ChangeDetectorRef,
     private alert: AlertService
   ) {
@@ -78,6 +82,8 @@ export class PublicComponent
     this.audioController.setCurrentTime(parseInt(lastEpisode.time, 10));
 
     this.navbarAudioController.show();
+
+    this.setTimer();
   }
 
   ngOnDestroy(): void {
@@ -107,5 +113,21 @@ export class PublicComponent
         );
       }
     );
+  }
+
+  private setTimer(): void {
+    const timerString = this.storage.get('timer');
+    if (!timerString) return;
+
+    const timer: {
+      status: boolean;
+      timeToEnd: number;
+      percentElapsed: number;
+    } = JSON.parse(timerString);
+
+    return;
+    if (!timer.status) return;
+
+    this.timer.setTimer(timer.timeToEnd);
   }
 }

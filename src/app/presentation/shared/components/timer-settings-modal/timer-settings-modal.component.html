@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="header"></div>
+
+  <form
+    class="form"
+    [formGroup]="form"
+    (submit)="onSubmit()"
+    *ngIf="!(isTimerUp$ | async)"
+  >
+    <div class="inputs">
+      <div class="input">
+        <app-timer-input
+          [control]="hourControl"
+          label="Horas"
+        ></app-timer-input>
+      </div>
+
+      <div class="input">
+        <app-timer-input
+          [control]="minutesControl"
+          label="Minutos"
+        ></app-timer-input>
+      </div>
+
+      <div class="input">
+        <app-timer-input
+          [control]="secondsControl"
+          label="Segundos"
+        ></app-timer-input>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary-invert">Confirmar</button>
+    </div>
+  </form>
+
+  <div class="timer" *ngIf="isTimerUp$ | async">
+    <div class="timer-progress">
+      <app-timer-progress-circle
+        [timeToEnd$]="timeToEnd$"
+        [percent$]="percentElapsed$"
+      ></app-timer-progress-circle>
+    </div>
+
+    <div class="timer-actions">
+      <button class="btn btn-danger-invert btn-block" (click)="onStop()">
+        Parar
+      </button>
+    </div>
+  </div>
+</div>

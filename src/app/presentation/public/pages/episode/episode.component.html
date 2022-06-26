@@ -25,6 +25,10 @@
         <i class="fa-solid fa-plus options-action__icon"></i>
         <span>Agregar a playlist</span>
       </button>
+      <button class="options-action" (click)="onClickTimer()">
+        <div class="bubble" [ngClass]="{ green: timerStatus$ | async }"></div>
+        <span>Temporizador</span>
+      </button>
     </app-episode-options-button>
   </div>
 

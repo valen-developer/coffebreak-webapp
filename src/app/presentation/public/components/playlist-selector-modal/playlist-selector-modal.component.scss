@@ -3,6 +3,8 @@ $itemWidth: 70px;
 .content {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
 }
 .playlist-item {
   display: flex;

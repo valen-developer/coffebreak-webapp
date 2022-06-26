@@ -11,6 +11,10 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { ModalModule } from './modules/modal/modal.module';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
+import { TimerSettingsModalComponent } from './components/timer-settings-modal/timer-settings-modal.component';
+import { TimerInputComponent } from './components/timer-input/timer-input.component';
+import { TimerProgressCircleComponent } from './components/timer-progress-circle/timer-progress-circle.component';
+import { TimerIconComponent } from './components/timer-icon/timer-icon.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,10 @@ import { DeleteModalComponent } from './components/delete-modal/delete-modal.com
     CheckboxComponent,
     DropzoneDirective,
     DeleteModalComponent,
+    TimerSettingsModalComponent,
+    TimerInputComponent,
+    TimerProgressCircleComponent,
+    TimerIconComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule, ModalModule],
   exports: [
@@ -30,7 +38,9 @@ import { DeleteModalComponent } from './components/delete-modal/delete-modal.com
     CheckboxComponent,
     ModalModule,
     DropzoneDirective,
-    DeleteModalComponent
+    DeleteModalComponent,
+    TimerSettingsModalComponent,
+    TimerIconComponent,
   ],
 })
 export class SharedModule {}

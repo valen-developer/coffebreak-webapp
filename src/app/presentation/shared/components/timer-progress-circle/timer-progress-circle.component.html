@@ -1,0 +1,12 @@
+<div class="progress-circle p10" [ngClass]="{ over50: !clip() ? true : false }">
+  <span>{{ secondsToString(timeToEnd$ | async) }}</span>
+  <div class="left-half-clipper">
+    <div class="first50-bar"></div>
+    <div
+      class="value-bar"
+      [ngStyle]="{
+        transform: 'rotate(' + degress() + 'deg)'
+      }"
+    ></div>
+  </div>
+</div>

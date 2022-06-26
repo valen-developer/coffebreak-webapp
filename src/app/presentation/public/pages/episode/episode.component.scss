@@ -1,3 +1,16 @@
+$bubbleWidth: 10px;
+.bubble {
+  width: $bubbleWidth;
+  height: $bubbleWidth;
+  border-radius: 50%;
+  background-color: red;
+  margin-right: 0.25rem;
+
+  &.green {
+    background-color: green;
+  }
+}
+
 .episode-player {
   display: flex;
   flex-direction: column;
@@ -38,7 +51,6 @@
 
 .options-action {
   display: flex;
-  justify-content: center;
   align-items: center;
   border: none;
   border-radius: var(--border-radius);
@@ -51,6 +63,11 @@
 
   &__icon {
     margin-right: 0.25rem;
+  }
+
+  // apply to all buttons except the last one
+  &:not(:last-child) {
+    margin-bottom: 0.5rem;
   }
 }
 

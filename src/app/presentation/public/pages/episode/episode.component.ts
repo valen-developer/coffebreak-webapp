@@ -6,9 +6,11 @@ import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/Podcast
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
+import { TimerSettingsModalComponent } from 'src/app/presentation/shared/components/timer-settings-modal/timer-settings-modal.component';
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio-player/services/navbar-audio-controller.service';
+import { PlayerTimerService } from 'src/app/presentation/shared/modules/audio-player/services/player-timer.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
@@ -31,6 +33,8 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   private episodePlayingSubscription!: Subscription;
 
+  public timerStatus$: Observable<boolean>;
+
   constructor(
     private route: ActivatedRoute,
     private navbarAudioController: NavbarAudioController,
@@ -39,10 +43,13 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     private routeTool: RouteToolService,
     private episodeFinder: PodcastEpisodeFinder,
     private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
+    private timer: PlayerTimerService,
     private alert: AlertService
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
     this.previousUrl$ = this.routeTool.previousUrl$;
+
+    this.timerStatus$ = this.timer.timerUp$;
   }
 
   ngOnInit(): void {
@@ -115,6 +122,12 @@ export class EpisodeComponent implements OnInit, OnDestroy {
           );
         });
     });
+  }
+
+  public onClickTimer(): void {
+    this.modal
+      .show(TimerSettingsModalComponent, {})
+      .then(() => this.modal.hide());
   }
 
   public onImageError(event: ErrorEvent): void {

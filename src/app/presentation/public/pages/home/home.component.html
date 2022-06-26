@@ -6,8 +6,14 @@
         {{ user?.name?.value || "Usuario" }}!
       </span></span
     >
-    <div class="header-profile">
-      <app-circle-profile></app-circle-profile>
+
+    <div class="header-icons">
+      <div class="header-profile">
+        <app-timer-icon></app-timer-icon>
+      </div>
+      <div class="header-profile">
+        <app-circle-profile></app-circle-profile>
+      </div>
     </div>
   </div>
 
@@ -21,18 +27,18 @@
     </section> -->
 
     <section class="section">
-      <h5 class="section__title">Canales Populares</h5>
-      <app-episode-card-list
-        route="/playlist"
-        [entities]="channels"
-      ></app-episode-card-list>
-    </section>
-
-    <section class="section">
       <h5 class="section__title">Últimos episodios</h5>
       <app-episode-card-list
         route="/episode"
         [entities]="lastEpisodes"
+      ></app-episode-card-list>
+    </section>
+
+    <section class="section">
+      <h5 class="section__title">Canales Populares</h5>
+      <app-episode-card-list
+        route="/playlist"
+        [entities]="channels"
       ></app-episode-card-list>
     </section>
   </div>

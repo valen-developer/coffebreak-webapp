@@ -1,1 +1,27 @@
-<p>settings-app works!</p>
+<div class="wrapper">
+  <div class="header">
+    <a class="header__back" routerLink="../">
+      <i class="fas fa-angle-left"></i>
+    </a>
+
+    <h1 class="header__title">Ajustes</h1>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="content">
+    <div class="lists">
+      <div class="list">
+        <button class="list-item" (click)="onClickSetTimer()">
+          <span>{{ "Establecer temporizador" }}</span>
+          <div class="icon">
+            <!-- arrow left icon fontawesome -->
+            <i class="fas fa-angle-right"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #modal></app-modal>
