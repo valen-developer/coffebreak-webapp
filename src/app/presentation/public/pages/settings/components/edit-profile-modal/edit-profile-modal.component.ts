@@ -56,19 +56,20 @@ export class EditProfileModalComponent
     });
 
     this.responseEmitter.emit({ user: newUser, file: this.image });
-    this.userUpdater
-      .update(newUser, this.image)
-      .then(() => {
-        this.alert.success('Profile updated successfully');
-        this.hide();
-      })
-      .catch((erro) => {
-        console.log(
-          '🚀 ~ file: edit-profile-modal.component.ts ~ line 66 ~ onSubmit ~ erro',
-          erro
-        );
-        this.alert.danger('Profile update failed');
-      });
+
+    try {
+      this.userUpdater
+        .update({
+          user: newUser,
+          image: this.image,
+        })
+        .then(() => {
+          this.alert.success('Profile updated successfully');
+          this.hide();
+        });
+    } catch (error: any) {
+      this.alert.danger(error.message);
+    }
   }
 
   hide(): void {
