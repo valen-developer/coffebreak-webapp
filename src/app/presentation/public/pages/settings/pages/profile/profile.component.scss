@@ -109,6 +109,12 @@
   }
 }
 
+.playlists-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
 .col {
   display: flex;
 }
@@ -116,6 +122,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1rem;
 
   &-image {
     border-radius: var(--border-radius);

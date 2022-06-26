@@ -34,20 +34,22 @@
         <h2>Playlists</h2>
       </div>
 
-      <div class="playlist" *ngFor="let playlist of playlistsData">
-        <div class="col">
-          <div class="playlist-image">
-            <img [src]="playlist.imageUrl" alt="" />
+      <div class="playlists-list">
+        <div class="playlist" *ngFor="let playlist of playlistsData">
+          <div class="col">
+            <div class="playlist-image">
+              <img [src]="playlist.imageUrl" alt="" />
+            </div>
+
+            <div class="playlist-info">
+              <span>{{ playlist.name }}</span>
+            </div>
           </div>
 
-          <div class="playlist-info">
-            <span>{{ playlist.name }}</span>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="playlist-episodes">
-            <small>{{ playlist.episodes }} Episodios</small>
+          <div class="col">
+            <div class="playlist-episodes">
+              <small>{{ playlist.episodes }} Episodios</small>
+            </div>
           </div>
         </div>
       </div>
