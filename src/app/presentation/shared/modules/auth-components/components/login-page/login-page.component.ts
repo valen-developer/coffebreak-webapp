@@ -5,9 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { UserLogger } from 'src/app/application/Auth/UserLogger.service';
 import { StorageService } from 'src/app/presentation/shared/services/storage.service';
+import { AlertService } from '../../../alert/alert.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,11 +22,12 @@ export class LoginPageComponent implements OnInit {
   public rememberControler: FormControl;
 
   @Output() authStatusEmitter = new EventEmitter<boolean>();
+
   constructor(
     private fb: FormBuilder,
     private userLogger: UserLogger,
-    private authStatus: AuthStatusService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private alert: AlertService
   ) {
     this.form = this.buildForm();
 
@@ -35,12 +36,6 @@ export class LoginPageComponent implements OnInit {
     this.rememberControler = this.form.get('remember') as FormControl;
 
     this.getRemember();
-
-    this.authStatus.user$.subscribe({
-      next: (user) => {
-        console.log(user);
-      },
-    });
   }
 
   ngOnInit(): void {}
@@ -59,7 +54,10 @@ export class LoginPageComponent implements OnInit {
     this.setRemember();
     await this.userLogger
       .login(email, password)
-      .then(() => this.authStatusEmitter.emit(true));
+      .then(() => this.authStatusEmitter.emit(true))
+      .catch((error) => {
+        this.alert.danger(error.message);
+      });
   }
 
   private setRemember(): void {
