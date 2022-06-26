@@ -10,6 +10,8 @@ import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileModalComponent } from './components/edit-profile-modal/edit-profile-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SettingsAppComponent } from './pages/settings-app/settings-app.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MyAccountComponent,
     ProfileComponent,
     EditProfileModalComponent,
+    SettingsAppComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,

@@ -19,6 +19,11 @@ export class SettingsHomeComponent implements OnInit, OnDestroy {
     },
     {
       label: 'Cambiar Contraseña',
+      url: 'change-password',
+    },
+    {
+      label: 'Ajustes',
+      url: 'app',
     },
   ];
 
