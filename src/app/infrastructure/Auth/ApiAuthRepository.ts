@@ -50,6 +50,22 @@ export class ApiAuthRepository implements AuthRepository {
 
     return new User(user);
   }
+
+  async changePassword(
+    password: string,
+    passwordConfirmation: string
+  ): Promise<void> {
+    const body = {
+      password,
+      passwordConfirmation,
+    };
+    const response$ = this.http.put<{ ok: boolean }>(
+      `${this.API_URL}/password`,
+      body
+    );
+
+    await firstValueFrom(response$);
+  }
 }
 
 interface ApiLoginResponse {
