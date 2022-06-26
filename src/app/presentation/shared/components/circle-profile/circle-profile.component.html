@@ -1,5 +1,9 @@
-<div class="circle-profile" [ngStyle]="{ background: randomColor }">
+<a
+  class="circle-profile"
+  [ngStyle]="{ background: randomColor }"
+  [routerLink]="['/settings/profile']"
+>
   <img [src]="imageUrl" alt="" *ngIf="imageUrl" />
 
   <div class="initials" *ngIf="!imageUrl">{{ initials | uppercase }}</div>
-</div>
+</a>

@@ -15,6 +15,7 @@ import { TimerSettingsModalComponent } from './components/timer-settings-modal/t
 import { TimerInputComponent } from './components/timer-input/timer-input.component';
 import { TimerProgressCircleComponent } from './components/timer-progress-circle/timer-progress-circle.component';
 import { TimerIconComponent } from './components/timer-icon/timer-icon.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,13 @@ import { TimerIconComponent } from './components/timer-icon/timer-icon.component
     TimerProgressCircleComponent,
     TimerIconComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, AudioPlayerModule, ModalModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    ReactiveFormsModule,
+    AudioPlayerModule,
+    ModalModule,
+  ],
   exports: [
     CircleProfileComponent,
     SearchInputComponent,

@@ -11,6 +11,9 @@
   box-shadow: 0 0 5px var(--hover);
   overflow: hidden;
 
+  text-decoration: none;
+  color: var(--text-contrast-primary);
+
   & img {
     width: 100%;
     height: 100%;
