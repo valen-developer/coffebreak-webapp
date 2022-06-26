@@ -61,7 +61,10 @@ export class ChangePasswordComponent implements OnInit {
     this.passwordChanger
       .changePassword(password, passwordConfirmation)
       .then(() => {
-        this.alert.success('Contraseña cambiada con éxito');
+        this.alert.success({
+          message: 'Contraseña cambiada',
+          subtitle: 'La contraseña se ha cambiado correctamente',
+        });
         this.form.reset();
       })
       .catch((e) =>
@@ -83,6 +86,9 @@ export class ChangePasswordComponent implements OnInit {
       message ??
       'La contraseña debe tener al menos 8 caracteres, minúsculas, mayúsculas y números';
 
-    this.alert.warning(showedMessage);
+    this.alert.warning({
+      message: 'Error al cambiar contraseña',
+      subtitle: showedMessage,
+    });
   }
 }

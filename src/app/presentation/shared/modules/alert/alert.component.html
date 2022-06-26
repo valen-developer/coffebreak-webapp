@@ -1,4 +1,4 @@
-<div class="alert-container">
+<!-- <div class="alert-container">
   <div
     *ngFor="let alert of alerts.reverse()"
     class="alert-card {{ alert.type }} animate__animated animate__bounceInDown"
@@ -12,8 +12,47 @@
 
     <span class="alert-message">{{ alert.message }}</span>
 
-    <!-- <div class="remove-alert">
+    <div class="remove-alert">
+      <i class="far fa-times-circle" (click)="removeAlert(alert)"></i>
+    </div>
+  </div>
+</div> -->
+
+<div class="alert-container">
+  <div
+    class="alert-card animate__animated animate__bounceInDown"
+    [ngClass]="{ fadeOut: alert.fadeOut ? true : false }"
+    *ngFor="let alert of alerts.reverse()"
+  >
+    <div class="alert-card-left">
+      <div class="alert-card-icon {{ alert.type }}">
+        <i class="fas fa-check-circle" *ngIf="alert.type === 'succes'"></i>
+        <i
+          class="fas fa-exclamation-triangle"
+          *ngIf="alert.type === 'warning'"
+        ></i>
+        <i
+          class="fas fa-exclamation-triangle"
+          *ngIf="alert.type === 'info'"
+        ></i>
+        <i
+          class="fas fa-exclamation-circle"
+          *ngIf="alert.type === 'danger'"
+        ></i>
+      </div>
+
+      <div class="alert-card-message">
+        <span class="alert-card-message__title">{{ alert.message }}</span>
+        <span class="alert-card-message__subtitle {{ alert.type }}">
+          {{ alert.subtitle || alert.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="alert-card-right">
+      <div class="alert-card-close-icon">
         <i class="far fa-times-circle" (click)="removeAlert(alert)"></i>
-      </div> -->
+      </div>
+    </div>
   </div>
 </div>

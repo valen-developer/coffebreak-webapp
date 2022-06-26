@@ -46,29 +46,33 @@ export class EditProfileModalComponent
     const { name, email } = this.form.value;
     const { user } = this.initialState;
 
-    const newUser = new User({
-      uuid: user.uuid.value,
-      name: name ?? user.name.value,
-      email: email ?? user.email.value,
-      role: user.role.value,
-      password: user.password.value,
-      status: user.status.value,
-    });
-
-    this.responseEmitter.emit({ user: newUser, file: this.image });
-
     try {
-      this.userUpdater
-        .update({
-          user: newUser,
-          image: this.image,
-        })
-        .then(() => {
-          this.alert.success('Profile updated successfully');
-          this.hide();
-        });
+      const newUser = new User({
+        uuid: user.uuid.value,
+        name: name ?? user.name.value,
+        email: email ?? user.email.value,
+        role: user.role.value,
+        password: user.password.value,
+        status: user.status.value,
+      });
+
+      this.responseEmitter.emit({ user: newUser, file: this.image });
+      await this.userUpdater.update({
+        user: newUser,
+        image: this.image,
+      });
+
+      this.alert.success({
+        message: 'Perfil actualizado',
+        subtitle: 'El perfil se ha actualizado correctamente',
+      });
+
+      this.hide();
     } catch (error: any) {
-      this.alert.danger(error.message);
+      this.alert.danger({
+        message: 'Error al actualizar el perfil',
+        ...(error.message ? { subtitle: error.message } : {}),
+      });
     }
   }
 

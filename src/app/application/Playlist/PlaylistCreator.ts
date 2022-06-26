@@ -15,6 +15,8 @@ export class PlaylistCreator {
 
   @ImageSizeGuard()
   public async createPlaylist(params: CreateParams): Promise<Playlist> {
+    if (!params.image) throw new Error('Una imagen es necesaria.');
+
     const playlist = new Playlist({
       uuid: this.uuidGenerator.generate(),
       name: params.name,

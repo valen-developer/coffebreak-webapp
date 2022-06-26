@@ -134,9 +134,15 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       this.platyLists = [playlist, ...this.platyLists];
       this.buildPlaylistData();
 
-      this.alert.success('Playlist creada correctamente');
-    } catch (error) {
-      this.alert.danger('Error al crear playlist');
+      this.alert.success({
+        message: 'Playlist creada correctamente',
+        subtitle: `${name} creada`,
+      });
+    } catch (error: any) {
+      this.alert.danger({
+        message: 'Error al crear playlist',
+        ...(error.message ? { subtitle: error.message } : {}),
+      });
     }
   }
 
@@ -176,9 +182,15 @@ export class PlaylistComponent implements OnInit, OnDestroy {
       });
 
       this.buildPlaylistData();
-      this.alert.success('Playlist actualizada correctamente');
-    } catch (error) {
-      this.alert.danger('Error al editar playlist');
+      this.alert.success({
+        message: 'Playlist actualizada correctamente',
+        subtitle: `${name} actualizada`,
+      });
+    } catch (error: any) {
+      this.alert.danger({
+        message: 'Error al actualizar playlist',
+        ...(error.message ? { subtitle: error.message } : {}),
+      });
     }
   }
 
@@ -213,7 +225,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
         this.buildPlaylistData();
         this.setNullPlaylistPlayerIfDeleted(uuid);
 
-        this.alert.success(`Playlist ${platyList.name.value} eliminada`);
+        this.alert.success({
+          message: 'Playlist eliminada correctamente',
+          subtitle: `${platyList.name.value} eliminada`,
+        });
       })
       .catch(() => {});
   }

@@ -9,6 +9,7 @@ import {
   take,
 } from 'rxjs';
 import { StorageService } from '../../../services/storage.service';
+import { AlertService } from '../../alert/alert.service';
 import { AudioController } from './audio-controller.service';
 
 @Injectable({
@@ -37,7 +38,8 @@ export class PlayerTimerService implements OnDestroy {
 
   constructor(
     private audioController: AudioController,
-    private storage: StorageService
+    private storage: StorageService,
+    private alert: AlertService
   ) {}
 
   ngOnDestroy(): void {
@@ -85,6 +87,11 @@ export class PlayerTimerService implements OnDestroy {
         },
       }
     );
+
+    this.alert.success({
+      message: 'Se ha iniciado el cronómetro',
+      subtitle: `El audio se detendrá en ${this.timeToEndString()}`,
+    });
   }
 
   public cancelTimer(): void {
@@ -92,6 +99,22 @@ export class PlayerTimerService implements OnDestroy {
     this.isTimerUp = false;
     this.emitTimerStatus();
     this.cleanStorage();
+  }
+
+  public timeToEndString(): string {
+    const hours = Math.floor(this.timeToEnd / 3600);
+    const minutes = Math.floor((this.timeToEnd - hours * 3600) / 60);
+    const seconds = this.timeToEnd - hours * 3600 - minutes * 60;
+
+    const hourFixed = hours < 10 ? `0${hours}` : hours;
+    const minuteFixed = minutes < 10 ? `0${minutes}` : minutes;
+    const secondFixed = seconds < 10 ? `0${seconds}` : seconds;
+
+    const hourMessage = hours > 0 ? `${hourFixed} horas` : '';
+    const minuteMessage = minutes > 0 ? `${minuteFixed} minutos` : '';
+    const secondMessage = seconds > 0 ? `${secondFixed} segundos` : '';
+
+    return `${hourMessage} ${minuteMessage} ${secondMessage}`;
   }
 
   private makeIntervalObservable(duration: number): Observable<number> {
@@ -109,6 +132,12 @@ export class PlayerTimerService implements OnDestroy {
 
   private pause(): void {
     this.audioController.pause();
+
+    this.alert.info({
+      message: 'El tiempo se ha terminado',
+      subtitle: 'El audio se ha detenido',
+      autoclose: false,
+    });
   }
 
   private emitTimerStatus(): void {

@@ -135,7 +135,10 @@ export class PlaylistComponent implements OnInit {
       .then(() => {
         this.episodes = this.episodes.filter((ep) => ep.uuid !== episode.uuid);
         this.calculateDurationSeconds();
-        this.alert.success(`Episodio ${episode.episode} eliminado`);
+        this.alert.success({
+          message: 'Episodio eliminado',
+          subtitle: `El episodio ${episode.episode} ha sido eliminado`,
+        });
       });
   }
 
@@ -143,10 +146,16 @@ export class PlaylistComponent implements OnInit {
     this.playlistCreator
       .duplicatePlaylist(this.playlist)
       .then(() => {
-        this.alert.success('Playlist duplicada');
+        this.alert.success({
+          message: 'Lista duplicada',
+          subtitle: 'Puedes editarla desde la lista duplicada',
+        });
       })
       .catch(() => {
-        this.alert.danger('Error duplicando playlist');
+        this.alert.danger({
+          message: 'Error al duplicar la lista',
+          subtitle: 'No se pudo duplicar la lista',
+        });
       });
   }
 }

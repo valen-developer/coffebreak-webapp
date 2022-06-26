@@ -117,9 +117,10 @@ export class EpisodeComponent implements OnInit, OnDestroy {
       this.playlistEpisodeUpdater
         .addEpisode(playlist, this.episode)
         .then(() => {
-          this.alert.success(
-            `Episodio ${this.episode.episode} añadido a la lista ${playlist.name.value}`
-          );
+          this.alert.success({
+            message: 'Episodio añadido',
+            subtitle: `Episodio ${this.episode.episode} añadido a la lista ${playlist.name.value}`,
+          });
         });
     });
   }

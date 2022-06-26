@@ -56,7 +56,10 @@ export class LoginPageComponent implements OnInit {
       .login(email, password)
       .then(() => this.authStatusEmitter.emit(true))
       .catch((error) => {
-        this.alert.danger(error.message);
+        this.alert.danger({
+          message: 'No se pudo iniciar sesión',
+          ...(error ? { subtitle: error } : {}),
+        });
       });
   }
 
