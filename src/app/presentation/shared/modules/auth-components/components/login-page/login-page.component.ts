@@ -6,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserLogger } from 'src/app/application/Auth/UserLogger.service';
+import { DOMService } from 'src/app/presentation/shared/services/dom.service';
 import { StorageService } from 'src/app/presentation/shared/services/storage.service';
+import { environment } from 'src/environments/environment';
 import { AlertService } from '../../../alert/alert.service';
 
 @Component({
@@ -15,6 +17,8 @@ import { AlertService } from '../../../alert/alert.service';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
+  public readonly googleInitSigninUrl = environment.apiUrl + '/auth/google';
+
   public form: FormGroup;
 
   public emailControl: FormControl;
@@ -27,6 +31,7 @@ export class LoginPageComponent implements OnInit {
     private fb: FormBuilder,
     private userLogger: UserLogger,
     private storageService: StorageService,
+    private domService: DOMService,
     private alert: AlertService
   ) {
     this.form = this.buildForm();
@@ -58,9 +63,17 @@ export class LoginPageComponent implements OnInit {
       .catch((error) => {
         this.alert.danger({
           message: 'No se pudo iniciar sesión',
-          ...(error ? { subtitle: error } : {}),
+          subtitle: 'Usuario o contraseña incorrectos',
         });
       });
+  }
+
+  public initWithGoogle(): void {
+    const window = this.domService.getWindow();
+
+    if (!window) return;
+
+    window.location.href = this.googleInitSigninUrl;
   }
 
   private setRemember(): void {

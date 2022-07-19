@@ -9,6 +9,8 @@ import { AlertService } from './alert.service';
   styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent implements OnInit {
+  private readonly _TIME_FOR_REMOVE_ALERT = 2250;
+
   public alerts: Alert[] = [];
 
   constructor(private alertService: AlertService) {}
@@ -22,7 +24,7 @@ export class AlertComponent implements OnInit {
   private processAlert(alert: Alert): void {
     this.alerts.push(alert);
     if (!alert.autoClose) return;
-    setTimeout(() => this.removeAlert(alert), 2000);
+    setTimeout(() => this.removeAlert(alert), this._TIME_FOR_REMOVE_ALERT);
   }
 
   public removeAlert(alert: Alert): void {

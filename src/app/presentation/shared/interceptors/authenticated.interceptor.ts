@@ -36,9 +36,6 @@ export class AuthenticatedInterceptor implements HttpInterceptor {
 
     return next.handle(newRequest).pipe(
       catchError((err, caught) => {
-        if (err.status === 401) {
-          this.router.navigateByUrl('/home');
-        }
         return throwError(() => err);
       })
     );

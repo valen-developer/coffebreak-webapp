@@ -44,3 +44,31 @@
     width: 100%;
   }
 }
+
+.btn.google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background-color: var(--text-secondary);
+  margin: 2rem 0;
+}
+
+.rrss-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 1rem;
+}
+
+@media screen and (min-width: 500px) {
+  .rrss-actions {
+    padding: 0 6rem;
+  }
+}

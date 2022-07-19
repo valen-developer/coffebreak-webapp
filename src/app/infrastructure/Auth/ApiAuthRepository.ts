@@ -66,6 +66,12 @@ export class ApiAuthRepository implements AuthRepository {
 
     await firstValueFrom(response$);
   }
+
+  async initGoogleAuth(): Promise<void> {
+    const response$ = this.http.get<{ ok: boolean }>(`${this.API_URL}/google`);
+
+    await firstValueFrom(response$);
+  }
 }
 
 interface ApiLoginResponse {

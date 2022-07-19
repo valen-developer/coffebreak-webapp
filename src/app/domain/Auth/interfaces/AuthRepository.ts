@@ -3,6 +3,7 @@ import { User } from '../../User/User.mode';
 export abstract class AuthRepository {
   abstract signup(request: SignupRequest): Promise<void>;
   abstract login(email: string, password: string): Promise<LoginResponse>;
+  abstract initGoogleAuth(): Promise<void>;
   abstract loginWithToken(): Promise<User>;
   abstract changePassword(
     password: string,

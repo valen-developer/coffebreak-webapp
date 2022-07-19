@@ -25,13 +25,22 @@ export class UserLogger {
     this.authStatusService.setUser(user);
   }
 
-  public async loginWithToken(): Promise<void> {
-    const user = await this.authRepository.loginWithToken();
+  public async loginWithToken(token?: string): Promise<void> {
+    if (token) this.setToken(token);
 
+    const user = await this.authRepository.loginWithToken();
     this.authStatusService.setUser(user);
+  }
+
+  public async initGoogleAuth(): Promise<void> {
+    await this.authRepository.initGoogleAuth();
   }
 
   private checkPassword(password: string): void {
     UserPassword.validate(password);
+  }
+
+  private setToken(token: string): void {
+    this.storageService.set('token', token);
   }
 }
