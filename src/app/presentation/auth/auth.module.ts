@@ -6,9 +6,25 @@ import { AuthComponent } from './auth.component';
 import { AuthComponentsModule } from '../shared/modules/auth-components/auth-components.module';
 import { RrssSuccessComponent } from './pages/rrss-success/rrss-success.component';
 import { RrssErrorComponent } from './pages/rrss-error/rrss-error.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 
 @NgModule({
-  declarations: [AuthComponent, RrssSuccessComponent, RrssErrorComponent],
-  imports: [CommonModule, AuthRoutingModule, AuthComponentsModule],
+  declarations: [
+    AuthComponent,
+    RrssSuccessComponent,
+    RrssErrorComponent,
+    RegisterComponent,
+    RecoverPasswordComponent,
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AuthRoutingModule,
+    AuthComponentsModule,
+    SharedModule,
+  ],
 })
 export class AuthModule {}

@@ -9,6 +9,13 @@ export abstract class AuthRepository {
     password: string,
     passwordConfirmation: string
   ): Promise<void>;
+  abstract recoverPassword(params: RecoverPasswordParams): Promise<void>;
+}
+
+export interface RecoverPasswordParams {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 export interface LoginResponse {

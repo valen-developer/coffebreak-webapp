@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   AuthRepository,
   LoginResponse,
+  RecoverPasswordParams,
   SignupRequest,
 } from 'src/app/domain/Auth/interfaces/AuthRepository';
 import { User, UserDto } from 'src/app/domain/User/User.mode';
@@ -15,6 +16,15 @@ import { environment } from 'src/environments/environment';
 export class ApiAuthRepository implements AuthRepository {
   private API_URL = environment.apiUrl + '/auth';
   constructor(private http: HttpClient) {}
+
+  public async recoverPassword(params: RecoverPasswordParams): Promise<void> {
+    const response$ = this.http.put<{ ok: boolean }>(
+      `${this.API_URL}/password/recovery`,
+      params
+    );
+
+    await firstValueFrom(response$);
+  }
 
   async signup(request: SignupRequest): Promise<void> {
     const response = this.http.post(this.API_URL + '/signup', request);

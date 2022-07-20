@@ -1,4 +1,4 @@
-<div class="login">
+<div class="login animate__animated animate__fadeIn">
   <h1>Entra con tu email y contraseña</h1>
 
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -15,7 +15,10 @@
     ></app-input>
 
     <div class="forgot-password">
-      <a><small>He olvidado mi contraseña</small></a>
+      <a [routerLink]="['/auth/register']"><small>No tengo cuenta</small></a>
+      <a [routerLink]="['/auth/recovery']"
+        ><small>He olvidado mi contraseña</small></a
+      >
     </div>
 
     <div class="actions">
