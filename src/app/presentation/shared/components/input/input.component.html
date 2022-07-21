@@ -7,8 +7,8 @@
   />
 
   <div class="actions">
-    <button class="actions__action">
-      <i class="fa fa-times" (click)="onClear($event)"></i>
+    <button role="button" class="actions__action" (click)="onClear($event)">
+      <i class="fa fa-times"></i>
     </button>
     <button
       class="actions__action"
@@ -21,5 +21,13 @@
       <!-- icon eye-slash fontawesome -->
       <i class="fa fa-eye-slash" *ngIf="isVisible"></i>
     </button>
+  </div>
+</div>
+<div class="error" *ngIf="hasError()">
+  <div class="icon">
+    <i class="fa fa-exclamation-triangle"></i>
+  </div>
+  <div class="message">
+    <span>{{ error() }}</span>
   </div>
 </div>

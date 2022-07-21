@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 
 import { debounceTime, fromEvent, Observable, Subscription } from 'rxjs';
+import { UserLogger } from 'src/app/application/Auth/UserLogger.service';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { Events } from 'src/app/domain/PodcastEpisode/constants/Events';
@@ -50,15 +51,14 @@ export class PublicComponent
     private audioController: AudioController,
     private lastEpisoreRepository: LastEpisodesRepository,
     private episodeFinder: PodcastEpisodeFinder,
-    private storage: StorageService,
-    private timer: PlayerTimerService,
-    private cdref: ChangeDetectorRef,
-    private alert: AlertService
+    private userLogger: UserLogger,
+    private cdref: ChangeDetectorRef
   ) {
     this.showAudioPlayer$ = this.navbarAudioController.show$;
   }
 
   ngAfterViewInit(): void {
+    this.tryLogin();
     this.susbcribeToScrolling();
     this.scrollToSubscribe();
   }
@@ -82,8 +82,6 @@ export class PublicComponent
     this.audioController.setCurrentTime(parseInt(lastEpisode.time, 10));
 
     this.navbarAudioController.show();
-
-    this.setTimer();
   }
 
   ngOnDestroy(): void {
@@ -115,19 +113,7 @@ export class PublicComponent
     );
   }
 
-  private setTimer(): void {
-    const timerString = this.storage.get('timer');
-    if (!timerString) return;
-
-    const timer: {
-      status: boolean;
-      timeToEnd: number;
-      percentElapsed: number;
-    } = JSON.parse(timerString);
-
-    return;
-    if (!timer.status) return;
-
-    this.timer.setTimer(timer.timeToEnd);
+  private tryLogin(): void {
+    this.userLogger.loginWithToken().catch(() => {});
   }
 }

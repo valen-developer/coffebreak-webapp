@@ -10,13 +10,17 @@
   </section>
 
   <section class="suggest">
-    <button class="suggest-action" (click)="onSuggest('')">
+    <button role="button" class="suggest-action" (click)="onSuggest('')">
       Obtener todos
     </button>
-    <button class="suggest-action" (click)="onSuggest('Einstein')">
+    <button
+      role="button"
+      class="suggest-action"
+      (click)="onSuggest('Einstein')"
+    >
       Albert Einstein
     </button>
-    <button class="suggest-action" (click)="onSuggest('Hawking')">
+    <button role="button" class="suggest-action" (click)="onSuggest('Hawking')">
       Stephen Hawking
     </button>
   </section>

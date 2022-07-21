@@ -30,9 +30,13 @@
     </div>
 
     <div class="alert-card-right">
-      <div class="alert-card-close-icon">
-        <i class="far fa-times-circle" (click)="removeAlert(alert)"></i>
-      </div>
+      <button
+        role="button"
+        class="alert-card-close-icon"
+        (click)="removeAlert(alert)"
+      >
+        <i class="far fa-times-circle"></i>
+      </button>
     </div>
   </div>
 </div>

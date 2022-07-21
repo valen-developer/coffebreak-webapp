@@ -16,17 +16,8 @@ import { PlaylistDTO } from './domain/Playlist/Playlist.model';
 export class AppComponent {
   title = 'webapp';
 
-  constructor(
-    private domService: DOMService,
-    private userLogger: UserLogger,
-    private alert: AlertService
-  ) {
-    this.tryLogin();
+  constructor(private domService: DOMService, private alert: AlertService) {
     this.initSocket();
-  }
-
-  private tryLogin(): void {
-    this.userLogger.loginWithToken().catch(() => {});
   }
 
   private initSocket(): void {

@@ -26,9 +26,23 @@ export class RecoverPasswordComponent implements OnInit {
     private passwordRecover: PasswordRecover
   ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      passwordConfirmation: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
+      passwordConfirmation: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
     });
 
     this.emailControl = this.form.get('email') as FormControl;
@@ -42,11 +56,13 @@ export class RecoverPasswordComponent implements OnInit {
 
   public async onSubmit(): Promise<void> {
     const isValid = this.form.valid;
-    if (!isValid)
+    if (!isValid) {
+      this.form.markAllAsTouched();
       return this.alert.warning({
         message: 'Formulario inválido',
         subtitle: 'Por favor, complete todos los campos requeridos',
       });
+    }
 
     const { email, password, passwordConfirmation } = this.form.value;
 
@@ -64,10 +80,17 @@ export class RecoverPasswordComponent implements OnInit {
 
         this.router.navigate(['/settings']);
       })
-      .catch(() => {
+      .catch((error) => {
+        const { status } = error;
+        const subtitle = status
+          ? status === 404
+            ? 'Usuario no encontrado. Registrese para crear una cuenta'
+            : 'Por favor, intente nuevamente'
+          : error.message;
+
         this.alert.danger({
           message: 'Error al reactivar usuario',
-          subtitle: 'Por favor, intente nuevamente',
+          subtitle,
         });
       });
   }

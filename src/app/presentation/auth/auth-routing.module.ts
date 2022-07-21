@@ -5,6 +5,7 @@ import { RecoverPasswordComponent } from './pages/recover-password/recover-passw
 import { RegisterComponent } from './pages/register/register.component';
 import { RrssErrorComponent } from './pages/rrss-error/rrss-error.component';
 import { RrssSuccessComponent } from './pages/rrss-success/rrss-success.component';
+import { ValidateComponent } from './pages/validate/validate.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'recovery',
         component: RecoverPasswordComponent,
+      },
+      {
+        path: 'validate',
+        component: ValidateComponent,
       },
       {
         path: 'rrss/success',

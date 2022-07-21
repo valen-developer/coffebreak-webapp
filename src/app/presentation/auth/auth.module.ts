@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
+import { ValidateComponent } from './pages/validate/validate.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RecoverPasswordComponent } from './pages/recover-password/recover-passw
     RrssErrorComponent,
     RegisterComponent,
     RecoverPasswordComponent,
+    ValidateComponent,
   ],
   imports: [
     CommonModule,

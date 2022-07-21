@@ -43,7 +43,24 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     this.type = this.typeConstant;
   }
 
+  public hasError(): boolean {
+    return this.formControl.invalid && this.formControl.touched;
+  }
+
+  public error(): string {
+    return this.formControl.hasError('required')
+      ? 'El campo es requerido'
+      : this.formControl.hasError('email')
+      ? 'El campo debe ser un email'
+      : this.formControl.hasError('minlength')
+      ? `Minimo de caracteres invalido`
+      : this.formControl.hasError('maxlength')
+      ? `Maximo de caracteres invalido`
+      : '';
+  }
+
   public onClear(event: MouseEvent): void {
+    console.log('Press');
     event.preventDefault();
     event.stopPropagation();
     this.formControl.setValue('');

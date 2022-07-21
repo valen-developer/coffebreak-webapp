@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import {
@@ -29,6 +29,18 @@ export class ApiAuthRepository implements AuthRepository {
   async signup(request: SignupRequest): Promise<void> {
     const response = this.http.post(this.API_URL + '/signup', request);
     await firstValueFrom(response);
+  }
+
+  public async validate(token: string): Promise<void> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const response$ = this.http.put<{ ok: boolean }>(
+      `${this.API_URL}/validate`,
+      {},
+      { headers }
+    );
+
+    await firstValueFrom(response$);
   }
 
   async login(email: string, password: string): Promise<LoginResponse> {

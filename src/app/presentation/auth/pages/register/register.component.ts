@@ -32,9 +32,23 @@ export class RegisterComponent implements OnInit {
     private alert: AlertService
   ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      passwordConfirmation: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
+      passwordConfirmation: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
       name: ['', [Validators.required]],
 
       remember: [false],
@@ -53,11 +67,13 @@ export class RegisterComponent implements OnInit {
   public async onSubmit(): Promise<void> {
     const isValid = this.form.valid;
 
-    if (!isValid)
+    if (!isValid) {
+      this.form.markAllAsTouched();
       return this.alert.warning({
         message: 'Formulario invalido',
         subtitle: 'Por favor, complete todos los campos requeridos',
       });
+    }
 
     const { email, password, passwordConfirmation, name } = this.form.value;
     this.userRegister
