@@ -29,12 +29,14 @@ export class ApiPlaylistRepository
   }
 
   public async duplicate(uuid: string): Promise<Playlist> {
-    const response$ = this.http.post<{ ok: boolean; playlist: PlaylistDTO }>(
+    const response$ = this.http.post<PlaylistDTO>(
       `${this._API_URL}/duplicate/${uuid}`,
       {}
     );
 
-    const { playlist } = await firstValueFrom(response$);
+    const playlist = await firstValueFrom(response$);
+
+    this.playlistCache.clear();
 
     return new Playlist(playlist);
   }
@@ -46,12 +48,9 @@ export class ApiPlaylistRepository
     formData.append('description', playlist.description.value);
     formData.append('file', image);
 
-    const response$ = this.http.post<{ ok: boolean; playlist: PlaylistDTO }>(
-      this._API_URL,
-      formData
-    );
+    const response$ = this.http.post<PlaylistDTO>(this._API_URL, formData);
 
-    const { playlist: playlistCreated } = await firstValueFrom(response$);
+    const playlistCreated = await firstValueFrom(response$);
 
     this.playlistCache.clear();
     return new Playlist(playlistCreated);
@@ -65,7 +64,7 @@ export class ApiPlaylistRepository
       formData.append('file', image);
     }
 
-    const response$ = this.http.put<{ ok: boolean }>(
+    const response$ = this.http.put<void>(
       `${this._API_URL}/${playlist.uuid.value}`,
       formData
     );
@@ -74,9 +73,7 @@ export class ApiPlaylistRepository
   }
 
   public async delete(uuid: string): Promise<void> {
-    const response$ = this.http.delete<{ ok: boolean }>(
-      `${this._API_URL}/${uuid}`
-    );
+    const response$ = this.http.delete<void>(`${this._API_URL}/${uuid}`);
 
     await firstValueFrom(response$);
     this.playlistCache.clear();
@@ -86,21 +83,19 @@ export class ApiPlaylistRepository
     try {
       return this.playlistCache.getCachedPlaylistFromOwner(uuid);
     } catch (error) {
-      const response$ = this.http
-        .get<{ ok: boolean; playlist: PlaylistDTO }>(`${this._API_URL}/${uuid}`)
-        .pipe(pluck('playlist'));
+      const response$ = this.http.get<PlaylistDTO>(`${this._API_URL}/${uuid}`);
 
-      return firstValueFrom(response$).then((dto) => new Playlist(dto));
+      const dto = await firstValueFrom(response$);
+
+      return new Playlist(dto);
     }
   }
 
   public async searchPlaylist(query: PlaylistQuery): Promise<Playlist[]> {
-    const response$ = this.http
-      .post<{ ok: boolean; playlists: PlaylistDTO[] }>(
-        `${this._API_URL}/search`,
-        query
-      )
-      .pipe(pluck('playlists'));
+    const response$ = this.http.post<PlaylistDTO[]>(
+      `${this._API_URL}/search`,
+      query
+    );
 
     const playlists = await firstValueFrom(response$);
 
@@ -111,9 +106,7 @@ export class ApiPlaylistRepository
     try {
       return this.playlistCache.getCachedPlaylistArrayFromOwner();
     } catch (error) {
-      const response$ = this.http
-        .get<{ ok: boolean; playlist: PlaylistDTO[] }>(`${this._API_URL}/own`)
-        .pipe(pluck('playlist'));
+      const response$ = this.http.get<PlaylistDTO[]>(`${this._API_URL}/own`);
 
       const playlistsDTO = await firstValueFrom(response$);
       const playlists = playlistsDTO.map((p) => new Playlist(p));
@@ -124,11 +117,7 @@ export class ApiPlaylistRepository
   }
 
   public async getChannels(): Promise<Playlist[]> {
-    const response$ = this.http
-      .get<{ ok: boolean; channels: PlaylistDTO[] }>(
-        `${this._API_URL}/channels`
-      )
-      .pipe(pluck('channels'));
+    const response$ = this.http.get<PlaylistDTO[]>(`${this._API_URL}/channels`);
 
     const channels = await firstValueFrom(response$).then((dtos) =>
       dtos.map((dto) => new Playlist(dto))
@@ -138,11 +127,9 @@ export class ApiPlaylistRepository
   }
 
   public getEpisodes(playlist: string): Promise<PodcastEpisode[]> {
-    const response$ = this.http
-      .get<{ ok: boolean; episodes: PodcastEpisodeDTO[] }>(
-        `${this._API_URL}/${playlist}/episodes`
-      )
-      .pipe(pluck('episodes'));
+    const response$ = this.http.get<PodcastEpisodeDTO[]>(
+      `${this._API_URL}/${playlist}/episodes`
+    );
 
     return firstValueFrom(response$).then((episodes) =>
       episodes.map((dto) => new PodcastEpisode(dto))
@@ -157,7 +144,7 @@ export class ApiPlaylistRepository
       episodeUuid: episode.uuid.value,
     };
 
-    const response$ = this.http.post<{ ok: boolean }>(
+    const response$ = this.http.post<void>(
       `${this._API_URL}/${playlist.uuid.value}/episode/add`,
       body
     );
@@ -174,7 +161,7 @@ export class ApiPlaylistRepository
       episodeUuid: episode.uuid.value,
     };
 
-    const response$ = this.http.post<{ ok: boolean }>(
+    const response$ = this.http.post<void>(
       `${this._API_URL}/${playlist.uuid.value}/episode/remove`,
       body
     );

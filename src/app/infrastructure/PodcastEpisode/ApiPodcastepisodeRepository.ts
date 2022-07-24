@@ -27,12 +27,12 @@ export class ApiPodcastEpisodeRepository
       ...paginator,
     };
 
-    const request$ = this.http.post<{ episodes: PodcastEpisodeDTO[] }>(
+    const request$ = this.http.post<PodcastEpisodeDTO[]>(
       this._API_URL + '/filter',
       body
     );
 
-    const { episodes } = await firstValueFrom(request$);
+    const episodes = await firstValueFrom(request$);
 
     return episodes.map((episodeDTO) => new PodcastEpisode(episodeDTO));
   }

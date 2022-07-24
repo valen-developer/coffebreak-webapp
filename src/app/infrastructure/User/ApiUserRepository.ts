@@ -19,7 +19,7 @@ export class ApiUserRepository implements UserRepository {
     formData.append('name', user.name.value);
     formData.append('email', user.email.value);
 
-    const response$ = this.http.put<{ ok: true; user: UserDto }>(
+    const response$ = this.http.put<UserDto>(
       `${this._API_URL}/${user.uuid.value}`,
       formData
     );

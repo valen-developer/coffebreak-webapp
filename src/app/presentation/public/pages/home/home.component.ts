@@ -55,10 +55,11 @@ export class HomeComponent implements OnInit {
 
   private async getChannels(): Promise<void> {
     const channels = await this.playlistFinder.getChannels();
+
     const entities: Entity[] = await asyncMap(channels, async (ch) => {
-      const imageUrl = await this.imageGetter.getDataUrlFromEntity(
-        ch.uuid.value
-      );
+      const imageUrl = await this.imageGetter
+        .getDataUrlFromEntity(ch.uuid.value)
+        .catch(() => '');
       return {
         uuid: ch.uuid.value,
         title: ch.name.value,

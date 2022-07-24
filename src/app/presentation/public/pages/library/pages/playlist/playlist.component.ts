@@ -62,9 +62,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   private subsCribeToUser(): void {
     this.userSubscription = this.authStatus.user$.subscribe({
       next: (user) => {
-        console.log(user);
         this.user = user;
-        this.getPlaylists();
       },
     });
   }

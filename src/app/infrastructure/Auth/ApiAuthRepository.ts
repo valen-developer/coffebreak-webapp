@@ -18,7 +18,7 @@ export class ApiAuthRepository implements AuthRepository {
   constructor(private http: HttpClient) {}
 
   public async recoverPassword(params: RecoverPasswordParams): Promise<void> {
-    const response$ = this.http.put<{ ok: boolean }>(
+    const response$ = this.http.put<void>(
       `${this.API_URL}/password/recovery`,
       params
     );
@@ -34,7 +34,7 @@ export class ApiAuthRepository implements AuthRepository {
   public async validate(token: string): Promise<void> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    const response$ = this.http.put<{ ok: boolean }>(
+    const response$ = this.http.put<void>(
       `${this.API_URL}/validate`,
       {},
       { headers }
@@ -54,7 +54,7 @@ export class ApiAuthRepository implements AuthRepository {
       body
     );
 
-    const { ok, user, token } = await firstValueFrom(response);
+    const { user, token } = await firstValueFrom(response);
 
     return {
       user: new User(user),
@@ -63,12 +63,9 @@ export class ApiAuthRepository implements AuthRepository {
   }
 
   async loginWithToken(): Promise<User> {
-    const response = this.http.post<ApiLoginResponse>(
-      this.API_URL + '/login/token',
-      {}
-    );
+    const response = this.http.post<UserDto>(this.API_URL + '/login/token', {});
 
-    const { ok, user } = await firstValueFrom(response);
+    const user = await firstValueFrom(response);
 
     return new User(user);
   }
@@ -81,16 +78,13 @@ export class ApiAuthRepository implements AuthRepository {
       password,
       passwordConfirmation,
     };
-    const response$ = this.http.put<{ ok: boolean }>(
-      `${this.API_URL}/password`,
-      body
-    );
+    const response$ = this.http.put<void>(`${this.API_URL}/password`, body);
 
     await firstValueFrom(response$);
   }
 
   async initGoogleAuth(): Promise<void> {
-    const response$ = this.http.get<{ ok: boolean }>(`${this.API_URL}/google`);
+    const response$ = this.http.get<void>(`${this.API_URL}/google`);
 
     await firstValueFrom(response$);
   }
