@@ -16,6 +16,7 @@ import { TimerInputComponent } from './components/timer-input/timer-input.compon
 import { TimerProgressCircleComponent } from './components/timer-progress-circle/timer-progress-circle.component';
 import { TimerIconComponent } from './components/timer-icon/timer-icon.component';
 import { RouterModule } from '@angular/router';
+import { GeneralCircleProfileComponent } from './components/general-circle-profile/general-circle-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
     TimerInputComponent,
     TimerProgressCircleComponent,
     TimerIconComponent,
+    GeneralCircleProfileComponent,
   ],
   imports: [
     RouterModule,
@@ -48,6 +50,7 @@ import { RouterModule } from '@angular/router';
     DeleteModalComponent,
     TimerSettingsModalComponent,
     TimerIconComponent,
+    GeneralCircleProfileComponent,
   ],
 })
 export class SharedModule {}

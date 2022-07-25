@@ -1,15 +1,48 @@
 <main class="animate__animated animate__fadeIn explore" #exploreMain>
-  <section class="header">
+  <section class="header p-1">
     <app-search-input
       (searchEmitter)="onSearch($event)"
-      placeholder="Buscar episodios"
+      placeholder="Buscar episodios, contertulios..."
     ></app-search-input>
     <div class="header-profile">
       <app-circle-profile></app-circle-profile>
     </div>
   </section>
 
-  <section class="suggest">
+  <section class="artist-list" *ngIf="artists.length > 0">
+    <button
+      class="artist"
+      *ngFor="let artist of artists"
+      (click)="searchByArtist(artist)"
+      Tooltip
+      [text]="artist.name.value"
+    >
+      <div class="artist-circle">
+        <app-general-circle-profile
+          [name]="artist.name.value"
+          [uuid]="artist.uuid.value"
+        ></app-general-circle-profile>
+      </div>
+
+      <div class="artist-info">
+        <span>{{ artist.name.value.slice(0, 12) }}</span>
+      </div>
+    </button>
+    <div
+      class="artist-list__add"
+      *ngIf="hasMorePages(totalPagesArtists, currentPageArtists)"
+    >
+      <button
+        class="btn btn-primary-invert"
+        (click)="nextArtistPage()"
+        *ngIf="totalPagesArtists > currentPageArtists"
+      >
+        Más...
+      </button>
+    </div>
+  </section>
+
+  <section class="suggest p-1">
     <button role="button" class="suggest-action" (click)="onSuggest('')">
       Obtener todos
     </button>
@@ -25,7 +58,7 @@
     </button>
   </section>
 
-  <section class="results" *ngIf="episodes.length > 0">
+  <section class="results p-1" *ngIf="episodes.length > 0">
     <h3 class="results__title">Resultados</h3>
     <a
       [routerLink]="['/episode', episode?.uuid?.value]"
@@ -36,9 +69,18 @@
         [episodes]="episode"
       ></app-search-result-entity-moblie>
     </a>
+
+    <div
+      class="result__add"
+      *ngIf="hasMorePages(totalPagesEpisodes, currentPageEpisodes)"
+    >
+      <button class="btn btn-primary-invert" (click)="nextPageEpisodes()">
+        Más...
+      </button>
+    </div>
   </section>
 
-  <section class="no-results" *ngIf="episodes.length <= 0">
+  <section class="no-results p-1" *ngIf="episodes.length <= 0">
     <h4>Sin resultados</h4>
   </section>
 </main>

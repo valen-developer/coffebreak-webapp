@@ -8,6 +8,7 @@ import {
 } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
 import { Paginator } from 'src/app/domain/Shared/interfaces/Paginator.interface';
+import { Paginated } from 'src/app/helpers/Paginated';
 import { environment } from 'src/environments/environment';
 import { ApiRepository } from '../Shared/ApiRepository';
 
@@ -21,19 +22,22 @@ export class ApiPodcastEpisodeRepository
   public async filter(
     query: PodcastEpisodeQuery,
     paginator: Paginator<PodcastEpisodeDTO>
-  ): Promise<PodcastEpisode[]> {
+  ): Promise<Paginated<PodcastEpisode[], 'episodes'>> {
     const body = {
       ...query,
       ...paginator,
     };
 
-    const request$ = this.http.post<PodcastEpisodeDTO[]>(
+    const request$ = this.http.post<Paginated<PodcastEpisodeDTO[], 'episodes'>>(
       this._API_URL + '/filter',
       body
     );
 
-    const episodes = await firstValueFrom(request$);
+    const { episodes, pages } = await firstValueFrom(request$);
 
-    return episodes.map((episodeDTO) => new PodcastEpisode(episodeDTO));
+    return {
+      episodes: episodes.map((ep) => new PodcastEpisode(ep)),
+      pages,
+    };
   }
 }

@@ -41,10 +41,7 @@ export class PrincipalAudioPlayerComponent implements OnChanges, OnDestroy {
   @Output() randomEmitter = new EventEmitter<void>();
   @Output() playPulseEmitter = new EventEmitter<void>();
 
-  constructor(
-    private audioController: AudioController,
-    private playerTimer: PlayerTimerService
-  ) {}
+  constructor(private audioController: AudioController) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.isSameEpisode) return;

@@ -72,7 +72,7 @@ export class PublicComponent
 
     if (!lastEpisode) return;
 
-    const episodeArray = await this.episodeFinder.filter(
+    const { episodes: episodeArray } = await this.episodeFinder.filter(
       { uuid_equals: lastEpisode.uuid },
       {}
     );

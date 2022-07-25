@@ -6,6 +6,7 @@ import {
 } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
 import { Paginator } from 'src/app/domain/Shared/interfaces/Paginator.interface';
+import { Paginated } from 'src/app/helpers/Paginated';
 
 @Injectable({ providedIn: 'root' })
 export class PodcastEpisodeFinder {
@@ -29,13 +30,13 @@ export class PodcastEpisodeFinder {
       order: 'desc',
     };
 
-    return this.filter(query, paginator);
+    return this.filter(query, paginator).then(({ episodes }) => episodes);
   }
 
   public async filter(
     query: PodcastEpisodeQuery,
     paginator: Paginator<PodcastEpisodeDTO>
-  ): Promise<PodcastEpisode[]> {
+  ): Promise<Paginated<PodcastEpisode[], 'episodes'>> {
     return await this.podcastEpisodeRepository.filter(query, paginator);
   }
 }

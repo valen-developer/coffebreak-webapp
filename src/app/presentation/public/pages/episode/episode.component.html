@@ -41,13 +41,50 @@
   </div>
 
   <div class="title">
-    <h4>{{ "Episodio " + episode?.episode }}</h4>
-    <p>{{ episode?.title?.value }}</p>
-
-    <h5>{{ "Descripción" }}</h5>
-    <div class="title-description">
-      <p [innerHtml]="episode?.description?.value"></p>
+    <div>
+      <h4>{{ "Episodio " + episode?.episode }}</h4>
+      <p>{{ episode?.title?.value }}</p>
     </div>
+
+    <div class="tabs">
+      <div class="tabs-buttons">
+        <button
+          class="btn btn-small tab-item"
+          [ngClass]="{
+            active: selectedTab === 'DESCRIPTION'
+          }"
+          (click)="setSelectedTab('DESCRIPTION')"
+        >
+          Descripción
+        </button>
+        <hr class="vertical-divider" />
+        <button
+          class="btn btn-small tab-item"
+          [ngClass]="{
+            active: selectedTab === 'EPISODE_TRACKS'
+          }"
+          (click)="setSelectedTab('EPISODE_TRACKS')"
+        >
+          {{ tracks.length }} Tracks
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <div class="title-description" *ngIf="selectedTab === 'DESCRIPTION'">
+          <p [innerHtml]="episode?.description?.value"></p>
+        </div>
+
+        <div class="tracks" *ngIf="selectedTab === 'EPISODE_TRACKS'">
+          <div class="track" *ngFor="let track of tracks">
+            <button class="track-time" (click)="goToTrack(track)">
+              {{ track.time.value }}
+            </button>
+            <span class="track-description">{{ track.description.value }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="title-meta">
       <small>{{ episode?.pubDate?.toDDMMYYYY() }}</small>
     </div>

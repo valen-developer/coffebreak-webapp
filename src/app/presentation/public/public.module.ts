@@ -7,6 +7,7 @@ import { PublicRoutingModule } from './public-routing.module';
 import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
 import { PlaylistPlayerService } from '../shared/modules/audio-player/services/playlist-player.service';
 import { AuthComponentsModule } from '../shared/modules/auth-components/auth-components.module';
+import { TooltipModule } from '../shared/modules/tooltip/tooltip.module';
 import { RouteToolService } from '../shared/services/route-tool.service';
 import { ScrollService } from '../shared/services/scroll.service';
 import { EpisodeCardListComponent } from './components/episode-card-list/episode-card-list.component';
@@ -46,6 +47,7 @@ import { PublicComponent } from './public.component';
     PublicRoutingModule,
     SharedModule,
     AuthComponentsModule,
+    TooltipModule,
   ],
   providers: [
     PlaylistPlayerService,

@@ -1,13 +1,18 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { EpisodeTrackFinder } from 'src/app/application/EpisodeTrack/EpisodeTrackFinder';
+
 import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
+import { EpisodeTrack } from 'src/app/domain/EpisodeTrack/EpisodeTrack.model';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastEpisodeQuery } from 'src/app/domain/PodcastEpisode/PodcastEpisodeQuery';
+import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { TimerSettingsModalComponent } from 'src/app/presentation/shared/components/timer-settings-modal/timer-settings-modal.component';
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
+import { AudioController } from 'src/app/presentation/shared/modules/audio-player/services/audio-controller.service';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio-player/services/navbar-audio-controller.service';
 import { PlayerTimerService } from 'src/app/presentation/shared/modules/audio-player/services/player-timer.service';
@@ -16,6 +21,8 @@ import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { PlaylistSelectorModalComponent } from '../../components/playlist-selector-modal/playlist-selector-modal.component';
 
+type AVIABLE_TABS = 'DESCRIPTION' | 'EPISODE_TRACKS';
+
 @Component({
   templateUrl: './episode.component.html',
   styleUrls: ['./episode.component.scss'],
@@ -23,10 +30,14 @@ import { PlaylistSelectorModalComponent } from '../../components/playlist-select
 export class EpisodeComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: true }) modal!: ModalComponent;
 
-  public episode!: PodcastEpisode;
+  public selectedTab: AVIABLE_TABS = 'DESCRIPTION';
+
+  public episode!: Nullable<PodcastEpisode>;
   private episodePlaying!: PodcastEpisode;
-  public playlist!: Playlist;
+  public playlist!: Nullable<Playlist>;
   public isSameThanPlaying = false;
+
+  public tracks: EpisodeTrack[] = [];
 
   public episodePlaylistIndex$: Observable<number>;
   public previousUrl$!: Observable<string>;
@@ -37,12 +48,14 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private audioController: AudioController,
     private navbarAudioController: NavbarAudioController,
     private episodePlayerService: EpisodePlayerService,
     private playlistPlayer: PlaylistPlayerService,
     private routeTool: RouteToolService,
     private episodeFinder: PodcastEpisodeFinder,
     private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
+    private trackFinder: EpisodeTrackFinder,
     private timer: PlayerTimerService,
     private alert: AlertService
   ) {
@@ -59,9 +72,10 @@ export class EpisodeComponent implements OnInit, OnDestroy {
       uuid_equals: this.getUuid(),
     };
 
-    this.episodeFinder.filter(query, {}).then((episodeArray) => {
+    this.episodeFinder.filter(query, {}).then(({ episodes: episodeArray }) => {
       const episode = episodeArray[0];
       this.episode = episode;
+      this.getEpisodeTracks();
       this.isSameThanPlaying = this.episode?.isSame(this.episodePlaying);
     });
 
@@ -70,7 +84,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
         next: (episode) => {
           if (!episode) return;
           this.episodePlaying = episode;
-          this.isSameThanPlaying = this.episode?.isSame(episode);
+          this.isSameThanPlaying = this.episode?.isSame(episode) ?? false;
         },
       });
   }
@@ -82,6 +96,14 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   private getUuid(): string {
     return this.route.snapshot.paramMap.get('uuid') as string;
+  }
+
+  private getEpisodeTracks(): void {
+    if (!this.episode) return;
+
+    this.trackFinder.findByEpisode(this.episode?.uuid.value).then((tracks) => {
+      this.tracks = tracks;
+    });
   }
 
   public isPlaylist(): boolean {
@@ -113,13 +135,14 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
     this.modal.show(PlaylistSelectorModalComponent, {}).then((playlist) => {
       if (!playlist) return this.modal.hide();
+      if (!this.episode) return this.modal.hide();
 
       this.playlistEpisodeUpdater
         .addEpisode(playlist, this.episode)
         .then(() => {
           this.alert.success({
             message: 'Episodio añadido',
-            subtitle: `Episodio ${this.episode.episode} añadido a la lista ${playlist.name.value}`,
+            subtitle: `Episodio ${this.episode?.episode} añadido a la lista ${playlist.name.value}`,
           });
         });
     });
@@ -137,6 +160,23 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   public onPlayPulse(): void {
+    if (!this.episode) return;
+
     this.episodePlayerService.setEpisode(this.episode);
+  }
+
+  public setSelectedTab(tab: AVIABLE_TABS): void {
+    this.selectedTab = tab;
+  }
+
+  public goToTrack(track: EpisodeTrack): void {
+    if (!this.isSameThanPlaying)
+      return this.alert.warning({
+        message: 'No se navegar a ese momento',
+        subtitle: 'No estás reproduciendo el mismo episodio',
+      });
+
+    const seconds = track.time.toSeconds();
+    this.audioController.setCurrentTime(seconds);
   }
 }
