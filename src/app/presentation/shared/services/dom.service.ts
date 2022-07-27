@@ -1,5 +1,6 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Observable, Subject } from 'rxjs';
 
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
@@ -15,7 +16,8 @@ export class DOMService {
 
   constructor(
     @Inject(PLATFORM_ID) private platformID: InjectionToken<any>,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private title: Title
   ) {
     this.onChangeViewSubject = new Subject<void>();
     this.onChangeViewDimension$ = this.onChangeViewSubject.asObservable();
@@ -41,6 +43,10 @@ export class DOMService {
 
   public getWindow(): Nullable<Window> {
     return this.isBrowser() ? this.document.defaultView : null;
+  }
+
+  public getTitleObject(): Nullable<Title> {
+    return this.title;
   }
 
   private observeChangeViewDimentions(): void {

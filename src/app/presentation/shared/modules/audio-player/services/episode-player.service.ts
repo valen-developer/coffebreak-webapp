@@ -3,6 +3,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { LastEpisodesRepository } from 'src/app/domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
+import { DOMService } from '../../../services/dom.service';
 import { AudioController } from './audio-controller.service';
 
 @Injectable()
@@ -17,7 +18,8 @@ export class EpisodePlayerService implements OnDestroy {
 
   constructor(
     private audioController: AudioController,
-    private lastEpisodeRepository: LastEpisodesRepository
+    private lastEpisodeRepository: LastEpisodesRepository,
+    private domService: DOMService
   ) {
     this.subscribeToTime();
   }
@@ -39,6 +41,11 @@ export class EpisodePlayerService implements OnDestroy {
     this.audioController.setupAudio(episode?.audioUrl.value as string);
 
     if (opt?.autoplay) this.audioController.togglePlayPause();
+
+    const title = this.domService.getTitleObject();
+
+    if (!title) return;
+    title.setTitle(episode?.title.value);
   }
 
   public togglePlayPause(): void {
