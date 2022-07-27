@@ -7,10 +7,10 @@
   />
 
   <div class="actions">
-    <button role="button" class="actions__action" (click)="onClear($event)">
+    <div role="button" class="actions__action" (click)="onClear($event)">
       <i class="fa fa-times"></i>
-    </button>
-    <button
+    </div>
+    <div
       class="actions__action"
       *ngIf="isPassword"
       (click)="changeVisibility($event)"
@@ -20,7 +20,7 @@
 
       <!-- icon eye-slash fontawesome -->
       <i class="fa fa-eye-slash" *ngIf="isVisible"></i>
-    </button>
+    </div>
   </div>
 </div>
 <div class="error" *ngIf="hasError()">

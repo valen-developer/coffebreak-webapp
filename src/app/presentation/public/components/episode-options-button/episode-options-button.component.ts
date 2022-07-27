@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { debounceTime, fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { DOMService } from 'src/app/presentation/shared/services/dom.service';
 
 @Component({
