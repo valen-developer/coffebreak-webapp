@@ -7,6 +7,11 @@ import { DOMService } from './presentation/shared/services/dom.service';
 import { Events } from './domain/PodcastEpisode/constants/Events';
 import { AlertService } from './presentation/shared/modules/alert/alert.service';
 import { PlaylistDTO } from './domain/Playlist/Playlist.model';
+import {
+  PodcastEpisode,
+  PodcastEpisodeDTO,
+} from './domain/PodcastEpisode/PodcastEpisode.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +21,11 @@ import { PlaylistDTO } from './domain/Playlist/Playlist.model';
 export class AppComponent {
   title = 'webapp';
 
-  constructor(private domService: DOMService, private alert: AlertService) {
+  constructor(
+    private domService: DOMService,
+    private alert: AlertService,
+    private router: Router
+  ) {
     this.initSocket();
   }
 
@@ -28,10 +37,29 @@ export class AppComponent {
       console.log('Connected');
     });
 
-    socket.on(Events.NEW_CHANNEL, (data: PlaylistDTO) => {
+    socket.on(Events.NEW_EPISODE, (episode: PodcastEpisodeDTO) => {
+      console.log(
+        '🚀 ~ file: app.component.ts ~ line 33 ~ AppComponent ~ socket.on ~ episode',
+        episode
+      );
       this.alert.info({
-        message: `Nuevo canal: ${data.name} añadido`,
-        subtitle: `${data.name} - ${data.episodes?.length} episodios`,
+        message: `Nuevo episodio 🥳`,
+        subtitle: episode.title,
+        autoclose: false,
+        onClick: () => {
+          this.router.navigate(['/episode', episode.uuid]);
+        },
+      });
+    });
+
+    socket.on(Events.NEW_CHANNEL, (channel: PlaylistDTO) => {
+      this.alert.info({
+        message: `Nuevo canal: ${channel.name} añadido`,
+        subtitle: `${channel.name} - ${channel.episodes?.length} episodios`,
+        autoclose: false,
+        onClick: () => {
+          this.router.navigate(['/playlist', channel.uuid]);
+        },
       });
     });
   }

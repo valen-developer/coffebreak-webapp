@@ -33,4 +33,11 @@ export class AlertComponent implements OnInit {
       this.alerts = this.alerts.filter((a) => a.uuid !== alert.uuid);
     }, 300);
   }
+
+  public onClick(alert: Alert): void {
+    if (!alert.onClick) return;
+
+    alert.onClick();
+    this.removeAlert(alert);
+  }
 }

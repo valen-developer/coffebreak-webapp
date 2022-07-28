@@ -4,7 +4,7 @@
     [ngClass]="{ fadeOut: alert.fadeOut ? true : false }"
     *ngFor="let alert of alerts.reverse()"
   >
-    <div class="alert-card-left">
+    <div class="alert-card-left" (click)="onClick(alert)">
       <div class="alert-card-icon {{ alert.type }}">
         <i class="fas fa-check-circle" *ngIf="alert.type === 'succes'"></i>
         <i

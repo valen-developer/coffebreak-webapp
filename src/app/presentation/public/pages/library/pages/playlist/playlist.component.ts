@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, RouteConfigLoadEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
@@ -16,6 +17,7 @@ import { DeleteModalComponent } from 'src/app/presentation/shared/components/del
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
+import { DOMService } from 'src/app/presentation/shared/services/dom.service';
 import {
   CrearePlaylistModalComponent,
   NewPlaylistModalResponse,
@@ -32,12 +34,16 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   public platyLists: Playlist[] = [];
   public playlistsData: PlaylistData[] = [];
 
+  public playlistFromRoute: Nullable<Playlist>;
+
   private user: Nullable<User>;
   private userSubscription!: Subscription;
 
   private searchSubscription!: Subscription;
 
   constructor(
+    private router: Router,
+    private domService: DOMService,
     private playlistFinder: PlaylistFinder,
     private playlistDeleter: PlaylistDeleter,
     private playlistCreator: PlaylistCreator,
@@ -52,11 +58,33 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subsCribeToUser();
     this.searchSubscribe();
+
+    this.playlistFromRoute = this.getPlaylistFromRoute();
   }
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
     this.searchSubscription?.unsubscribe();
+  }
+
+  public isFromUrl(playlistUuid: string): boolean {
+    if (!this.playlistFromRoute) return false;
+
+    const isSame = this.playlistFromRoute?.uuid?.value === playlistUuid;
+    return isSame;
+  }
+
+  private getPlaylistFromRoute(): Nullable<Playlist> {
+    if (!this.domService.isBrowser()) return null;
+
+    const state =
+      this.router.getCurrentNavigation()?.extras?.state ?? history.state;
+
+    const playlist: Nullable<Playlist> = state?.playlist;
+
+    if (!playlist) return null;
+
+    return playlist;
   }
 
   private subsCribeToUser(): void {

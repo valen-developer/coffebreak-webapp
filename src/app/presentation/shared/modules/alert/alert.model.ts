@@ -7,4 +7,5 @@ export interface Alert {
   type: alertTypes;
   autoClose: boolean;
   fadeOut?: boolean;
+  onClick?: () => void;
 }

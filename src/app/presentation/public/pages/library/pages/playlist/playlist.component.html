@@ -6,14 +6,20 @@
     <span>Crear nueva playlist</span>
   </button>
 
-  <div class="item" *ngFor="let playlist of playlistsData">
+  <div
+    class="item"
+    *ngFor="let playlist of playlistsData"
+    [ngClass]="{ featured: isFromUrl(playlist.uuid) }"
+  >
     <a [routerLink]="['/playlist', playlist.uuid]" class="playlist-item">
       <div class="image">
         <img [src]="playlist.imageUrl" alt="" />
       </div>
 
       <div class="text">
-        <h5 class="text__title">{{ playlist.name }}</h5>
+        <h5 class="text__title">
+          {{ playlist.name }}
+        </h5>
       </div>
 
       <div class="count">

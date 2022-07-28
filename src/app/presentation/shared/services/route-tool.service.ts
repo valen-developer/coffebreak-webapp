@@ -45,6 +45,10 @@ export class RouteToolService {
     });
   }
 
+  public getRouter(): Router {
+    return this.router;
+  }
+
   public getPreviousUrl(): string {
     return this._previousUrl;
   }

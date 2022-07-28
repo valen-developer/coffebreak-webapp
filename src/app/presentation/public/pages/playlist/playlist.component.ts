@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from 'express';
 import { Observable } from 'rxjs';
 import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { PlaylistCreator } from 'src/app/application/Playlist/PlaylistCreator';
@@ -9,6 +10,7 @@ import { ImageGetter } from 'src/app/application/Shared/ImageGetter';
 import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { PodcastDuration } from 'src/app/domain/PodcastEpisode/valueObjects/PodcastDuration.valueObject';
+import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
 import { DeleteModalComponent } from 'src/app/presentation/shared/components/delete-modal/delete-modal.component';
 import { AlertService } from 'src/app/presentation/shared/modules/alert/alert.service';
 import { EpisodePlayerService } from 'src/app/presentation/shared/modules/audio-player/services/episode-player.service';
@@ -29,7 +31,7 @@ export class PlaylistComponent implements OnInit {
   public canUpdate = false;
 
   public imageUrl!: string;
-  public durationSeconds!: PodcastDuration;
+  public durationSeconds!: Nullable<PodcastDuration>;
 
   public isAuthenticated$: Observable<boolean>;
 
@@ -145,10 +147,21 @@ export class PlaylistComponent implements OnInit {
   public async duplicate(): Promise<void> {
     this.playlistCreator
       .duplicatePlaylist(this.playlist)
-      .then(() => {
+      .then((duplicatedPlaylist: Playlist) => {
         this.alert.success({
           message: 'Lista duplicada',
-          subtitle: 'Puedes editarla desde la lista duplicada',
+          subtitle:
+            'Puedes editarla desde la lista duplicada. Pulsa para ver tus listas',
+          onClick: () => {
+            const router = this.routeTool.getRouter();
+            if (!router) return;
+
+            router.navigate(['/library/playlist'], {
+              state: {
+                playlist: duplicatedPlaylist,
+              },
+            });
+          },
         });
       })
       .catch(() => {

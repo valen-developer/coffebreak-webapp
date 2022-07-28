@@ -12,6 +12,8 @@ export class AlertService {
   private alertSubject: Subject<Alert>;
   public onAlert$: Observable<Alert>;
 
+  private voidOnClick: () => void = () => {};
+
   constructor(private uuidGenerator: UUIDGenerator) {
     this.alertSubject = new Subject();
     this.onAlert$ = this.alertSubject.asObservable();
@@ -25,6 +27,7 @@ export class AlertService {
       type: 'succes',
       autoclose: fixedParams.autoclose as boolean,
       subtitle: fixedParams.subtitle,
+      onClick: fixedParams.onClick,
     });
   }
 
@@ -36,6 +39,7 @@ export class AlertService {
       type: 'warning',
       autoclose: fixedParams.autoclose as boolean,
       subtitle: fixedParams.subtitle,
+      onClick: fixedParams.onClick,
     });
   }
 
@@ -47,6 +51,7 @@ export class AlertService {
       type: 'danger',
       autoclose: fixedParams.autoclose as boolean,
       subtitle: fixedParams.subtitle,
+      onClick: fixedParams.onClick,
     });
   }
 
@@ -58,6 +63,7 @@ export class AlertService {
       type: 'info',
       autoclose: fixedParams.autoclose as boolean,
       subtitle: fixedParams.subtitle,
+      onClick: fixedParams.onClick,
     });
   }
 
@@ -68,6 +74,7 @@ export class AlertService {
       subtitle: params.subtitle,
       type: params.type,
       autoClose: params.autoclose,
+      onClick: params.onClick,
     });
   }
 
@@ -76,6 +83,7 @@ export class AlertService {
       message: params.message,
       subtitle: params.subtitle ?? params.message,
       autoclose: isNull(params.autoclose) ? true : params.autoclose,
+      onClick: params.onClick ?? this.voidOnClick,
     };
     return fixedParams;
   }
@@ -85,6 +93,7 @@ interface AlertShowParams {
   message: string;
   subtitle?: string;
   autoclose?: boolean;
+  onClick?: () => void;
 }
 
 interface AlertTypeParams extends NotOptional<AlertShowParams> {
