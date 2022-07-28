@@ -71,7 +71,7 @@
 
       <div class="tab-content">
         <div class="title-description" *ngIf="selectedTab === 'DESCRIPTION'">
-          <p [innerHtml]="episode?.description?.value"></p>
+          <p>{{ episode?.description?.value }}</p>
         </div>
 
         <div class="tracks" *ngIf="selectedTab === 'EPISODE_TRACKS'">
