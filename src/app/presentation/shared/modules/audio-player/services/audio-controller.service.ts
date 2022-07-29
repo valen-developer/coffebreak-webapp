@@ -16,6 +16,7 @@ import { DOMService } from '../../../services/dom.service';
 })
 export class AudioController implements OnDestroy {
   private _DEFAULT_VOLUME: number = 0.8;
+  private _SHIFT_TIME: number = 5;
 
   private audioObject!: HTMLAudioElement;
 
@@ -147,5 +148,23 @@ export class AudioController implements OnDestroy {
 
   private emitVolume(volume: number): void {
     this.volumeSubject.next(volume);
+  }
+
+  public shiftLeft(): void {
+    this.shift(-this._SHIFT_TIME);
+  }
+
+  public shiftRight(): void {
+    this.shift(this._SHIFT_TIME);
+  }
+
+  private shift(shiftTime: number): void {
+    const currentTime = this.audioObject.currentTime;
+    const newTime = currentTime + shiftTime;
+
+    if (newTime > this.audioObject.duration) return;
+    if (newTime < 0) return;
+
+    this.audioObject.currentTime = newTime;
   }
 }

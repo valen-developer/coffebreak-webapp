@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { EpisodeTrackFinder } from 'src/app/application/EpisodeTrack/EpisodeTrackFinder';
 
 import { PlaylistEpisodeUpdater } from 'src/app/application/Playlist/PlaylistEpisodeUpdater';
@@ -18,6 +18,7 @@ import { NavbarAudioController } from 'src/app/presentation/shared/modules/audio
 import { PlayerTimerService } from 'src/app/presentation/shared/modules/audio-player/services/player-timer.service';
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
+import { DOMService } from 'src/app/presentation/shared/services/dom.service';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { PlaylistSelectorModalComponent } from '../../components/playlist-selector-modal/playlist-selector-modal.component';
 
@@ -43,11 +44,13 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   public previousUrl$!: Observable<string>;
 
   private episodePlayingSubscription!: Subscription;
+  private keyupSubscription!: Subscription;
 
   public timerStatus$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
+    private domService: DOMService,
     private audioController: AudioController,
     private navbarAudioController: NavbarAudioController,
     private episodePlayerService: EpisodePlayerService,
@@ -66,6 +69,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('On init');
     this.navbarAudioController.hide();
 
     const query: PodcastEpisodeQuery = {
@@ -87,11 +91,49 @@ export class EpisodeComponent implements OnInit, OnDestroy {
           this.isSameThanPlaying = this.episode?.isSame(episode) ?? false;
         },
       });
+
+    const document = this.domService.getDocument();
+    if (!document) return;
+
+    this.keyupSubscription?.unsubscribe();
+
+    this.keyupSubscription = fromEvent(document, 'keyup').subscribe({
+      next: (event: any) => {
+        this.keypresManager(event);
+      },
+    });
   }
 
   ngOnDestroy(): void {
+    console.log('Destroy');
     this.navbarAudioController.show();
     this.episodePlayingSubscription?.unsubscribe();
+    this.keyupSubscription?.unsubscribe();
+  }
+
+  private keypresManager(event: KeyboardEvent): void {
+    const arrowLeft = event.key === 'ArrowLeft';
+    const arrowRight = event.key === 'ArrowRight';
+    const enter = event.key === 'Enter';
+
+    const isValidKey = arrowLeft || arrowRight || enter;
+    if (!isValidKey) return;
+
+    const isSameThanPlaying = this.episode?.isSame(this.episodePlaying);
+    if (!isSameThanPlaying) return;
+
+    if (arrowLeft) {
+      this.audioController.shiftLeft();
+    }
+
+    if (arrowRight) {
+      this.audioController.shiftRight();
+    }
+
+    if (enter) {
+      console.log('Same as playing', 'Enter');
+      this.audioController.togglePlayPause();
+    }
   }
 
   private getUuid(): string {
