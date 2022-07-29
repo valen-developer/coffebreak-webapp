@@ -24,13 +24,24 @@ export class RrssSuccessComponent implements OnInit {
   }
 
   private loginWithToken(): void {
-    this.userLogger.loginWithToken(this.getToken()).then(() => {
-      this.alert.success({
-        message: '¡Bienvenido!',
-        subtitle: 'Inicio de sesión con Google correcto',
-      });
+    console.log(this.getToken());
 
-      this.router.navigate(['/home']);
-    });
+    this.userLogger
+      .loginWithToken(this.getToken())
+      .then(() => {
+        this.alert.success({
+          message: '¡Bienvenido!',
+          subtitle: 'Inicio de sesión con Google correcto',
+        });
+      })
+      .catch(() => {
+        this.alert.danger({
+          message: '¡Error!',
+          subtitle: 'Inicio de sesión con Google incorrecto',
+        });
+      })
+      .finally(() => {
+        this.router.navigate(['/home']);
+      });
   }
 }
