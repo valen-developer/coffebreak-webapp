@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY . .
 
+
+ENV NODE_OPTIONS="--max-old-space-size=800"
 RUN npm install
 RUN npm run build --prod
 
