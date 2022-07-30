@@ -1,0 +1,26 @@
+
+
+name: deploy-production
+on:
+  push:
+    branches:
+      - production
+    tags:
+      - coffebreak
+      - production
+
+jobs:
+  test1:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: build webapp
+        run: docker build -t coffebreak-webapp .
+
+      - name: up containers
+        run: docker-compose -f docker-compose.prod.yml up -d
+
+
+
+

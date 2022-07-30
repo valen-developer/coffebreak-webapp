@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  presupuestador:
+    container_name: coffebreak-webapp
+    image: coffebreak-webapp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=coffeebreakpodcast.app,www.coffeebreakpodcast.app
+      - LETSENCRYPT_HOST=coffeebreakpodcast.app,www.coffeebreakpodcast.app
+      - LETSENCRYPT_EMAIL=valentin@valentinvalverde.com
+    networks:
+      - coffebreak
+    external_links:
+      - backend
+    restart: always
+
+networks:
+  coffebreak:
+    external: true
