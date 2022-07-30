@@ -6,6 +6,7 @@
     "start": "ng serve",
     "start:host": "ng serve --host 0.0.0.0",
     "build": "ng build",
+    "build:prod": "node --max_old_space_size=800 ./node_modules/@angular/cli/bin/ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run webapp:serve-ssr",
