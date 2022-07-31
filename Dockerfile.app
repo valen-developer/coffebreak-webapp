@@ -8,9 +8,8 @@ COPY . .
 
 
 RUN npm install
-RUN npm run build
+RUN npm run build:ssr
 
 
-FROM nginx:latest
+CMD ["node", "dist/server/main.js"]
 
-COPY --from=build /app/dist /usr/share/nginx/html

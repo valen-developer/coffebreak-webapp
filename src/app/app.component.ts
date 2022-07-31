@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { UserLogger } from './application/Auth/UserLogger.service';
+import { Router } from '@angular/router';
+import { Meta } from '@angular/platform-browser';
 
 import { io } from 'socket.io-client';
+
 import { environment } from 'src/environments/environment';
-import { DOMService } from './presentation/shared/services/dom.service';
-import { Events } from './domain/PodcastEpisode/constants/Events';
-import { AlertService } from './presentation/shared/modules/alert/alert.service';
 import { PlaylistDTO } from './domain/Playlist/Playlist.model';
-import {
-  PodcastEpisode,
-  PodcastEpisodeDTO,
-} from './domain/PodcastEpisode/PodcastEpisode.model';
-import { Router } from '@angular/router';
+import { Events } from './domain/PodcastEpisode/constants/Events';
+import { PodcastEpisodeDTO } from './domain/PodcastEpisode/PodcastEpisode.model';
+import { AlertService } from './presentation/shared/modules/alert/alert.service';
+import { DOMService } from './presentation/shared/services/dom.service';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +20,12 @@ export class AppComponent {
   title = 'webapp';
 
   constructor(
+    private meta: Meta,
     private domService: DOMService,
     private alert: AlertService,
     private router: Router
   ) {
+    // this.addMetaTags();
     this.initSocket();
   }
 
@@ -38,10 +38,6 @@ export class AppComponent {
     });
 
     socket.on(Events.NEW_EPISODE, (episode: PodcastEpisodeDTO) => {
-      console.log(
-        '🚀 ~ file: app.component.ts ~ line 33 ~ AppComponent ~ socket.on ~ episode',
-        episode
-      );
       this.alert.info({
         message: `Nuevo episodio 🥳`,
         subtitle: episode.title,
@@ -62,5 +58,35 @@ export class AppComponent {
         },
       });
     });
+  }
+
+  private addMetaTags(): void {
+    if (!this.domService.isBrowser()) return;
+
+    this.meta.addTag({ name: 'description', content: 'Podcast de ciencia' });
+    this.meta.addTag({
+      name: 'keywords',
+      content: 'podcast, ciencia, física, biología, arqueología, astronomía',
+    });
+
+    // make a preview url for social media
+    const url = `${window.location.origin}${window.location.pathname}`;
+    this.meta.addTag({ name: 'og:url', content: url });
+    this.meta.addTag({
+      name: 'og:title',
+      content: 'Coffeebreak: señal y ruido',
+    });
+    this.meta.addTag({ name: 'og:description', content: 'Podcast de ciencia' });
+    this.meta.addTag({
+      name: 'og:image',
+      content: 'https://coffeebreakpodcast.app/assets/images/cover.png',
+    });
+    this.meta.addTag({ name: 'og:image:type', content: 'image/png' });
+    this.meta.addTag({ name: 'og:image:width', content: '630' });
+    this.meta.addTag({ name: 'og:image:height', content: '630' });
+    this.meta.addTag({ name: 'og:image:alt', content: 'Coffeebreak' });
+    this.meta.addTag({ name: 'og:type', content: 'website' });
+    this.meta.addTag({ name: 'og:site_name', content: 'Coffeebreak' });
+    this.meta.addTag({ name: 'og:locale', content: 'es_ES' });
   }
 }

@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  coffeebreak:
-    container_name: coffebreak-webapp
-    image: coffebreak-webapp:latest
+  coffebreak-webapp-proxy:
+    container_name: coffebreak-webapp-proxy
+    image: coffebreak-webapp-proxy:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.proxy
     volumes:
       - ./nginx/:/etc/nginx/conf.d/
     expose:
@@ -19,8 +19,52 @@ services:
       - coffebreak
     external_links:
       - backend
+    depends_on:
+      - coffebreak-webapp
+    links:
+      - coffebreak-webapp
     restart: always
+
+  coffebreak-webapp:
+    container_name: coffebreak-webapp
+    image: coffebreak-webapp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    environment:
+      - PORT=4000
+    expose:
+      - 4000
+    restart: unless-stopped
+
+    networks:
+      coffebreak:
+        aliases:
+          - coffebreak-webapp
 
 networks:
   coffebreak:
     external: true
+
+
+
+#nginx-valentinvalverde:
+   # build:
+   #   context: ./nginx/
+   #   dockerfile: Dockerfile
+   # container_name: nginx-valentinvalverde
+   # volumes:
+   #   - ./dist:/usr/share/nginx/html:ro
+   #   - ./nginx/:/etc/nginx/conf.d/
+   # expose:
+   #   - "80"
+   # environment:
+   #   - VIRTUAL_HOST=valentinvalverde.com,www.valentinvalverde.com
+   #   - LETSENCRYPT_HOST=valentinvalverde.com,www.valentinvalverde.com
+   #   - LETSENCRYPT_EMAIL=valenreta.developer@gmail.com
+   # restart: unless-stopped
+   # links:
+   #   - node-server-front:node-server-front
+   #   - nodeback-valentinvalverde:nodeback-valentinvalverde
+   # networks:
+   #   - netnginx

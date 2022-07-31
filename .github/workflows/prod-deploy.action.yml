@@ -21,19 +21,28 @@ jobs:
 
       # Build the app
       - name: Build webapp
-        run: docker build -t coffebreak-webapp .
+        run: docker build -t coffebreak-webapp --file Dockerfile.app .
+
+      - name: Build proxy
+        run: docker build -t coffebreak-webapp-proxy --file Dockerfile.proxy .
 
       # login to github docker registry
       - name: Login to docker registry
         run: docker login https://ghcr.io -u ${{ env.registry_username }} -p ${{ env.registry_password }}
 
       # tag the image
-      - name: Tag image
+      - name: Tag image webapp
         run: docker tag coffebreak-webapp ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
 
+      - name: Tag image proxy
+        run: docker tag coffebreak-webapp-proxy ghcr.io/${{ env.registry_username }}/coffebreak-webapp-proxy:latest
+
       # push the image to the registry
-      - name: Push image
+      - name: Push webapp image
         run: docker push ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
+
+      - name: Push proxy image
+        run: docker push ghcr.io/${{ env.registry_username }}/coffebreak-webapp-proxy:latest
 
       # logout of github docker registry
       - name: Logout of docker registry
@@ -50,12 +59,20 @@ jobs:
         run: docker login https://ghcr.io -u ${{ env.registry_username }} -p ${{ env.registry_password }}
 
       # get the image from the registry
+      # get webapp image
       - name: Get image from registry
         run: docker pull ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
 
+      # get proxy image
+      - name: Get image from registry
+        run: docker pull ghcr.io/${{ env.registry_username }}/coffebreak-webapp-proxy:latest
+
       # tag the image
-      - name: Tag image
+      - name: Tag webapp image
         run: docker tag ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest coffebreak-webapp:latest
+
+      - name: Tag proxy image
+        run: docker tag ghcr.io/${{ env.registry_username }}/coffebreak-webapp-proxy:latest coffebreak-webapp-proxy:latest
 
       # run containers
       - name: Build containers
