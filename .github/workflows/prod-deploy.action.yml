@@ -9,18 +9,76 @@ on:
       - coffebreak
       - production
 
+env:
+  registry_username: ${{ secrets.REGISTRY_USERNAME }}
+  registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Build the app
+      - name: Build webapp
+        run: docker build -t coffebreak-webapp .
+
+      # login to github docker registry
+      - name: Login to docker registry
+        run: docker login https://ghcr.io -u ${{ env.registry_username }} -p ${{ env.registry_password }}
+
+      # tag the image
+      - name: Tag image
+        run: docker tag coffebreak-webapp ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
+
+      # push the image to the registry
+      - name: Push image
+        run: docker push ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
+
+      # logout of github docker registry
+      - name: Logout of docker registry
+        run: docker logout
+
+
   deploy:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
 
-      - name: build webapp
-        run: docker build -t coffebreak-webapp .
+      # login to github docker registry
+      - name: Login to docker registry
+        run: docker login https://ghcr.io -u ${{ env.registry_username }} -p ${{ env.registry_password }}
 
-      - name: up containers
+      # get the image from the registry
+      - name: Get image from registry
+        run: docker pull ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest
+
+      # tag the image
+      - name: Tag image
+        run: docker tag ghcr.io/${{ env.registry_username }}/coffebreak-webapp:latest coffebreak-webapp:latest
+
+      # run containers
+      - name: Build containers
         run: docker-compose -f docker-compose.prod.yml up -d
 
+      # logout of github docker registry
+      - name: Logout of docker registry
+        run: docker logout
+
+  cleanresitry:
+    runs-on: self-hosted
+    steps:
+      # login to github docker registry
+      - name: Login to docker registry
+        run: docker login https://ghcr.io -u ${{ env.registry_username }} -p ${{ env.registry_password }}
+
+      # clean the registry
+      - name: Clean registry
+        run: docker rmi $(docker images -q -f dangling=true)
+
+      # logout of github docker registry
+      - name: Logout of docker registry
+        run: docker logout
 
 
 
