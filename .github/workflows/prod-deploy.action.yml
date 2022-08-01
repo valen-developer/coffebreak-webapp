@@ -16,6 +16,11 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        image:
+          - ${{ env.REGISTRY_USERNAME }}/coffebreak-production:${{ env.GIT_BRANCH }}
     steps:
       - uses: actions/checkout@v3
 
@@ -51,6 +56,8 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    # run when build job is successful
+    if: steps.build.outcome == 'success'
     steps:
       - uses: actions/checkout@v3
 
@@ -84,6 +91,7 @@ jobs:
 
   cleanresitry:
     runs-on: self-hosted
+    if: steps.deploy.outcome == 'success'
     steps:
       # login to github docker registry
       - name: Login to docker registry
