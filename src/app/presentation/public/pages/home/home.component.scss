@@ -6,8 +6,12 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 0.5rem;
+}
+.header__regards__title {
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
 .header-icons {
