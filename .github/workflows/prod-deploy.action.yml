@@ -53,8 +53,6 @@ jobs:
     runs-on: self-hosted
     needs:
       - build
-    # run when build job is successful
-    if: steps.build.outcome == 'success'
     steps:
       - uses: actions/checkout@v3
 
