@@ -48,23 +48,3 @@ networks:
 
 
 
-#nginx-valentinvalverde:
-   # build:
-   #   context: ./nginx/
-   #   dockerfile: Dockerfile
-   # container_name: nginx-valentinvalverde
-   # volumes:
-   #   - ./dist:/usr/share/nginx/html:ro
-   #   - ./nginx/:/etc/nginx/conf.d/
-   # expose:
-   #   - "80"
-   # environment:
-   #   - VIRTUAL_HOST=valentinvalverde.com,www.valentinvalverde.com
-   #   - LETSENCRYPT_HOST=valentinvalverde.com,www.valentinvalverde.com
-   #   - LETSENCRYPT_EMAIL=valenreta.developer@gmail.com
-   # restart: unless-stopped
-   # links:
-   #   - node-server-front:node-server-front
-   #   - nodeback-valentinvalverde:nodeback-valentinvalverde
-   # networks:
-   #   - netnginx
