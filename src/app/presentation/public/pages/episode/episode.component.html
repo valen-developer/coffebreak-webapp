@@ -34,7 +34,7 @@
 
   <div class="image">
     <img
-      [src]="episode?.imageUrl?.value"
+      [src]="episode?.imageUrl?.value || 'assets/images/not-episode-image.png'"
       alt=""
       (error)="onImageError($event)"
     />

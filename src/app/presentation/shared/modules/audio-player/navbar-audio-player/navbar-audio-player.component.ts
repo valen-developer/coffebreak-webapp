@@ -68,4 +68,9 @@ export class NavbarAudioPlayerComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  onImageError(event: ErrorEvent): void {
+    const imageHtmlElement = event.target as HTMLImageElement;
+    imageHtmlElement.src = 'assets/images/playing.png';
+  }
 }

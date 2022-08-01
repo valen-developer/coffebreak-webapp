@@ -14,7 +14,7 @@ export class EpisodeCardComponent implements OnInit {
 
   public onError(event: ErrorEvent): void {
     const imageHtmlElement = event.target as HTMLImageElement;
-    imageHtmlElement.src = 'https://via.placeholder.com/150';
+    imageHtmlElement.src = 'assets/images/not-episode-image.png';
   }
 }
 

@@ -198,7 +198,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   public onImageError(event: ErrorEvent): void {
     const imageHtmlElement = event.target as HTMLImageElement;
-    imageHtmlElement.src = 'https://via.placeholder.com/150';
+    imageHtmlElement.src = 'assets/images/not-episode-image.png';
   }
 
   public onPlayPulse(): void {

@@ -1,7 +1,11 @@
 <div class="navbar-audio" *ngIf="episode">
-  <a [routerLink]="['/episode', episode?.uuid?.value]" class="information">
+  <a [routerLink]="['/episode', episode.uuid.value]" class="information">
     <div class="image">
-      <img [src]="episode.imageUrl.value" alt="" />
+      <img
+        [src]="episode.imageUrl.value || 'assets/images/playing.png'"
+        alt=""
+        (error)="onImageError($event)"
+      />
     </div>
 
     <div class="title">
