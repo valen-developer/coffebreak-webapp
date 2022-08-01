@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Meta } from '@angular/platform-browser';
 
 import { io } from 'socket.io-client';
 
+import { SwUpdate } from '@angular/service-worker';
 import { environment } from 'src/environments/environment';
 import { PlaylistDTO } from './domain/Playlist/Playlist.model';
 import { Events } from './domain/PodcastEpisode/constants/Events';
@@ -17,16 +17,16 @@ import { DOMService } from './presentation/shared/services/dom.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'webapp';
+  title = 'Coffeebreak: Señal y ruido';
 
   constructor(
-    private meta: Meta,
+    private swUpdate: SwUpdate,
     private domService: DOMService,
     private alert: AlertService,
     private router: Router
   ) {
-    // this.addMetaTags();
     this.initSocket();
+    this.subscribeToUpdates();
   }
 
   private initSocket(): void {
@@ -60,33 +60,24 @@ export class AppComponent {
     });
   }
 
-  private addMetaTags(): void {
+  private subscribeToUpdates(): void {
     if (!this.domService.isBrowser()) return;
 
-    this.meta.addTag({ name: 'description', content: 'Podcast de ciencia' });
-    this.meta.addTag({
-      name: 'keywords',
-      content: 'podcast, ciencia, física, biología, arqueología, astronomía',
-    });
+    const window = this.domService.getWindow();
 
-    // make a preview url for social media
-    const url = `${window.location.origin}${window.location.pathname}`;
-    this.meta.addTag({ name: 'og:url', content: url });
-    this.meta.addTag({
-      name: 'og:title',
-      content: 'Coffeebreak: señal y ruido',
+    this.swUpdate.versionUpdates.subscribe({
+      next: () => {
+        this.alert.info({
+          message: `Actualización disponible 🎉`,
+          subtitle: `Pulse para actualizar`,
+          autoclose: false,
+          onClick: () => {
+            if (!window) return;
+
+            window?.location?.reload();
+          },
+        });
+      },
     });
-    this.meta.addTag({ name: 'og:description', content: 'Podcast de ciencia' });
-    this.meta.addTag({
-      name: 'og:image',
-      content: 'https://coffeebreakpodcast.app/assets/images/cover.png',
-    });
-    this.meta.addTag({ name: 'og:image:type', content: 'image/png' });
-    this.meta.addTag({ name: 'og:image:width', content: '630' });
-    this.meta.addTag({ name: 'og:image:height', content: '630' });
-    this.meta.addTag({ name: 'og:image:alt', content: 'Coffeebreak' });
-    this.meta.addTag({ name: 'og:type', content: 'website' });
-    this.meta.addTag({ name: 'og:site_name', content: 'Coffeebreak' });
-    this.meta.addTag({ name: 'og:locale', content: 'es_ES' });
   }
 }
