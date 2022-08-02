@@ -25,7 +25,6 @@ export class AppComponent {
     private alert: AlertService,
     private router: Router
   ) {
-    this.initSocket();
     this.subscribeToUpdates();
   }
 
