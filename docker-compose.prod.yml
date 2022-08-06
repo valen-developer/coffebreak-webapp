@@ -15,6 +15,10 @@ services:
       - VIRTUAL_HOST=coffeebreakpodcast.app,www.coffeebreakpodcast.app
       - LETSENCRYPT_HOST=coffeebreakpodcast.app,www.coffeebreakpodcast.app
       - LETSENCRYPT_EMAIL=valentin@valentinvalverde.com
+    labels:
+      - "traefik.enable=true"
+      # add rule for www.coffeebreakpodcast.app and coffeebreakpodcast.app
+      - "traefik.frontend.rule=Host:coffeebreakpodcast.app,www.coffeebreakpodcast.app"
     networks:
       - coffebreak
     external_links:
