@@ -34,6 +34,11 @@ const routes: Routes = [
         component: ChangePasswordComponent,
       },
       {
+        path: 'about',
+        loadChildren: () =>
+          import('./pages/about/about.module').then((m) => m.AboutModule),
+      },
+      {
         path: '**',
         redirectTo: '',
         pathMatch: 'full',

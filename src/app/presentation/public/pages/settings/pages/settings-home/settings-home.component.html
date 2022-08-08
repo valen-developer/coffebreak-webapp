@@ -37,7 +37,11 @@
     <hr class="divider" />
 
     <div class="app-actions list">
-      <a class="list-item" *ngFor="let link of appLinks">
+      <a
+        class="list-item"
+        *ngFor="let link of appLinks"
+        [routerLink]="link.url"
+      >
         <span>{{ link.label }}</span>
         <div class="icon">
           <!-- arrow left icon fontawesome -->

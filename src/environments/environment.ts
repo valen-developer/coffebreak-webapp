@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://www.coffeebreakpodcast.app/api',
-  socketUrl: 'wss://www.coffeebreakpodcast.app',
+  apiUrl: 'http://localhost:3000/api',
+  socketUrl: 'ws://localhost:3000',
 };
 
 /*

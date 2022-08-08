@@ -12,6 +12,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./presentation/public/public.module').then((m) => m.PublicModule),
   },
+  { path: 'about', loadChildren: () => import('./presentation/public/pages/settings/pages/about/about.module').then(m => m.AboutModule) },
   {
     path: '**',
     pathMatch: 'full',

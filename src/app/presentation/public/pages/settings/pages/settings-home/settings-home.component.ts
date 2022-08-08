@@ -30,6 +30,7 @@ export class SettingsHomeComponent implements OnInit, OnDestroy {
   public appLinks: Link[] = [
     {
       label: 'About',
+      url: 'about',
     },
   ];
 
