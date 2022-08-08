@@ -39,7 +39,6 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void {}
 
   ngOnInit(): void {
-    console.log('on init');
     this.isPassword = this.typeConstant === 'password';
     this.type = this.typeConstant;
   }
@@ -61,7 +60,6 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   }
 
   public onClear(event: any): void {
-    console.log('Press');
     event.preventDefault();
     this.formControl.setValue('');
 

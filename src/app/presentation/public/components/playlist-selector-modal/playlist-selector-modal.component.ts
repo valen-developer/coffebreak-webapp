@@ -70,10 +70,6 @@ export class PlaylistSelectorModalComponent
   }
 
   private async getPlaylists(userUuid: string): Promise<void> {
-    console.log(
-      '🚀 ~ file: playlist-selector-modal.component.ts ~ line 74 ~ getPlaylists ~ userUuid',
-      userUuid
-    );
     this.playlists = await this.playlistFinder.getPlayListByOwner(userUuid);
     this.buildPlaylistData();
   }

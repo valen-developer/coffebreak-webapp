@@ -32,9 +32,7 @@ export class AppComponent {
     if (!this.domService.isBrowser()) return;
 
     const socket = io(environment.socketUrl);
-    socket.on('connect', () => {
-      console.log('Connected');
-    });
+    socket.on('connect', () => {});
 
     socket.on(Events.NEW_EPISODE, (episode: PodcastEpisodeDTO) => {
       this.alert.info({

@@ -19,6 +19,7 @@ import { PlayerTimerService } from 'src/app/presentation/shared/modules/audio-pl
 import { PlaylistPlayerService } from 'src/app/presentation/shared/modules/audio-player/services/playlist-player.service';
 import { ModalComponent } from 'src/app/presentation/shared/modules/modal/modal.component';
 import { DOMService } from 'src/app/presentation/shared/services/dom.service';
+import { MetaService } from 'src/app/presentation/shared/services/meta.service';
 import { RouteToolService } from 'src/app/presentation/shared/services/route-tool.service';
 import { PlaylistSelectorModalComponent } from '../../components/playlist-selector-modal/playlist-selector-modal.component';
 
@@ -60,7 +61,8 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     private playlistEpisodeUpdater: PlaylistEpisodeUpdater,
     private trackFinder: EpisodeTrackFinder,
     private timer: PlayerTimerService,
-    private alert: AlertService
+    private alert: AlertService,
+    private metaService: MetaService
   ) {
     this.episodePlaylistIndex$ = this.playlistPlayer.episodeIndex$;
     this.previousUrl$ = this.routeTool.previousUrl$;
@@ -69,7 +71,6 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('On init');
     this.navbarAudioController.hide();
 
     const query: PodcastEpisodeQuery = {
@@ -81,6 +82,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
       this.episode = episode;
       this.getEpisodeTracks();
       this.isSameThanPlaying = this.episode?.isSame(this.episodePlaying);
+      this.setMetaTags();
     });
 
     this.episodePlayingSubscription =
@@ -105,10 +107,26 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('Destroy');
     this.navbarAudioController.show();
     this.episodePlayingSubscription?.unsubscribe();
     this.keyupSubscription?.unsubscribe();
+
+    this.metaService.setOriginals();
+  }
+
+  private setMetaTags(): void {
+    if (!this.episode) return;
+    if (!this.domService.isBrowser()) return;
+
+    const currentUrl = this.routeTool.getFullCurrentUrl();
+
+    this.metaService.setMetaForRRSS({
+      title: this.episode?.title.value,
+      description: this.episode?.description.value,
+      image: this.episode?.imageUrl.value,
+      // url of this page
+      url: currentUrl,
+    });
   }
 
   private keypresManager(event: KeyboardEvent): void {
@@ -131,7 +149,6 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     }
 
     if (enter) {
-      console.log('Same as playing', 'Enter');
       this.audioController.togglePlayPause();
     }
   }

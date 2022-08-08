@@ -45,6 +45,11 @@ export class RouteToolService {
     });
   }
 
+  public getFullCurrentUrl(): string {
+    if (!this.domService.isBrowser()) return '';
+    return this.router['location']._platformLocation.location.origin;
+  }
+
   public getRouter(): Router {
     return this.router;
   }

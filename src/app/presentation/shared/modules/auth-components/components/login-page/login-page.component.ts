@@ -55,10 +55,6 @@ export class LoginPageComponent implements OnInit {
 
   public async onSubmit(): Promise<void> {
     const { email, password } = this.form.value;
-    console.log(
-      '🚀 ~ file: login-page.component.ts ~ line 58 ~ LoginPageComponent ~ onSubmit ~  this.form',
-      this.form
-    );
 
     if (!this.form.valid)
       return this.alert.warning({

@@ -23,8 +23,6 @@ export const ImageSizeGuard = () => {
 
       if (!image) return originalMethod.apply(this, args);
 
-      console.log(stringInBytesConverter(image.size));
-
       if (image.size > IMAGE_SIZE_LIMIT) {
         throw new Error(`La imagen debe ser menor a ${message}`);
       }

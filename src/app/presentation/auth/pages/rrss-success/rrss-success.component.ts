@@ -24,8 +24,6 @@ export class RrssSuccessComponent implements OnInit {
   }
 
   private loginWithToken(): void {
-    console.log(this.getToken());
-
     this.userLogger
       .loginWithToken(this.getToken())
       .then(() => {
