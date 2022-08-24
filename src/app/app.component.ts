@@ -24,9 +24,7 @@ export class AppComponent {
     private domService: DOMService,
     private alert: AlertService,
     private router: Router
-  ) {
-    this.subscribeToUpdates();
-  }
+  ) {}
 
   private initSocket(): void {
     if (!this.domService.isBrowser()) return;
