@@ -11,21 +11,14 @@ import {
 } from '@angular/core';
 
 import { debounceTime, fromEvent, Observable, Subscription } from 'rxjs';
+import { AuthStatusService } from 'src/app/application/Auth/AuthStatus.service';
 import { UserLogger } from 'src/app/application/Auth/UserLogger.service';
+import { EpisodeTimeTrackerFinder } from 'src/app/application/EpisodeTimeTracker/EpisodeTimeTrackerFinder.service';
 import { PodcastEpisodeFinder } from 'src/app/application/PodcastEpisode/PodcastEpisodeFinder';
-import { Playlist } from 'src/app/domain/Playlist/Playlist.model';
-import { Events } from 'src/app/domain/PodcastEpisode/constants/Events';
 import { LastEpisodesRepository } from 'src/app/domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
-import {
-  PodcastEpisode,
-  PodcastEpisodeDTO,
-} from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
-import { AlertService } from '../shared/modules/alert/alert.service';
 import { AudioController } from '../shared/modules/audio-player/services/audio-controller.service';
 import { EpisodePlayerService } from '../shared/modules/audio-player/services/episode-player.service';
 import { NavbarAudioController } from '../shared/modules/audio-player/services/navbar-audio-controller.service';
-import { PlayerTimerService } from '../shared/modules/audio-player/services/player-timer.service';
-import { StorageService } from '../shared/services/storage.service';
 import { RouteContainerScrollService } from './services/route-container-scroll.service';
 
 @Component({
@@ -42,6 +35,7 @@ export class PublicComponent
   public showAudioPlayer$!: Observable<boolean>;
 
   private scrollSubscription!: Subscription;
+  private userSubscription!: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -52,7 +46,9 @@ export class PublicComponent
     private lastEpisoreRepository: LastEpisodesRepository,
     private episodeFinder: PodcastEpisodeFinder,
     private userLogger: UserLogger,
-    private cdref: ChangeDetectorRef
+    private authStatus: AuthStatusService,
+    private cdref: ChangeDetectorRef,
+    private timeTrackerFinder: EpisodeTimeTrackerFinder
   ) {
     this.showAudioPlayer$ = this.navbarAudioController.show$;
   }
@@ -61,6 +57,7 @@ export class PublicComponent
     this.tryLogin();
     this.susbcribeToScrolling();
     this.scrollToSubscribe();
+    this.getTimeTrackers();
   }
 
   ngAfterContentChecked(): void {
@@ -86,6 +83,7 @@ export class PublicComponent
 
   ngOnDestroy(): void {
     this.scrollSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 
   private susbcribeToScrolling(): void {
@@ -115,5 +113,15 @@ export class PublicComponent
 
   private tryLogin(): void {
     this.userLogger.loginWithToken().catch(() => {});
+  }
+
+  private getTimeTrackers(): void {
+    this.userSubscription = this.authStatus.user$.subscribe((user) => {
+      if (!user) return;
+      this.timeTrackerFinder
+        .findByUser(user.uuid.value)
+        .subscribe((timeTrackers) => {})
+        .unsubscribe();
+    });
   }
 }

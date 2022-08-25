@@ -5,13 +5,11 @@ export class EpisodeTimeTracker {
   public readonly uuid: UUID;
 
   public readonly episodeUuid: UUID;
-  public readonly userUuid: UUID;
   public readonly time: EpisodeTimeTrackerTime;
 
   constructor(params: EpisodeTimeTrackerDTO) {
     this.uuid = new UUID(params.uuid);
     this.episodeUuid = new UUID(params.episodeUuid);
-    this.userUuid = new UUID(params.userUuid);
     this.time = new EpisodeTimeTrackerTime(params.time);
   }
 
@@ -19,7 +17,6 @@ export class EpisodeTimeTracker {
     return {
       uuid: this.uuid.value,
       episodeUuid: this.episodeUuid.value,
-      userUuid: this.userUuid.value,
       time: this.time.value,
     };
   }
@@ -28,6 +25,5 @@ export class EpisodeTimeTracker {
 export interface EpisodeTimeTrackerDTO {
   uuid: string;
   episodeUuid: string;
-  userUuid: string;
   time: number;
 }
