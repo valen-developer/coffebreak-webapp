@@ -118,10 +118,11 @@ export class PublicComponent
   private getTimeTrackers(): void {
     this.userSubscription = this.authStatus.user$.subscribe((user) => {
       if (!user) return;
-      this.timeTrackerFinder
-        .findByUser(user.uuid.value)
-        .subscribe((timeTrackers) => {})
-        .unsubscribe();
+      const sub = this.timeTrackerFinder.findByUser().subscribe({
+        next: (timeTrackers) => {
+          sub.unsubscribe();
+        },
+      });
     });
   }
 }

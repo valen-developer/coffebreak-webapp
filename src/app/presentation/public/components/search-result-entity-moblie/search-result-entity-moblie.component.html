@@ -1,15 +1,27 @@
 <div class="search-result">
   <div class="image">
     <img
-      [src]="episodes.imageUrl.value || 'assets/images/not-episode-image.png'"
+      [src]="episode.imageUrl.value || 'assets/images/not-episode-image.png'"
       alt=""
       onerror="this.src='assets/images/not-episode-image.png'"
     />
+
+    <div
+      class="percent-bar"
+      *ngIf="timeTracker"
+      [ngStyle]="{ width: timeTracker.percentageComplete() * 100 + '%' }"
+    ></div>
   </div>
 
   <div class="text">
-    <h5>{{ "Episodio " + episodes.episode }}</h5>
-    <p class="text__description">{{ episodes.title.value }}</p>
+    <div class="text-title">
+      <h5>{{ "Episodio " + episode.episode }}</h5>
+      <i
+        *ngIf="timeTracker?.isComplete()"
+        class="fas fa-check complete-icon"
+      ></i>
+    </div>
+    <p class="text__description">{{ episode.title.value }}</p>
   </div>
 
   <div class="icon">

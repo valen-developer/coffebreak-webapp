@@ -1,10 +1,23 @@
-<div class="card">
+<div class="card" *ngIf="entity">
   <div class="card-image">
-    <img [src]="entity?.imageUrl" alt="" (error)="onError($event)" />
+    <img [src]="entity.imageUrl" alt="" (error)="onError($event)" />
   </div>
 
   <div class="card-text">
-    <h5 class="card-text__title">{{ entity?.title }}</h5>
-    <p class="card-text__description">{{ entity?.description }}</p>
+    <h5 class="card-text__title">{{ entity.title }}</h5>
+    <p class="card-text__description">{{ entity.description }}</p>
+    <i
+      *ngIf="timeTracker?.isComplete()"
+      class="fas fa-check complete-icon"
+      Tooltip
+      text="Escuchado"
+      placement="top"
+    ></i>
   </div>
+
+  <div
+    class="percent-bar"
+    *ngIf="timeTracker"
+    [ngStyle]="{ width: timeTracker.percentageComplete() * 100 + '%' }"
+  ></div>
 </div>

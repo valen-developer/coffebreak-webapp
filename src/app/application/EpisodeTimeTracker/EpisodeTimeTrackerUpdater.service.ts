@@ -24,7 +24,11 @@ export class EpisodeTimeTrackerUpdater {
       params.episodeUuid
     );
 
-    if (timeTracker) this.updateTimeTracker(timeTracker);
+    if (timeTracker)
+      this.updateTimeTracker({
+        ...timeTracker.toDto(),
+        time: params.time,
+      });
     if (!timeTracker) {
       const newTimeTracker = await this.create(params);
       this.timeTrackerStore.updateTimeTracker(newTimeTracker);
@@ -37,8 +41,10 @@ export class EpisodeTimeTrackerUpdater {
     return this.timeTrackerCreator.create(params);
   }
 
-  private updateTimeTracker(episodeTimeTracker: EpisodeTimeTracker): void {
-    this.timeTrakerRepository.update(episodeTimeTracker);
-    this.timeTrackerStore.updateTimeTracker(episodeTimeTracker);
+  private updateTimeTracker(params: EpisodeTimeTrackerDTO): void {
+    const updatedTimeTracker = new EpisodeTimeTracker(params);
+
+    this.timeTrakerRepository.update(updatedTimeTracker);
+    this.timeTrackerStore.updateTimeTracker(updatedTimeTracker);
   }
 }

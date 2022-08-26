@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
         description: e.title.value,
         imageUrl: e.imageUrl.value,
         uuid: e.uuid.value,
+        isEpisode: true,
       }));
     });
   }
@@ -64,6 +65,7 @@ export class HomeComponent implements OnInit {
         uuid: ch.uuid.value,
         title: ch.name.value,
         description: ch.description.value,
+        isEpisode: false,
         imageUrl,
       };
     });

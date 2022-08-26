@@ -36,10 +36,10 @@ export class ApiEpisodeTimeTrackerRepository
     await firstValueFrom(response);
   }
 
-  public findByUser(userUuid: string): Observable<EpisodeTimeTracker[]> {
+  public findByUser(): Observable<EpisodeTimeTracker[]> {
     return this.http
       .get<EpisodeTimeTrackerDTO[]>(
-        `${this._API_URL}/episode-time-tracker/user/${userUuid}`
+        `${this._API_URL}/episode-time-tracker/user`
       )
       .pipe(
         map((timeTrackers: EpisodeTimeTrackerDTO[]) =>

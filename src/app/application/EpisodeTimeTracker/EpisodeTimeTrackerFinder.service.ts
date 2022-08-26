@@ -13,9 +13,13 @@ export class EpisodeTimeTrackerFinder {
     private timeTrackerStore: EpisodeTimeTrackerStore
   ) {}
 
-  public findByUser(userUuid: string): Observable<EpisodeTimeTracker[]> {
-    return this.timeTrakerRepository.findByUser(userUuid).pipe(
+  public findByUser(): Observable<EpisodeTimeTracker[]> {
+    return this.timeTrakerRepository.findByUser().pipe(
       tap((timeTrackers) => {
+        console.log(
+          '🚀 ~ file: EpisodeTimeTrackerFinder.service.ts ~ line 19 ~ EpisodeTimeTrackerFinder ~ tap ~ timeTrackers',
+          timeTrackers
+        );
         this.timeTrackerStore.setTimeTrackers(timeTrackers);
       })
     );
