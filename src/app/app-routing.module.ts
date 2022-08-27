@@ -12,7 +12,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./presentation/public/public.module').then((m) => m.PublicModule),
   },
-  { path: 'about', loadChildren: () => import('./presentation/public/pages/settings/pages/about/about.module').then(m => m.AboutModule) },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import(
+        './presentation/public/pages/settings/pages/about/about.module'
+      ).then((m) => m.AboutModule),
+  },
   {
     path: '**',
     pathMatch: 'full',
@@ -21,9 +27,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-})],
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabledBlocking',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

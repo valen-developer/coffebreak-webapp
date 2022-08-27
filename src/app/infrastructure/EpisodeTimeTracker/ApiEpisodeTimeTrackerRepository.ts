@@ -50,4 +50,16 @@ export class ApiEpisodeTimeTrackerRepository
         )
       );
   }
+
+  public async findLastByUser(): Promise<EpisodeTimeTracker[]> {
+    const response = this.http.get<EpisodeTimeTrackerDTO[]>(
+      `${this._API_URL}/episode-time-tracker/last/user`
+    );
+    const timeTrackers = await firstValueFrom(response);
+
+    return timeTrackers.map(
+      (timeTracker: EpisodeTimeTrackerDTO) =>
+        new EpisodeTimeTracker(timeTracker)
+    );
+  }
 }

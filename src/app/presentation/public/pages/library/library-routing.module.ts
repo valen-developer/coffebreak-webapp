@@ -11,6 +11,14 @@ const routes: Routes = [
     children: [
       { path: 'playlist', component: PlaylistComponent },
       { path: 'artists', component: ArtistsComponent },
+      {
+        path: 'last-ear',
+        loadChildren: () =>
+          import('./pages/last-ear/last-ear.module').then(
+            (m) => m.LastEarModule
+          ),
+      },
+
       { path: '**', pathMatch: 'full', redirectTo: 'playlist' },
     ],
   },
