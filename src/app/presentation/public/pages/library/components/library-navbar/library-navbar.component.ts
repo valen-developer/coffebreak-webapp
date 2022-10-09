@@ -15,6 +15,10 @@ export class LibraryNavbarComponent implements OnInit {
       label: 'Contertulios',
       path: '/library/artists',
     },
+    {
+      label: 'Ultimos escuchados',
+      path: '/library/last-ear',
+    },
   ];
 
   constructor() {}

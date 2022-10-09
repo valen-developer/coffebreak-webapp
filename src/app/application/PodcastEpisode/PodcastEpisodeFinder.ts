@@ -39,4 +39,17 @@ export class PodcastEpisodeFinder {
   ): Promise<Paginated<PodcastEpisode[], 'episodes'>> {
     return await this.podcastEpisodeRepository.filter(query, paginator);
   }
+
+  public async find(uuid: string): Promise<PodcastEpisode> {
+    const episode = await this.podcastEpisodeRepository
+      .filter(
+        {
+          uuid_equals: uuid,
+        },
+        {}
+      )
+      .then(({ episodes }) => episodes[0]);
+
+    return episode;
+  }
 }

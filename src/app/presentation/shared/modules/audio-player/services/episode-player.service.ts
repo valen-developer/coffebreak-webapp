@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { EpisodeTimeTrackerStore } from 'src/app/application/EpisodeTimeTracker/EpisodeTimeTrackerStore.service';
+import { EpisodeTimeTrackerUpdater } from 'src/app/application/EpisodeTimeTracker/EpisodeTimeTrackerUpdater.service';
 import { LastEpisodesRepository } from 'src/app/domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
 import { PodcastEpisode } from 'src/app/domain/PodcastEpisode/PodcastEpisode.model';
 import { Nullable } from 'src/app/domain/Shared/types/Nullable.type';
@@ -19,6 +21,8 @@ export class EpisodePlayerService implements OnDestroy {
   constructor(
     private audioController: AudioController,
     private lastEpisodeRepository: LastEpisodesRepository,
+    private timeTrackerUpdater: EpisodeTimeTrackerUpdater,
+    private timeTrackerStore: EpisodeTimeTrackerStore,
     private domService: DOMService
   ) {
     this.subscribeToTime();
@@ -43,9 +47,14 @@ export class EpisodePlayerService implements OnDestroy {
     if (opt?.autoplay) this.audioController.togglePlayPause();
 
     const title = this.domService.getTitleObject();
+    if (title) title.setTitle(episode?.title.value);
 
-    if (!title) return;
-    title.setTitle(episode?.title.value);
+    const timeTracker = this.timeTrackerStore.getTimeTracker(
+      episode.uuid.value
+    );
+    if (timeTracker) {
+      this.audioController.setCurrentTime(timeTracker.time.value);
+    }
   }
 
   public togglePlayPause(): void {
@@ -78,6 +87,12 @@ export class EpisodePlayerService implements OnDestroy {
         this.lastEpisodeRepository.setLastEar({
           uuid: this._episodePlaying.uuid.value,
           time: time.toString(),
+        });
+
+        this.timeTrackerUpdater.update({
+          episodeUuid: this._episodePlaying.uuid.value,
+          episodeDuration: this._episodePlaying.duration.value,
+          time: time,
         });
       },
     });

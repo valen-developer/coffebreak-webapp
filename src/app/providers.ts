@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Provider } from '@angular/core';
 import { ArtistRepository } from './domain/Artist/interfaces/ArtistRepository.interface';
 import { AuthRepository } from './domain/Auth/interfaces/AuthRepository';
+import { EpisodeTimeTrackerRepository } from './domain/EpisodeTimeTracker/interfaces/EpisodeTimeTrackerRepository.interface';
 import { EpisodeTrackRepository } from './domain/EpisodeTrack/interfaces/EpisodeTrackRepository.interface';
 import { PlaylistRepository } from './domain/Playlist/interfaces/PlaylistRepository.interface';
 import { LastEpisodesRepository } from './domain/PodcastEpisode/interfaces/LastEpisodesRepository.interface';
@@ -11,6 +12,7 @@ import { UUIDGenerator } from './domain/Shared/interfaces/UuidGenerator';
 import { UserRepository } from './domain/User/interfaces/UserRepository.interface';
 import { ApiArtistRepository } from './infrastructure/Artist/ApiArtistRepository';
 import { ApiAuthRepository } from './infrastructure/Auth/ApiAuthRepository';
+import { ApiEpisodeTimeTrackerRepository } from './infrastructure/EpisodeTimeTracker/ApiEpisodeTimeTrackerRepository';
 import { ApiEpisodeTrackRepository } from './infrastructure/EpisodeTrack/ApiEpisodeTrackRepository';
 import { ApiImageRepository } from './infrastructure/Image/ApiImageRepository';
 import { ApiPlaylistRepository } from './infrastructure/Playlist/ApiPlaylistRepository';
@@ -59,6 +61,10 @@ const repositories: Provider[] = [
   {
     provide: EpisodeTrackRepository,
     useClass: ApiEpisodeTrackRepository,
+  },
+  {
+    provide: EpisodeTimeTrackerRepository,
+    useClass: ApiEpisodeTimeTrackerRepository,
   },
 ];
 

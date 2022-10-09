@@ -53,6 +53,7 @@
           *ngIf="isEpisodePlaying(episode)"
         ></i>
       </button>
+
       <a class="list-item-info" [routerLink]="['/episode', episode.uuid.value]">
         <span class="list-item-info__title">
           {{ "Episodio " + episode.episode }}

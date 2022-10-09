@@ -114,6 +114,7 @@
   }
 }
 
+$actionWidth: 40px;
 .list {
   display: flex;
   flex-direction: column;
@@ -137,8 +138,8 @@
       background-color: transparent;
       color: var(--text-primary);
 
-      height: 40px;
-      width: 40px;
+      height: $actionWidth;
+      width: $actionWidth;
 
       border-radius: 50%;
 
