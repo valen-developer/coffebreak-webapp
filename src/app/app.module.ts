@@ -1,20 +1,16 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 
 import { providers } from './providers';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AlertModule } from './presentation/shared/modules/alert/alert.module';
-import { RouteReuseStrategy } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { CustomReuseStrategy } from './infrastructure/Shared/CustomReuseStrategy';
-import {
-  NgxGoogleAnalyticsModule,
-  NgxGoogleAnalyticsRouterModule,
-} from 'ngx-google-analytics';
+import { AlertModule } from './presentation/shared/modules/alert/alert.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +19,6 @@ import {
     AppRoutingModule,
     HttpClientModule,
     AlertModule,
-    NgxGoogleAnalyticsModule.forRoot('G-F3830WZ0F4'),
-    NgxGoogleAnalyticsRouterModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
