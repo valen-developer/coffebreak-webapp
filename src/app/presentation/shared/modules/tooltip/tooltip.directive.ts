@@ -26,6 +26,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 })
 export class TooltipDirective implements OnChanges {
   @Input() text: string = 'tooltip';
+  @Input() placement: Placement = 'bottom';
 
   private toolTipRef!: ComponentRef<TooltipComponent>;
   private toolTipElement!: HTMLElement;
@@ -63,7 +64,7 @@ export class TooltipDirective implements OnChanges {
     const arrowElement = this.toolTipRef.instance.arrow;
 
     const computeOptions: Partial<ComputePositionConfig> = {
-      placement: 'bottom',
+      placement: this.placement,
       middleware: [
         flip(),
         shift(),

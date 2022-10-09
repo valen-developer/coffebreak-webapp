@@ -42,6 +42,7 @@ import { PublicComponent } from './public.component';
     EpisodeOptionsButtonComponent,
     PlaylistSelectorModalComponent,
   ],
+  exports: [SearchResultEntityMoblieComponent],
   imports: [
     CommonModule,
     PublicRoutingModule,

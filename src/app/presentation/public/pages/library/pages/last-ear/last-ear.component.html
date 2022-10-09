@@ -1,0 +1,9 @@
+<a
+  [routerLink]="['/episode', episode?.uuid?.value]"
+  class="results-item"
+  *ngFor="let episode of episodes"
+>
+  <app-search-result-entity-moblie
+    [episode]="episode"
+  ></app-search-result-entity-moblie>
+</a>
